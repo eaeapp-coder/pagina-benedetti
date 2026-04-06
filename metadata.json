@@ -1,0 +1,5 @@
+{
+  "name": "Consultorios Benedetti",
+  "description": "Portal de pacientes para Consultorios Benedetti, permitiendo búsqueda de especialistas y reserva de turnos online.",
+  "requestFramePermissions": []
+}
