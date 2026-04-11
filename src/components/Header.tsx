@@ -12,6 +12,7 @@ export default function Header() {
     { name: 'Especialidades', path: '/especialidades' },
     { name: 'Profesionales', path: '/profesionales' },
     { name: 'Obras Sociales', path: '/obras-sociales' },
+    { name: 'Blog', path: '/blog' },
     { name: 'Nosotros', path: '/nosotros' },
     { name: 'Contacto', path: '/contacto' },
   ];

@@ -180,6 +180,26 @@ export const INSURANCE_PROVIDERS: InsuranceProvider[] = [
 ];
 
 export const DOCTORS: Doctor[] = [
+  {
+    id: '1',
+    name: 'Lic. Mariano Benedetti',
+    specialty: 'Quiropraxia',
+    image: 'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&q=80&w=400&h=400',
+    bio: 'Director de Consultorios Benedetti. Especialista en Quiropraxia y Kinesiología con amplia trayectoria en el tratamiento de la columna vertebral.',
+    education: ['Lic. en Kinesiología y Fisiatría - UBA', 'Especialista en Quiropraxia'],
+    languages: ['Español', 'Inglés'],
+    availability: 'Lunes a Viernes de 08:00 a 12:00'
+  },
+  {
+    id: '2',
+    name: 'Lic. Esteban Benedetti',
+    specialty: 'Kinesiología',
+    image: 'https://images.unsplash.com/photo-1559839734-2b71f153678f?auto=format&fit=crop&q=80&w=400&h=400',
+    bio: 'Co-director. Especialista en rehabilitación funcional y kinesiología deportiva.',
+    education: ['Lic. en Kinesiología y Fisiatría - UBA'],
+    languages: ['Español'],
+    availability: 'Lunes a Viernes de 14:00 a 20:00'
+  },
   { 
     id: '7', 
     name: 'Dr. Roberto Gomez', 
@@ -220,4 +240,66 @@ export const DOCTORS: Doctor[] = [
     languages: ['Español'],
     availability: 'Viernes de 09:00 a 15:00'
   },
+];
+
+export interface BlogPost {
+  id: string;
+  title: string;
+  excerpt: string;
+  content: string;
+  date: string;
+  author: string;
+  category: string;
+  image: string;
+}
+
+export const BLOG_POSTS: BlogPost[] = [
+  {
+    id: '1',
+    title: 'Beneficios de la Quiropraxia en el Deporte',
+    excerpt: 'Descubre cómo los ajustes quiroprácticos pueden mejorar el rendimiento deportivo y prevenir lesiones.',
+    content: `
+      La quiropraxia se ha convertido en una herramienta fundamental para deportistas de todos los niveles. No solo ayuda en la recuperación de lesiones, sino que también optimiza el funcionamiento del sistema nervioso, lo que se traduce en una mejor coordinación y potencia física.
+
+      En nuestro consultorio, trabajamos con atletas para asegurar que su columna vertebral esté correctamente alineada, permitiendo que los impulsos nerviosos viajen sin interferencias. Esto es crucial para la prevención de lesiones por sobrecarga y para mejorar los tiempos de reacción.
+
+      Muchos deportistas de élite incluyen la quiropraxia como parte de su rutina de entrenamiento regular, notando beneficios inmediatos en su flexibilidad y capacidad de recuperación tras esfuerzos intensos.
+    `,
+    date: '2024-03-15',
+    author: 'Dra. Lucía Fernández',
+    category: 'Quiropraxia',
+    image: 'https://images.unsplash.com/photo-1537368910025-700350fe46c7?auto=format&fit=crop&q=80&w=800'
+  },
+  {
+    id: '2',
+    title: 'La importancia de una buena pisada',
+    excerpt: '¿Sabías que muchos dolores de espalda comienzan en los pies? El análisis de la pisada es la clave.',
+    content: `
+      Nuestros pies son la base de todo nuestro cuerpo. Una mala pisada puede generar una reacción en cadena que afecte a los tobillos, rodillas, cadera y, finalmente, a la columna vertebral.
+
+      El análisis baropodométrico digital nos permite visualizar con precisión cómo distribuyes tu peso al caminar. Con esta información, podemos diseñar plantillas ortopédicas personalizadas que corrijan desequilibrios y alivien tensiones innecesarias en otras articulaciones.
+
+      Si sufres de dolores recurrentes de espalda o rodilla, el problema podría estar en tu forma de caminar. Un estudio a tiempo puede prevenir patologías crónicas y mejorar significativamente tu postura diaria.
+    `,
+    date: '2024-03-10',
+    author: 'Lic. Sergio Torres',
+    category: 'Análisis de la pisada',
+    image: 'https://images.unsplash.com/photo-1562157873-818bc0726f68?auto=format&fit=crop&q=80&w=800'
+  },
+  {
+    id: '3',
+    title: 'Kinesiología: Más que masajes',
+    excerpt: 'Entiende el rol del kinesiólogo en la rehabilitación moderna y cómo ayuda a recuperar la movilidad.',
+    content: `
+      Existe la creencia común de que la kinesiología se limita a los masajes, pero su campo de acción es mucho más amplio y científico. Es la ciencia del movimiento humano.
+
+      A través de ejercicios terapéuticos, técnicas manuales avanzadas y el uso de tecnología médica, el kinesiólogo trabaja para restaurar funciones que se han perdido debido a cirugías, accidentes o enfermedades degenerativas.
+
+      El objetivo final es la autonomía del paciente. No solo tratamos el síntoma, sino que buscamos la causa raíz del problema para evitar recaídas y fortalecer el cuerpo de manera integral.
+    `,
+    date: '2024-03-05',
+    author: 'Dr. Roberto Gomez',
+    category: 'Kinesiología',
+    image: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&q=80&w=800'
+  }
 ];

@@ -14,6 +14,9 @@ import ProfessionalProfile from './pages/ProfessionalProfile';
 import Contact from './pages/Contact';
 import Booking from './pages/Booking';
 import Insurances from './pages/Insurances';
+import BlogArchive from './pages/BlogArchive';
+import BlogPost from './pages/BlogPost';
+import About from './pages/About';
 import { motion, AnimatePresence } from 'motion/react';
 
 function AppRoutes() {
@@ -27,6 +30,9 @@ function AppRoutes() {
         <Route path="/especialidades" element={<Specialties />} />
         <Route path="/especialidades/:id" element={<SpecialtyDetail />} />
         <Route path="/obras-sociales" element={<Insurances />} />
+        <Route path="/blog" element={<BlogArchive />} />
+        <Route path="/blog/:id" element={<BlogPost />} />
+        <Route path="/nosotros" element={<About />} />
         <Route path="/contacto" element={<Contact />} />
         <Route path="/turnos" element={<Booking />} />
         {/* Fallback routes for demo */}
