@@ -3,13 +3,14 @@ import { SPECIALTIES, DOCTORS } from '../constants';
 import { motion, AnimatePresence } from 'motion/react';
 import { CheckCircle2, ChevronRight, Phone, MessageSquare } from 'lucide-react';
 import SEO from '../components/SEO';
-
 import PageTransition from '../components/PageTransition';
+import { useBusinessHours } from '../hooks/useBusinessHours';
 
 export default function Booking() {
   const [step, setStep] = useState(1);
   const [selectedSpecialty, setSelectedSpecialty] = useState<string | null>(null);
   const [selectedDoctor, setSelectedDoctor] = useState<string | null>(null);
+  const { isOpen, statusMessage } = useBusinessHours();
 
   const steps = [
     { id: 1, name: '1. Especialidad' },
@@ -178,14 +179,31 @@ export default function Booking() {
         <div className="mt-12 text-center">
           <p className="text-gray-500 font-medium mb-4">¿Necesitas ayuda?</p>
           <div className="flex flex-col md:flex-row items-center justify-center space-y-4 md:space-y-0 md:space-x-8">
-            <a href="tel:08001234567" className="flex items-center text-[#1A3A5A] font-bold hover:text-[#0088CC] transition-colors">
+            <a href="tel:20717674" className="flex items-center text-[#1A3A5A] font-bold hover:text-[#0088CC] transition-colors">
               <Phone className="w-5 h-5 mr-2 text-[#0088CC]" />
-              Llámanos al 0800-123-4567
+              Llámanos al 2071-7674
             </a>
-            <a href="#" className="flex items-center text-[#1A3A5A] font-bold hover:text-[#0088CC] transition-colors">
-              <MessageSquare className="w-5 h-5 mr-2 text-[#0088CC]" />
-              Escríbenos por <span className="underline ml-1">WhatsApp</span>
-            </a>
+            <div className="flex flex-col items-center">
+              <a 
+                href={isOpen ? "https://wa.me/5491122883581" : "#"} 
+                target={isOpen ? "_blank" : undefined}
+                rel={isOpen ? "noopener noreferrer" : undefined}
+                className={`flex items-center font-bold transition-all ${
+                  isOpen 
+                    ? "text-[#1A3A5A] hover:text-[#0088CC]" 
+                    : "text-gray-300 cursor-not-allowed pointer-events-none"
+                }`}
+                onClick={(e) => !isOpen && e.preventDefault()}
+              >
+                <MessageSquare className={`w-5 h-5 mr-2 ${isOpen ? 'text-[#0088CC]' : 'text-gray-300'}`} />
+                Escríbenos por <span className="underline ml-1">WhatsApp</span>
+              </a>
+              {!isOpen && (
+                <p className="text-[10px] text-gray-400 mt-1 font-medium">
+                  {statusMessage}
+                </p>
+              )}
+            </div>
           </div>
         </div>
       </div>

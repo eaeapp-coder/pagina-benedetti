@@ -5,11 +5,13 @@ import { motion } from 'motion/react';
 import PageTransition from '../components/PageTransition';
 import { ChevronRight, CheckCircle2, User, ArrowLeft, MessageSquare } from 'lucide-react';
 import SEO from '../components/SEO';
+import { useBusinessHours } from '../hooks/useBusinessHours';
 
 export default function SpecialtyDetail() {
   const { id } = useParams<{ id: string }>();
   const specialty = SPECIALTIES.find(s => s.id === id);
   const doctors = DOCTORS.filter(d => specialty && d.specialties.includes(specialty.name));
+  const { isOpen, statusMessage } = useBusinessHours();
 
   if (!specialty) {
     return <Navigate to="/especialidades" replace />;
@@ -114,15 +116,27 @@ export default function SpecialtyDetail() {
                   <p className="text-gray-500 italic mb-6">
                     Consulta por profesionales disponibles para esta especialidad.
                   </p>
-                  <a 
-                    href={`https://wa.me/5491122883581?text=${encodeURIComponent(`Hola, ¿qué profesional está asociado al área de ${specialty.name}?`)}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center bg-[#0088CC] text-white px-8 py-4 rounded-full font-bold hover:bg-[#0077B3] transition-all shadow-lg transform hover:-translate-y-1"
-                  >
-                    <MessageSquare className="w-5 h-5 mr-2" />
-                    Consultar por WhatsApp
-                  </a>
+                  <div className="flex flex-col items-center">
+                    <a 
+                      href={isOpen ? `https://wa.me/5491122883581?text=${encodeURIComponent(`Hola, ¿qué profesional está asociado al área de ${specialty.name}?`)}` : "#"}
+                      target={isOpen ? "_blank" : undefined}
+                      rel={isOpen ? "noopener noreferrer" : undefined}
+                      className={`inline-flex items-center px-8 py-4 rounded-full font-bold transition-all shadow-lg ${
+                        isOpen 
+                          ? "bg-[#0088CC] text-white hover:bg-[#0077B3] transform hover:-translate-y-1" 
+                          : "bg-[#0088CC]/40 text-white/70 cursor-not-allowed pointer-events-none"
+                      }`}
+                      onClick={(e) => !isOpen && e.preventDefault()}
+                    >
+                      <MessageSquare className="w-5 h-5 mr-2" />
+                      Consultar por WhatsApp
+                    </a>
+                    {!isOpen && (
+                      <p className="text-[10px] text-gray-400 mt-2 font-medium">
+                        {statusMessage}
+                      </p>
+                    )}
+                  </div>
                 </motion.div>
               )}
             </div>

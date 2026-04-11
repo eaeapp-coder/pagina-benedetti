@@ -8,6 +8,7 @@ import { HelmetProvider } from 'react-helmet-async';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import WhatsAppButton from './components/WhatsAppButton';
+import ScrollToTop from './components/ScrollToTop';
 import Home from './pages/Home';
 import Professionals from './pages/Professionals';
 import Specialties from './pages/Specialties';
@@ -50,6 +51,7 @@ export default function App() {
   return (
     <HelmetProvider>
       <Router>
+        <ScrollToTop />
         <div className="min-h-screen flex flex-col font-sans selection:bg-blue-100 selection:text-[#0088CC]">
           <Header />
           <div className="flex-1">
