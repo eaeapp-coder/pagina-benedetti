@@ -6,38 +6,24 @@ export default function Footer() {
   return (
     <footer className="bg-[#F8FAFC] border-t border-gray-200 pt-16 pb-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-12 mb-12">
           {/* Brand */}
-          <div className="col-span-1 md:col-span-1">
-            <Link to="/" className="flex items-center space-x-2 mb-6">
-              <div className="relative">
-                <img 
-                  src="https://photos.app.goo.gl/FwTdmu6AzJcQK5mKA" 
-                  alt="Logo" 
-                  className="h-10 w-auto object-contain"
-                  referrerPolicy="no-referrer"
-                  onError={(e) => {
-                    e.currentTarget.style.display = 'none';
-                    const fallback = e.currentTarget.parentElement?.querySelector('.logo-fallback');
-                    if (fallback) (fallback as HTMLElement).style.display = 'flex';
-                  }}
-                />
-                <div className="logo-fallback hidden bg-gradient-to-br from-[#0088CC] to-[#005580] p-1.5 rounded-lg shadow-sm">
-                  <Plus className="text-white w-5 h-5" />
-                </div>
-              </div>
-              <div className="flex flex-col">
-                <span className="text-lg font-bold text-[#1A3A5A] tracking-tight leading-none">Consultorios</span>
-                <span className="text-lg font-bold text-[#0088CC] tracking-tight">Benedetti</span>
-              </div>
+          <div className="col-span-1 md:col-span-5">
+            <Link to="/" className="inline-block mb-6">
+              <img 
+                src="https://eaeapp.com/images-ia/benedetti/logo-benedetti.png" 
+                alt="Consultorios Benedetti" 
+                className="h-16 w-auto object-contain"
+                referrerPolicy="no-referrer"
+              />
             </Link>
-            <p className="text-gray-500 text-sm leading-relaxed">
+            <p className="text-gray-500 text-sm leading-relaxed max-w-md">
               Brindamos atención médica de excelencia con un equipo de profesionales altamente capacitados y tecnología de última generación.
             </p>
           </div>
 
           {/* Contact Info */}
-          <div>
+          <div className="col-span-1 md:col-span-4">
             <h4 className="text-[#1A3A5A] font-bold mb-6">Contacto</h4>
             <ul className="space-y-4">
               <li className="flex items-start space-x-3 text-sm text-gray-600">
@@ -55,7 +41,7 @@ export default function Footer() {
           </div>
 
           {/* Links */}
-          <div>
+          <div className="col-span-1 md:col-span-3">
             <h4 className="text-[#1A3A5A] font-bold mb-6">Institucional</h4>
             <ul className="space-y-4 text-sm text-gray-600">
               <li><Link to="/nosotros" className="hover:text-[#0088CC]">Sobre Nosotros</Link></li>
@@ -64,15 +50,6 @@ export default function Footer() {
               <li><Link to="/obras-sociales" className="hover:text-[#0088CC]">Obras Sociales</Link></li>
               <li><a href="https://pruebas.eaeapp.com/blog/" target="_blank" rel="noopener noreferrer" className="hover:text-[#0088CC]">Blog</a></li>
               <li><Link to="/contacto" className="hover:text-[#0088CC]">Contacto</Link></li>
-            </ul>
-          </div>
-
-          {/* Legal */}
-          <div>
-            <h4 className="text-[#1A3A5A] font-bold mb-6">Legal</h4>
-            <ul className="space-y-4 text-sm text-gray-600">
-              <li><Link to="/privacidad" className="hover:text-[#0088CC]">Política de privacidad</Link></li>
-              <li><Link to="/terminos" className="hover:text-[#0088CC]">Términos de pedido</Link></li>
             </ul>
           </div>
         </div>

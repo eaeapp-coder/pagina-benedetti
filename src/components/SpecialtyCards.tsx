@@ -7,7 +7,7 @@ export default function SpecialtyCards() {
   const featured = SPECIALTIES.slice(0, 4);
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-24 relative z-20">
+    <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-24 relative z-20" aria-label="Especialidades principales">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {featured.map((spec, index) => (
           <motion.div
@@ -39,6 +39,6 @@ export default function SpecialtyCards() {
           </motion.div>
         ))}
       </div>
-    </div>
+    </section>
   );
 }

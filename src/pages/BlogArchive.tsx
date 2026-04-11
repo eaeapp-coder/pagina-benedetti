@@ -4,10 +4,15 @@ import { Link } from 'react-router-dom';
 import { BLOG_POSTS } from '../constants';
 import PageTransition from '../components/PageTransition';
 import { Calendar, User, ChevronRight } from 'lucide-react';
+import SEO from '../components/SEO';
 
 export default function BlogArchive() {
   return (
     <PageTransition>
+      <SEO 
+        title="Blog de Salud"
+        description="Explora nuestro blog de salud en Consultorios Benedetti. Consejos de especialistas en kinesiología, quiropraxia y bienestar integral para tu vida diaria."
+      />
       <main className="min-h-screen bg-[#F8FAFC] pt-32 pb-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Header */}

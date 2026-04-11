@@ -9,10 +9,15 @@ import {
   MessageSquare
 } from 'lucide-react';
 import PageTransition from '../components/PageTransition';
+import SEO from '../components/SEO';
 
 export default function Contact() {
   return (
     <PageTransition>
+      <SEO 
+        title="Contacto"
+        description="Contacta con Consultorios Benedetti en Lanús Este. Solicita tu turno por WhatsApp, consulta nuestros horarios y encuentra nuestra ubicación exacta."
+      />
       <main className="min-h-screen bg-[#F8FAFC] pt-32 pb-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Header Section */}

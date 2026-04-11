@@ -3,11 +3,16 @@ import { DOCTORS, SPECIALTIES } from '../constants';
 import { motion } from 'motion/react';
 import { Link } from 'react-router-dom';
 import PageTransition from '../components/PageTransition';
-import { ChevronRight, User } from 'lucide-react';
+import { ChevronRight, User, MessageSquare } from 'lucide-react';
+import SEO from '../components/SEO';
 
 export default function Specialties() {
   return (
     <PageTransition>
+      <SEO 
+        title="Especialidades"
+        description="Descubre nuestras especialidades médicas en Consultorios Benedetti: Kinesiología, Quiropraxia, Ortopedia y Análisis de la Pisada. Atención integral en Lanús."
+      />
       <div className="min-h-screen bg-[#F8FAFC] py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
@@ -92,10 +97,19 @@ export default function Specialties() {
                             </div>
                           </>
                         ) : (
-                          <div className="h-full flex items-center justify-center p-8 bg-gray-50 rounded-[2rem] border border-dashed border-gray-200">
-                            <p className="text-gray-400 italic text-center">
+                          <div className="h-full flex flex-col items-center justify-center p-8 bg-gray-50 rounded-[2rem] border border-dashed border-gray-200">
+                            <p className="text-gray-400 italic text-center mb-6">
                               Consulta por profesionales disponibles para esta especialidad.
                             </p>
+                            <a 
+                              href={`https://wa.me/5491122883581?text=${encodeURIComponent(`Hola, ¿qué profesional está asociado al área de ${spec.name}?`)}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center bg-[#0088CC] text-white px-6 py-3 rounded-full font-bold hover:bg-[#0077B3] transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
+                            >
+                              <MessageSquare className="w-5 h-5 mr-2" />
+                              Consultar por WhatsApp
+                            </a>
                           </div>
                         )}
                       </div>

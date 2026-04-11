@@ -4,6 +4,8 @@ import { BLOG_POSTS } from '../constants';
 import { motion } from 'motion/react';
 import PageTransition from '../components/PageTransition';
 import { Calendar, User, ArrowLeft, Share2, MessageSquare } from 'lucide-react';
+import SEO from '../components/SEO';
+import StructuredData from '../components/StructuredData';
 
 export default function BlogPost() {
   const { id } = useParams<{ id: string }>();
@@ -13,8 +15,37 @@ export default function BlogPost() {
     return <Navigate to="/blog" replace />;
   }
 
+  const articleSchema = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": post.title,
+    "image": post.image,
+    "author": {
+      "@type": "Person",
+      "name": post.author
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Consultorios Benedetti",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://eaeapp.com/images-ia/benedetti/favico.png"
+      }
+    },
+    "datePublished": post.date,
+    "description": post.excerpt
+  };
+
   return (
     <PageTransition>
+      <SEO 
+        title={post.title}
+        description={post.excerpt}
+        canonical={`https://consultoriosbenedetti.com.ar/blog/${post.id}`}
+        ogType="article"
+        ogImage={post.image}
+      />
+      <StructuredData data={articleSchema} />
       <main className="min-h-screen bg-[#F8FAFC] pt-32 pb-24">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Back Link */}

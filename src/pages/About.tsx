@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'motion/react';
 import PageTransition from '../components/PageTransition';
 import { Heart, Target, Eye, CheckCircle2, Users, Award } from 'lucide-react';
+import SEO from '../components/SEO';
 
 export default function About() {
   const values = [
@@ -29,6 +30,10 @@ export default function About() {
 
   return (
     <PageTransition>
+      <SEO 
+        title="Sobre Nosotros"
+        description="Conoce la historia, misión y valores de Consultorios Benedetti. Más de 10 años de trayectoria brindando atención médica de excelencia en Lanús Este."
+      />
       <main className="min-h-screen bg-[#F8FAFC] pt-32 pb-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Hero Section */}
@@ -46,30 +51,49 @@ export default function About() {
               transition={{ delay: 0.1 }}
               className="text-gray-500 text-lg max-w-3xl mx-auto leading-relaxed"
             >
-              En Consultorios Benedetti, combinamos años de experiencia familiar con las técnicas más modernas 
-              para ofrecerte una atención de salud excepcional.
+              Consultorios Benedetti es un centro de salud dedicado al cuidado del movimiento, la función y la calidad de vida de las personas.
             </motion.p>
           </div>
 
           {/* History Section */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center mb-32">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start mb-32">
             <motion.div
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              className="relative"
+              className="space-y-16"
             >
-              <div className="rounded-[3rem] overflow-hidden shadow-2xl aspect-square lg:aspect-auto lg:h-[600px]">
+              <div className="relative">
+                <div className="rounded-[3rem] overflow-hidden shadow-2xl aspect-square lg:aspect-auto lg:h-[500px]">
+                  <img 
+                    src="https://eaeapp.com/images-ia/benedetti/mariano-kinesiologia.jpg" 
+                    alt="Mariano Benedetti - Kinesiología" 
+                    className="w-full h-full object-cover"
+                    referrerPolicy="no-referrer"
+                  />
+                </div>
+                <div className="absolute -bottom-6 -right-6 bg-[#0088CC] p-8 rounded-[2rem] text-white hidden md:block shadow-xl z-10">
+                  <p className="text-3xl font-bold mb-1">10+</p>
+                  <p className="text-xs opacity-80">Años de trayectoria</p>
+                </div>
+              </div>
+
+              <div className="rounded-[3rem] overflow-hidden shadow-2xl aspect-square lg:aspect-auto lg:h-[500px]">
                 <img 
-                  src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&q=80&w=1000" 
-                  alt="Nuestras instalaciones" 
+                  src="https://eaeapp.com/images-ia/benedetti/esteban_imagen%203.jpg" 
+                  alt="Esteban Benedetti - Quiropraxia" 
                   className="w-full h-full object-cover"
                   referrerPolicy="no-referrer"
                 />
               </div>
-              <div className="absolute -bottom-10 -right-10 bg-[#0088CC] p-10 rounded-[2.5rem] text-white hidden md:block shadow-xl">
-                <p className="text-4xl font-bold mb-1">10+</p>
-                <p className="text-sm opacity-80">Años de trayectoria</p>
+
+              <div className="rounded-[3rem] overflow-hidden shadow-2xl aspect-square lg:aspect-auto lg:h-[500px]">
+                <img 
+                  src="https://eaeapp.com/images-ia/benedetti/mariano-y-esteban-juntos.jpeg" 
+                  alt="Esteban y Mariano Benedetti juntos" 
+                  className="w-full h-full object-cover"
+                  referrerPolicy="no-referrer"
+                />
               </div>
             </motion.div>
 
@@ -84,13 +108,22 @@ export default function About() {
               </h2>
               <div className="space-y-6 text-gray-600 leading-relaxed text-lg">
                 <p>
-                  Consultorios Benedetti nació como un proyecto familiar con una visión clara: transformar la rehabilitación física en una experiencia cálida, humana y altamente efectiva.
+                  Consultorios Benedetti es un centro de salud dedicado al cuidado del movimiento, la función y la calidad de vida de las personas. Nació hace más de diez años como un proyecto profesional centrado en la kinesiología, con el objetivo de acompañar procesos de rehabilitación y recuperación desde una mirada clínica, humana y personalizada.
                 </p>
                 <p>
-                  Fundado por los licenciados Mariano y Esteban Benedetti, nuestro centro ha crecido de la mano de la confianza de nuestros pacientes. Lo que comenzó como un pequeño consultorio de kinesiología se ha convertido en un centro de referencia regional en Quiropraxia, Ortopedia y Análisis Biomecánico.
+                  Desde sus inicios, el consultorio se orientó a la rehabilitación traumatológica, deportiva y postquirúrgica, acompañando a pacientes en procesos de recuperación funcional y en la mejora de su calidad de vida. Con el paso del tiempo, el proyecto fue creciendo, incorporando nuevas áreas de trabajo y profundizando en distintos enfoques terapéuticos, siempre con el mismo objetivo: ayudar a las personas a moverse mejor, sentirse mejor y recuperar su bienestar.
                 </p>
                 <p>
-                  Hoy, contamos con instalaciones preparadas con tecnología de última generación y un equipo de profesionales que comparten la misma pasión por la salud y el servicio de excelencia.
+                  A lo largo de estos años, el trabajo clínico se fue ampliando e integrando nuevas herramientas. El cuidado quiropráctico ocupa hoy un lugar central dentro del consultorio. Este enfoque busca mejorar la función de la columna vertebral y su relación con el sistema nervioso, entendiendo que una columna con mejor función puede impactar positivamente en la movilidad, el bienestar general y la calidad de vida. La quiropráctica no se plantea como un tratamiento aislado, sino como un proceso de cuidado progresivo que acompaña al paciente en la recuperación y el mantenimiento de su salud.
+                </p>
+                <p>
+                  En paralelo, el análisis de la pisada y la evaluación biomecánica se incorporaron como una herramienta fundamental para abordar alteraciones del apoyo plantar que pueden repercutir en pies, rodillas, cadera o columna. A partir de evaluaciones precisas, se diseñan y confeccionan soportes plantares personalizados, orientados a mejorar la función, corregir desequilibrios y favorecer tanto el rendimiento como el confort en la vida cotidiana.
+                </p>
+                <p>
+                  Más recientemente, el consultorio ha sumado un área vinculada a productos ortopédicos, orientada a brindar soluciones prácticas en procesos de rehabilitación, movilidad y cuidado postural. Esta incorporación forma parte de una visión integral que busca acompañar a cada persona no solo en el tratamiento clínico, sino también en las herramientas que facilitan su recuperación y autonomía.
+                </p>
+                <p>
+                  Con más de una década de trabajo sostenido, Consultorios Benedetti se ha consolidado como un espacio de referencia en la zona, combinando experiencia clínica, compromiso humano y una visión integral del cuidado de la salud. Nuestro propósito es claro: ayudar a cada persona a recuperar su función, mejorar su calidad de vida y sostener su bienestar a largo plazo.
                 </p>
               </div>
             </motion.div>

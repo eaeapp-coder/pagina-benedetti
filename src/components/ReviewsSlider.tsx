@@ -123,6 +123,7 @@ export default function ReviewsSlider() {
                     <div 
                       key={review.id}
                       className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 flex flex-col h-full"
+                      aria-label={`Reseña de ${review.author}`}
                     >
                       <div className="flex items-center space-x-1 mb-4">
                         {[...Array(review.rating)].map((_, i) => (

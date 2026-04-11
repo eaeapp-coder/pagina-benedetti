@@ -188,7 +188,7 @@ export const DOCTORS: Doctor[] = [
     bio: 'Director de Consultorios Benedetti. Especialista en Quiropraxia y Kinesiología con amplia trayectoria en el tratamiento de la columna vertebral.',
     education: ['Lic. en Kinesiología y Fisiatría - UBA', 'Especialista en Quiropraxia'],
     languages: ['Español', 'Inglés'],
-    availability: 'Lunes a Viernes de 08:00 a 12:00'
+    availability: 'Mar. a Jue. 11:00 a 20:00 | Lun. Mie. y Vie. 08:00 a 18:00'
   },
   {
     id: '2',
@@ -198,7 +198,7 @@ export const DOCTORS: Doctor[] = [
     bio: 'Co-director. Especialista en rehabilitación funcional y kinesiología deportiva.',
     education: ['Lic. en Kinesiología y Fisiatría - UBA'],
     languages: ['Español'],
-    availability: 'Lunes a Viernes de 14:00 a 20:00'
+    availability: 'Mar. a Jue. 11:00 a 20:00 | Lun. Mie. y Vie. 08:00 a 18:00'
   },
   { 
     id: '9', 

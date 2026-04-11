@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { SPECIALTIES, DOCTORS } from '../constants';
 import { motion, AnimatePresence } from 'motion/react';
 import { CheckCircle2, ChevronRight, Phone, MessageSquare } from 'lucide-react';
+import SEO from '../components/SEO';
 
 import PageTransition from '../components/PageTransition';
 
@@ -26,6 +27,10 @@ export default function Booking() {
 
   return (
     <PageTransition>
+      <SEO 
+        title="Reservar Turno"
+        description="Reserva tu turno online en Consultorios Benedetti. Elige tu especialidad, profesional y horario de atención de manera rápida y sencilla."
+      />
       <div className="min-h-screen bg-[#F8FAFC] py-12">
       <div className="max-w-4xl mx-auto px-4">
         

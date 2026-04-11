@@ -42,17 +42,17 @@ export default function NewServiceHighlight() {
                 tratamiento y rehabilitación de lesiones del sistema musculoesquelético.
               </p>
 
-              <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-6">
+              <div className="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4">
                 <Link 
                   to="/especialidades" 
-                  className="bg-[#0088CC] text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-[#0077B3] transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1 flex items-center justify-center"
+                  className="bg-[#0088CC] text-white px-6 py-3 rounded-full font-bold text-base hover:bg-[#0077B3] transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5 flex items-center justify-center whitespace-nowrap"
                 >
                   Ver Especialidad
-                  <ArrowRight className="w-5 h-5 ml-2" />
+                  <ArrowRight className="w-4 h-4 ml-2" />
                 </Link>
                 <Link 
                   to="/profesionales" 
-                  className="bg-white text-[#1A3A5A] border-2 border-[#1A3A5A]/10 px-8 py-4 rounded-full font-bold text-lg hover:bg-gray-50 transition-all flex items-center justify-center"
+                  className="bg-white text-[#1A3A5A] border-2 border-[#1A3A5A]/10 px-6 py-3 rounded-full font-bold text-base hover:bg-gray-50 transition-all flex items-center justify-center whitespace-nowrap"
                 >
                   Ver Profesionales
                 </Link>
@@ -69,11 +69,11 @@ export default function NewServiceHighlight() {
                   transition={{ delay: 0.5, type: "spring", stiffness: 100 }}
                   className="relative"
                 >
-                  <div className="w-48 h-48 md:w-64 md:h-64 bg-white rounded-[2rem] shadow-xl overflow-hidden transform -rotate-6">
+                  <div className="w-80 h-80 md:w-[420px] md:h-[420px] bg-white rounded-[2rem] shadow-xl overflow-hidden transform -rotate-6">
                     <img 
                       src="https://eaeapp.com/images-ia/benedetti/ortopedia.jpg" 
                       alt="Ortopedia" 
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-cover -scale-x-100"
                       referrerPolicy="no-referrer"
                     />
                   </div>

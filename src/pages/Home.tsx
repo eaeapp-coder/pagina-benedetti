@@ -6,12 +6,57 @@ import ReviewsSlider from '../components/ReviewsSlider';
 import { motion } from 'motion/react';
 import { CheckCircle2, Clock, User, Calendar } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import SEO from '../components/SEO';
+import StructuredData from '../components/StructuredData';
 
 import PageTransition from '../components/PageTransition';
 
 export default function Home() {
+  const clinicSchema = {
+    "@context": "https://schema.org",
+    "@type": "MedicalClinic",
+    "name": "Consultorios Benedetti",
+    "image": "https://eaeapp.com/images-ia/benedetti/favico.png",
+    "@id": "https://consultoriosbenedetti.com.ar",
+    "url": "https://consultoriosbenedetti.com.ar",
+    "telephone": "+541120717674",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "29 de Setiembre 2168",
+      "addressLocality": "Lanús Este",
+      "addressRegion": "Buenos Aires",
+      "postalCode": "1824",
+      "addressCountry": "AR"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": -34.706,
+      "longitude": -58.388
+    },
+    "openingHoursSpecification": {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday"
+      ],
+      "opens": "08:00",
+      "closes": "20:00"
+    },
+    "sameAs": [
+      "https://www.instagram.com/consultoriosbenedetti"
+    ]
+  };
+
   return (
     <PageTransition>
+      <SEO 
+        title="Inicio"
+        description="Consultorios Benedetti en Lanús Este. Especialistas en Kinesiología, Quiropraxia y Ortopedia. Atención con obras sociales y tecnología avanzada."
+      />
+      <StructuredData data={clinicSchema} />
       <main className="bg-white">
         <Hero />
         <SpecialtyCards />

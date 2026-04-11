@@ -3,7 +3,8 @@ import { useParams, Link, Navigate } from 'react-router-dom';
 import { SPECIALTIES, DOCTORS } from '../constants';
 import { motion } from 'motion/react';
 import PageTransition from '../components/PageTransition';
-import { ChevronRight, CheckCircle2, User, ArrowLeft } from 'lucide-react';
+import { ChevronRight, CheckCircle2, User, ArrowLeft, MessageSquare } from 'lucide-react';
+import SEO from '../components/SEO';
 
 export default function SpecialtyDetail() {
   const { id } = useParams<{ id: string }>();
@@ -16,6 +17,11 @@ export default function SpecialtyDetail() {
 
   return (
     <PageTransition>
+      <SEO 
+        title={specialty.name}
+        description={specialty.description}
+        canonical={`https://consultoriosbenedetti.com.ar/especialidades/${specialty.id}`}
+      />
       <main className="min-h-screen bg-[#F8FAFC] pt-32 pb-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Breadcrumbs / Back Link */}
@@ -66,7 +72,7 @@ export default function SpecialtyDetail() {
               </motion.div>
 
               {/* Associated Professional */}
-              {doctors.length > 0 && (specialty.id === 'kinesiology' || specialty.id === 'chiropractic') && (
+              {doctors.length > 0 && (specialty.id === 'kinesiology' || specialty.id === 'chiropractic') ? (
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -97,6 +103,26 @@ export default function SpecialtyDetail() {
                       </Link>
                     ))}
                   </div>
+                </motion.div>
+              ) : (
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  className="bg-gray-50 p-8 rounded-[2.5rem] border border-dashed border-gray-200 text-center"
+                >
+                  <p className="text-gray-500 italic mb-6">
+                    Consulta por profesionales disponibles para esta especialidad.
+                  </p>
+                  <a 
+                    href={`https://wa.me/5491122883581?text=${encodeURIComponent(`Hola, ¿qué profesional está asociado al área de ${specialty.name}?`)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center bg-[#0088CC] text-white px-8 py-4 rounded-full font-bold hover:bg-[#0077B3] transition-all shadow-lg transform hover:-translate-y-1"
+                  >
+                    <MessageSquare className="w-5 h-5 mr-2" />
+                    Consultar por WhatsApp
+                  </a>
                 </motion.div>
               )}
             </div>

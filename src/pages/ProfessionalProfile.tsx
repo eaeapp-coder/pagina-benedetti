@@ -13,6 +13,8 @@ import {
   Mail
 } from 'lucide-react';
 import PageTransition from '../components/PageTransition';
+import SEO from '../components/SEO';
+import StructuredData from '../components/StructuredData';
 
 export default function ProfessionalProfile() {
   const { id } = useParams<{ id: string }>();
@@ -22,8 +24,28 @@ export default function ProfessionalProfile() {
     return <Navigate to="/profesionales" replace />;
   }
 
+  const personSchema = {
+    "@context": "https://schema.org",
+    "@type": "Physician",
+    "name": doctor.name,
+    "image": doctor.image,
+    "medicalSpecialty": doctor.specialties,
+    "description": doctor.bio,
+    "affiliation": {
+      "@type": "MedicalClinic",
+      "name": "Consultorios Benedetti"
+    }
+  };
+
   return (
     <PageTransition>
+      <SEO 
+        title={doctor.name}
+        description={`${doctor.name} - Especialista en ${doctor.specialties.join(', ')} en Consultorios Benedetti. ${doctor.bio?.substring(0, 150)}...`}
+        canonical={`https://consultoriosbenedetti.com.ar/profesionales/${doctor.id}`}
+        ogImage={doctor.image}
+      />
+      <StructuredData data={personSchema} />
       <main className="bg-[#F8FAFC] min-h-screen pt-24 pb-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Back Button */}
@@ -67,15 +89,6 @@ export default function ProfessionalProfile() {
                       <div>
                         <p className="text-xs text-gray-400 uppercase font-bold tracking-wider">Disponibilidad</p>
                         <p className="text-sm text-gray-600">{doctor.availability}</p>
-                      </div>
-                    </div>
-                  )}
-                  {doctor.languages && (
-                    <div className="flex items-start space-x-3">
-                      <Languages className="w-5 h-5 text-gray-400 shrink-0" />
-                      <div>
-                        <p className="text-xs text-gray-400 uppercase font-bold tracking-wider">Idiomas</p>
-                        <p className="text-sm text-gray-600">{doctor.languages.join(', ')}</p>
                       </div>
                     </div>
                   )}

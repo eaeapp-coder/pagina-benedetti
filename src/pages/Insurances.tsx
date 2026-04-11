@@ -3,6 +3,7 @@ import { INSURANCE_PROVIDERS, SPECIALTIES } from '../constants';
 import { motion, AnimatePresence } from 'motion/react';
 import PageTransition from '../components/PageTransition';
 import { ShieldCheck, Filter, ChevronRight } from 'lucide-react';
+import SEO from '../components/SEO';
 
 export default function Insurances() {
   const [selectedSpecialty, setSelectedSpecialty] = useState<string | null>(null);
@@ -22,6 +23,10 @@ export default function Insurances() {
 
   return (
     <PageTransition>
+      <SEO 
+        title="Obras Sociales"
+        description="Consulta las obras sociales y prepagas con las que trabajamos en Consultorios Benedetti. Cobertura médica integral para tu tratamiento de Kinesiología."
+      />
       <div className="min-h-screen bg-[#F8FAFC] py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">

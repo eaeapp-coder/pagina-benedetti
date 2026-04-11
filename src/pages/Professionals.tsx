@@ -3,6 +3,7 @@ import { DOCTORS, SPECIALTIES } from '../constants';
 import { motion } from 'motion/react';
 import { Check, Search } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import SEO from '../components/SEO';
 
 import PageTransition from '../components/PageTransition';
 
@@ -17,6 +18,10 @@ export default function Professionals() {
 
   return (
     <PageTransition>
+      <SEO 
+        title="Profesionales"
+        description="Conoce a nuestro equipo de profesionales en Consultorios Benedetti. Especialistas en Kinesiología, Quiropraxia y Ortopedia dedicados a tu salud."
+      />
       <div className="min-h-screen bg-[#F8FAFC] py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col lg:flex-row gap-12">

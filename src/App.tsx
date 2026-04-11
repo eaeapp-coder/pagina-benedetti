@@ -4,6 +4,7 @@
  */
 
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { HelmetProvider } from 'react-helmet-async';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import WhatsAppButton from './components/WhatsAppButton';
@@ -47,16 +48,18 @@ function AppRoutes() {
 
 export default function App() {
   return (
-    <Router>
-      <div className="min-h-screen flex flex-col font-sans selection:bg-blue-100 selection:text-[#0088CC]">
-        <Header />
-        <div className="flex-1">
-          <AppRoutes />
+    <HelmetProvider>
+      <Router>
+        <div className="min-h-screen flex flex-col font-sans selection:bg-blue-100 selection:text-[#0088CC]">
+          <Header />
+          <div className="flex-1">
+            <AppRoutes />
+          </div>
+          <WhatsAppButton />
+          <Footer />
         </div>
-        <WhatsAppButton />
-        <Footer />
-      </div>
-    </Router>
+      </Router>
+    </HelmetProvider>
   );
 }
 
