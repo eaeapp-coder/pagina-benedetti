@@ -42,11 +42,11 @@ export default function Footer() {
             <ul className="space-y-4">
               <li className="flex items-start space-x-3 text-sm text-gray-600">
                 <MapPin className="w-5 h-5 text-[#0088CC] shrink-0" />
-                <span>Dirección: Buspadalara - Centana 33</span>
+                <span>Dirección: 29 de Setiembre 2168, Lanús Este</span>
               </li>
               <li className="flex items-center space-x-3 text-sm text-gray-600">
                 <Phone className="w-5 h-5 text-[#0088CC] shrink-0" />
-                <span>0800-123-4567</span>
+                <span>011 2288 3581</span>
               </li>
               <li className="flex items-center space-x-3 text-sm text-gray-600">
                 <Mail className="w-5 h-5 text-[#0088CC] shrink-0" />
