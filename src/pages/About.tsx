@@ -68,7 +68,7 @@ export default function About() {
                 />
               </div>
               <div className="absolute -bottom-10 -right-10 bg-[#0088CC] p-10 rounded-[2.5rem] text-white hidden md:block shadow-xl">
-                <p className="text-4xl font-bold mb-1">15+</p>
+                <p className="text-4xl font-bold mb-1">10+</p>
                 <p className="text-sm opacity-80">Años de trayectoria</p>
               </div>
             </motion.div>

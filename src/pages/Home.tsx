@@ -63,7 +63,7 @@ export default function Home() {
                   />
                 </div>
                 <div className="absolute -bottom-6 -left-6 bg-[#0088CC] text-white p-8 rounded-2xl shadow-xl hidden md:block">
-                  <p className="text-4xl font-bold mb-1">15+</p>
+                  <p className="text-4xl font-bold mb-1">10+</p>
                   <p className="text-sm opacity-80">Años de experiencia</p>
                 </div>
               </div>
