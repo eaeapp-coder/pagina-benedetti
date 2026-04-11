@@ -10,7 +10,6 @@ export default function Header() {
   const navLinks = [
     { name: 'Inicio', path: '/' },
     { name: 'Especialidades', path: '/especialidades' },
-    { name: 'Profesionales', path: '/profesionales' },
     { name: 'Obras Sociales', path: '/obras-sociales' },
     { name: 'Blog', path: '/blog' },
     { name: 'Nosotros', path: '/nosotros' },
@@ -23,27 +22,13 @@ export default function Header() {
     <header className="bg-white border-b border-gray-100 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
-          <Link to="/" className="flex items-center space-x-2">
-            <div className="relative">
-              <img 
-                src="https://photos.app.goo.gl/FwTdmu6AzJcQK5mKA" 
-                alt="Logo" 
-                className="h-12 w-auto object-contain"
-                referrerPolicy="no-referrer"
-                onError={(e) => {
-                  e.currentTarget.style.display = 'none';
-                  const fallback = e.currentTarget.parentElement?.querySelector('.logo-fallback');
-                  if (fallback) (fallback as HTMLElement).style.display = 'flex';
-                }}
-              />
-              <div className="logo-fallback hidden bg-gradient-to-br from-[#0088CC] to-[#005580] p-2 rounded-xl shadow-md">
-                <Plus className="text-white w-6 h-6" />
-              </div>
-            </div>
-            <div className="flex flex-col">
-              <span className="text-xl font-bold text-[#1A3A5A] tracking-tight leading-none">Consultorios</span>
-              <span className="text-xl font-bold text-[#0088CC] tracking-tight">Benedetti</span>
-            </div>
+          <Link to="/" className="flex items-center">
+            <img 
+              src="https://white-albatross-289547.hostingersite.com/imagenes/logo-Benedetti-300.webp" 
+              alt="Consultorios Benedetti" 
+              className="h-14 w-auto object-contain"
+              referrerPolicy="no-referrer"
+            />
           </Link>
 
           {/* Desktop Nav */}

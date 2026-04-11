@@ -5,10 +5,10 @@ import { Star, ChevronLeft, ChevronRight, Quote } from 'lucide-react';
 const REVIEWS = [
   {
     id: 1,
-    author: "Juan Pérez",
+    author: "Jonathan Delacour",
     rating: 5,
-    text: "Excelente atención. Los profesionales son muy dedicados y las instalaciones están impecables. Muy recomendable.",
-    date: "Hace 2 semanas"
+    text: "Súper recomendables. Quiero hacer una mención especial para el Quiropráctico. Agradezco a su técnica en la especialidad. Gracias a cada sesión que realizó con Esteban, puedo descansar mejor, no despierto con dolores. Y puedo realizar mis actividades con normalidad.",
+    date: ""
   },
   {
     id: 2,
@@ -137,12 +137,12 @@ export default function ReviewsSlider() {
                       <div className="mt-auto pt-6 border-t border-gray-50 flex items-center justify-between">
                         <div>
                           <p className="font-bold text-[#1A3A5A]">{review.author}</p>
-                          <p className="text-xs text-gray-400">{review.date}</p>
                         </div>
                         <img 
                           src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_Logo.svg" 
                           alt="Google" 
                           className="h-4 opacity-50"
+                          referrerPolicy="no-referrer"
                         />
                       </div>
                     </div>

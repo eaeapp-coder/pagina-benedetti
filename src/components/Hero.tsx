@@ -1,5 +1,4 @@
 import React from 'react';
-import { Search } from 'lucide-react';
 import { motion } from 'motion/react';
 
 export default function Hero() {
@@ -8,9 +7,9 @@ export default function Hero() {
       {/* Background Image with Overlay */}
       <div className="absolute inset-0 z-0">
         <img 
-          src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&q=80&w=2000" 
+          src="https://white-albatross-289547.hostingersite.com/imagenes/portada-web.jpg" 
           alt="Medical Center"
-          className="w-full h-full object-cover"
+          className="w-full h-full object-cover object-left"
           referrerPolicy="no-referrer"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-white/90 via-white/70 to-transparent"></div>
@@ -36,25 +35,6 @@ export default function Hero() {
           >
             Contamos con un equipo de Profesionales dedicados y amplias instalaciones preparadas para brindarle un servicio cálido, eficiente y de calidad.
           </motion.p>
-
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            className="flex items-center bg-white p-2 rounded-full shadow-xl max-w-md border border-gray-100"
-          >
-            <div className="flex-1 flex items-center px-4">
-              <Search className="text-gray-400 w-5 h-5 mr-2" />
-              <input 
-                type="text" 
-                placeholder="Buscar especialista o servicio..."
-                className="w-full text-sm focus:outline-none text-gray-700"
-              />
-            </div>
-            <button className="bg-[#0088CC] text-white px-8 py-3 rounded-full text-sm font-bold hover:bg-[#0077B3] transition-colors">
-              Buscar
-            </button>
-          </motion.div>
         </div>
       </div>
 

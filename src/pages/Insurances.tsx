@@ -7,6 +7,12 @@ import { ShieldCheck, Filter, ChevronRight } from 'lucide-react';
 export default function Insurances() {
   const [selectedSpecialty, setSelectedSpecialty] = useState<string | null>(null);
 
+  const availableSpecialties = useMemo(() => {
+    const names = new Set<string>();
+    INSURANCE_PROVIDERS.forEach(p => p.specialties.forEach(s => names.add(s)));
+    return SPECIALTIES.filter(s => names.has(s.name));
+  }, []);
+
   const filteredProviders = useMemo(() => {
     if (!selectedSpecialty) return INSURANCE_PROVIDERS;
     return INSURANCE_PROVIDERS.filter(provider => 
@@ -28,7 +34,7 @@ export default function Insurances() {
             </motion.div>
             <h1 className="text-4xl md:text-5xl font-bold text-[#1A3A5A] mb-4">Obras Sociales y Prepagas</h1>
             <p className="text-gray-500 text-lg max-w-2xl mx-auto">
-              Trabajamos con una amplia red de coberturas médicas para facilitar tu acceso a la salud.
+              Trabajamos con una amplia red de coberturas médicas exclusivamente para la especialidad de <span className="text-[#0088CC] font-semibold">Kinesiología</span>.
             </p>
           </div>
 
@@ -54,7 +60,7 @@ export default function Insurances() {
                     {selectedSpecialty === null && <ChevronRight className="w-4 h-4" />}
                   </button>
                   
-                  {SPECIALTIES.map((spec) => (
+                  {availableSpecialties.map((spec) => (
                     <button
                       key={spec.id}
                       onClick={() => setSelectedSpecialty(spec.name)}
@@ -69,6 +75,12 @@ export default function Insurances() {
                     </button>
                   ))}
                 </nav>
+
+                <div className="mt-8 pt-6 border-t border-gray-100">
+                  <p className="text-xs text-gray-400 leading-relaxed">
+                    * Las especialidades de Quiropraxia, Ortopedia y Análisis de la pisada se atienden de forma <span className="font-semibold">particular</span>.
+                  </p>
+                </div>
               </div>
             </aside>
 
