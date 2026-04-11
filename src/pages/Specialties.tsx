@@ -106,21 +106,16 @@ export default function Specialties() {
                             </p>
                             <div className="flex flex-col items-center">
                               <a 
-                                href={isOpen ? `https://wa.me/5491122883581?text=${encodeURIComponent(`Hola, ¿qué profesional está asociado al área de ${spec.name}?`)}` : "#"}
-                                target={isOpen ? "_blank" : undefined}
-                                rel={isOpen ? "noopener noreferrer" : undefined}
-                                className={`inline-flex items-center px-6 py-3 rounded-full font-bold transition-all shadow-md ${
-                                  isOpen 
-                                    ? "bg-[#0088CC] text-white hover:bg-[#0077B3] hover:shadow-lg transform hover:-translate-y-0.5" 
-                                    : "bg-[#0088CC]/40 text-white/70 cursor-not-allowed pointer-events-none"
-                                }`}
-                                onClick={(e) => !isOpen && e.preventDefault()}
+                                href={`https://wa.me/5491122883581?text=${encodeURIComponent(`Hola, ¿qué profesional está asociado al área de ${spec.name}?`)}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="inline-flex items-center px-6 py-3 rounded-full font-bold transition-all shadow-md bg-[#0088CC] text-white hover:bg-[#0077B3] hover:shadow-lg transform hover:-translate-y-0.5"
                               >
                                 <MessageSquare className="w-5 h-5 mr-2" />
                                 Consultar por WhatsApp
                               </a>
                               {!isOpen && (
-                                <p className="text-[10px] text-gray-400 mt-2 font-medium">
+                                <p className="text-[10px] text-gray-400 mt-2 font-medium text-center">
                                   {statusMessage}
                                 </p>
                               )}

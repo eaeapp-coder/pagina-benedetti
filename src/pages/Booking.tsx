@@ -185,21 +185,16 @@ export default function Booking() {
             </a>
             <div className="flex flex-col items-center">
               <a 
-                href={isOpen ? "https://wa.me/5491122883581" : "#"} 
-                target={isOpen ? "_blank" : undefined}
-                rel={isOpen ? "noopener noreferrer" : undefined}
-                className={`flex items-center font-bold transition-all ${
-                  isOpen 
-                    ? "text-[#1A3A5A] hover:text-[#0088CC]" 
-                    : "text-gray-300 cursor-not-allowed pointer-events-none"
-                }`}
-                onClick={(e) => !isOpen && e.preventDefault()}
+                href="https://wa.me/5491122883581" 
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center font-bold transition-all text-[#1A3A5A] hover:text-[#0088CC]"
               >
-                <MessageSquare className={`w-5 h-5 mr-2 ${isOpen ? 'text-[#0088CC]' : 'text-gray-300'}`} />
+                <MessageSquare className="w-5 h-5 mr-2 text-[#0088CC]" />
                 Escríbenos por <span className="underline ml-1">WhatsApp</span>
               </a>
               {!isOpen && (
-                <p className="text-[10px] text-gray-400 mt-1 font-medium">
+                <p className="text-[10px] text-gray-400 mt-1 font-medium text-center">
                   {statusMessage}
                 </p>
               )}

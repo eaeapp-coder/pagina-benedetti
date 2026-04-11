@@ -25,14 +25,14 @@ export function useBusinessHours() {
       if (day === 0 || day === 6) {
         // Saturday or Sunday
         open = false;
-        message = 'Disponible el Lunes';
+        message = 'Te responderemos el lunes a primera hora';
       } else if (day === 2 || day === 4) {
         // Tuesday or Thursday (11:00 to 20:00)
         if (currentTime >= 11 && currentTime < 20) {
           open = true;
         } else {
           open = false;
-          message = 'Disponible en el horario de atención del consultorio';
+          message = 'Te responderemos apenas reanudemos la atención';
         }
       } else {
         // Monday, Wednesday, Friday (08:00 to 18:00)
@@ -40,7 +40,7 @@ export function useBusinessHours() {
           open = true;
         } else {
           open = false;
-          message = 'Disponible en el horario de atención del consultorio';
+          message = 'Te responderemos apenas reanudemos la atención';
         }
       }
 

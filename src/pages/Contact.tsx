@@ -108,20 +108,15 @@ export default function Contact() {
                     </div>
                     <div className="flex flex-col items-center">
                       <a 
-                        href={isOpen ? "https://wa.me/5491122883581" : "#"} 
-                        target={isOpen ? "_blank" : undefined} 
-                        rel={isOpen ? "noopener noreferrer" : undefined}
-                        className={`w-full py-3 rounded-xl font-bold text-center transition-all shadow-md flex items-center justify-center space-x-2 ${
-                          isOpen 
-                            ? "bg-green-500 text-white hover:bg-green-600 hover:shadow-lg" 
-                            : "bg-green-500/40 text-white/70 cursor-not-allowed pointer-events-none"
-                        }`}
-                        onClick={(e) => !isOpen && e.preventDefault()}
+                        href="https://wa.me/5491122883581" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="w-full py-3 rounded-xl font-bold text-center transition-all shadow-md flex items-center justify-center space-x-2 bg-green-500 text-white hover:bg-green-600 hover:shadow-lg"
                       >
                         <span>Escribir por WhatsApp</span>
                       </a>
                       {!isOpen && (
-                        <p className="text-[10px] text-gray-400 mt-2 font-medium">
+                        <p className="text-[10px] text-gray-400 mt-2 font-medium text-center">
                           {statusMessage}
                         </p>
                       )}

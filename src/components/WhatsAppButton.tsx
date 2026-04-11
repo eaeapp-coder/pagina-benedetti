@@ -14,21 +14,18 @@ export default function WhatsAppButton() {
         </span>
       )}
       <motion.a
-        href={isOpen ? `https://wa.me/5491122883581?text=${message}` : "#"}
-        target={isOpen ? "_blank" : undefined}
-        rel={isOpen ? "noopener noreferrer" : undefined}
+        href={`https://wa.me/5491122883581?text=${message}`}
+        target="_blank"
+        rel="noopener noreferrer"
         initial={{ scale: 0, opacity: 0 }}
         animate={{ 
           scale: 1, 
-          opacity: isOpen ? 1 : 0.4 
+          opacity: 1 
         }}
-        whileHover={isOpen ? { scale: 1.1 } : {}}
-        whileTap={isOpen ? { scale: 0.9 } : {}}
-        className={`bg-[#25D366] text-white p-3.5 rounded-full shadow-lg transition-all flex items-center justify-center group ${
-          !isOpen ? 'cursor-not-allowed pointer-events-none' : 'hover:shadow-xl'
-        }`}
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.9 }}
+        className={`bg-[#25D366] text-white p-3.5 rounded-full shadow-lg transition-all flex items-center justify-center group hover:shadow-xl`}
         aria-label="Contactar por WhatsApp"
-        onClick={(e) => !isOpen && e.preventDefault()}
       >
         <svg 
           viewBox="0 0 24 24" 

@@ -118,21 +118,16 @@ export default function SpecialtyDetail() {
                   </p>
                   <div className="flex flex-col items-center">
                     <a 
-                      href={isOpen ? `https://wa.me/5491122883581?text=${encodeURIComponent(`Hola, ¿qué profesional está asociado al área de ${specialty.name}?`)}` : "#"}
-                      target={isOpen ? "_blank" : undefined}
-                      rel={isOpen ? "noopener noreferrer" : undefined}
-                      className={`inline-flex items-center px-8 py-4 rounded-full font-bold transition-all shadow-lg ${
-                        isOpen 
-                          ? "bg-[#0088CC] text-white hover:bg-[#0077B3] transform hover:-translate-y-1" 
-                          : "bg-[#0088CC]/40 text-white/70 cursor-not-allowed pointer-events-none"
-                      }`}
-                      onClick={(e) => !isOpen && e.preventDefault()}
+                      href={`https://wa.me/5491122883581?text=${encodeURIComponent(`Hola, ¿qué profesional está asociado al área de ${specialty.name}?`)}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center px-8 py-4 rounded-full font-bold transition-all shadow-lg bg-[#0088CC] text-white hover:bg-[#0077B3] transform hover:-translate-y-1"
                     >
                       <MessageSquare className="w-5 h-5 mr-2" />
                       Consultar por WhatsApp
                     </a>
                     {!isOpen && (
-                      <p className="text-[10px] text-gray-400 mt-2 font-medium">
+                      <p className="text-[10px] text-gray-400 mt-2 font-medium text-center">
                         {statusMessage}
                       </p>
                     )}
