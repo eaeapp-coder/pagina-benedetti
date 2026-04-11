@@ -25,7 +25,7 @@ import {
 export interface Doctor {
   id: string;
   name: string;
-  specialty: string;
+  specialties: string[];
   image: string;
   bio?: string;
   education?: string[];
@@ -59,7 +59,7 @@ export const SPECIALTIES: Specialty[] = [
       'Corrección postural y ergonomía'
     ],
     images: [
-      'https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&q=80&w=800',
+      'https://eaeapp.com/images-ia/benedetti/fisio.webp',
       'https://images.unsplash.com/photo-1597452485669-2c7bb5fef90d?auto=format&fit=crop&q=80&w=800'
     ]
   },
@@ -183,8 +183,8 @@ export const DOCTORS: Doctor[] = [
   {
     id: '1',
     name: 'Lic. Mariano Benedetti',
-    specialty: 'Quiropraxia',
-    image: 'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&q=80&w=400&h=400',
+    specialties: ['Kinesiología'],
+    image: 'https://eaeapp.com/images-ia/benedetti/avatar_mariano.jpg',
     bio: 'Director de Consultorios Benedetti. Especialista en Quiropraxia y Kinesiología con amplia trayectoria en el tratamiento de la columna vertebral.',
     education: ['Lic. en Kinesiología y Fisiatría - UBA', 'Especialista en Quiropraxia'],
     languages: ['Español', 'Inglés'],
@@ -193,37 +193,17 @@ export const DOCTORS: Doctor[] = [
   {
     id: '2',
     name: 'Lic. Esteban Benedetti',
-    specialty: 'Kinesiología',
-    image: 'https://images.unsplash.com/photo-1559839734-2b71f153678f?auto=format&fit=crop&q=80&w=400&h=400',
+    specialties: ['Quiropraxia'],
+    image: 'https://eaeapp.com/images-ia/benedetti/avatar_esteban.jpg',
     bio: 'Co-director. Especialista en rehabilitación funcional y kinesiología deportiva.',
     education: ['Lic. en Kinesiología y Fisiatría - UBA'],
     languages: ['Español'],
     availability: 'Lunes a Viernes de 14:00 a 20:00'
   },
   { 
-    id: '7', 
-    name: 'Dr. Roberto Gomez', 
-    specialty: 'Kinesiología', 
-    image: 'https://images.unsplash.com/photo-1559839734-2b71f153678f?auto=format&fit=crop&q=80&w=400&h=400',
-    bio: 'Especialista en rehabilitación deportiva y recuperación funcional post-quirúrgica.',
-    education: ['Lic. en Kinesiología y Fisiatría - UBA'],
-    languages: ['Español'],
-    availability: 'Lunes a Viernes de 08:00 a 16:00'
-  },
-  { 
-    id: '8', 
-    name: 'Dra. Lucía Fernández', 
-    specialty: 'Quiropraxia', 
-    image: 'https://images.unsplash.com/photo-1594824476967-48c8b964273f?auto=format&fit=crop&q=80&w=400&h=400',
-    bio: 'Dedicada al ajuste de la columna vertebral para mejorar la salud del sistema nervioso.',
-    education: ['Doctora en Quiropraxia - Life University'],
-    languages: ['Español', 'Inglés'],
-    availability: 'Martes y Jueves de 09:00 a 17:00'
-  },
-  { 
     id: '9', 
     name: 'Dr. Marcos Paz', 
-    specialty: 'Ortopedia', 
+    specialties: ['Ortopedia'], 
     image: 'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&q=80&w=400&h=400',
     bio: 'Cirujano ortopédico especializado en articulaciones y medicina deportiva.',
     education: ['Médico - UBA', 'Especialista en Ortopedia y Traumatología'],
@@ -233,7 +213,7 @@ export const DOCTORS: Doctor[] = [
   { 
     id: '10', 
     name: 'Lic. Sergio Torres', 
-    specialty: 'Análisis de la pisada', 
+    specialties: ['Análisis de la pisada'], 
     image: 'https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&q=80&w=400&h=400',
     bio: 'Experto en biomecánica de la marcha y diseño de plantillas ortopédicas personalizadas.',
     education: ['Lic. en Kinesiología', 'Especialista en Biomecánica'],
@@ -300,6 +280,6 @@ export const BLOG_POSTS: BlogPost[] = [
     date: '2024-03-05',
     author: 'Dr. Roberto Gomez',
     category: 'Kinesiología',
-    image: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&q=80&w=800'
+    image: 'https://eaeapp.com/images-ia/benedetti/fisio.webp'
   }
 ];

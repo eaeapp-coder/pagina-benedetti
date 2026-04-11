@@ -104,7 +104,7 @@ export default function Booking() {
               >
                 <h3 className="text-lg font-bold text-[#1A3A5A] mb-6">Selecciona un profesional</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {DOCTORS.filter(d => !selectedSpecialty || d.specialty === SPECIALTIES.find(s => s.id === selectedSpecialty)?.name).map((doc) => (
+                  {DOCTORS.filter(d => !selectedSpecialty || d.specialties.includes(SPECIALTIES.find(s => s.id === selectedSpecialty)?.name || '')).map((doc) => (
                     <button
                       key={doc.id}
                       onClick={() => setSelectedDoctor(doc.id)}
@@ -115,7 +115,7 @@ export default function Booking() {
                       <img src={doc.image} alt={doc.name} className="w-16 h-16 rounded-xl object-cover mr-4" />
                       <div>
                         <p className="font-bold text-[#1A3A5A]">{doc.name}</p>
-                        <p className="text-sm text-[#0088CC]">{doc.specialty}</p>
+                        <p className="text-sm text-[#0088CC]">{doc.specialties.join(', ')}</p>
                       </div>
                     </button>
                   ))}

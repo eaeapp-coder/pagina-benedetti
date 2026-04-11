@@ -12,37 +12,36 @@ const REVIEWS = [
   },
   {
     id: 2,
-    author: "María García",
+    author: "Joaquin Miranda",
     rating: 5,
-    text: "Fui por una sesión de kinesiología y la verdad que el trato fue excelente. Me sentí muy cómoda y bien atendida.",
-    date: "Hace 1 mes"
+    text: "muy conforme con las plantilla, cómodas desde el primer dia . super recomendable y exelente atención!!!! gracias."
   },
   {
     id: 3,
-    author: "Carlos Rodríguez",
+    author: "Bruno Fontana",
     rating: 4,
-    text: "Muy buena experiencia con el análisis de la pisada. Me explicaron todo con detalle y me ayudaron mucho con mis dolores.",
+    text: "Muy recomendado. Excelente atención de todo el personal. Empece hace un año y medio por la escoliosis que tengo,note muchas las mejoras con el paso del tiempo,las mejoras no son de un dia para otro,todo lleva su tiempo. No sentis ningun dolor con los ajustes",
     date: "Hace 3 semanas"
   },
   {
     id: 4,
-    author: "Ana Martínez",
+    author: "Brisa Alaniz",
     rating: 5,
-    text: "La mejor atención en traumatología. El doctor fue muy claro en su diagnóstico y el tratamiento está funcionando de maravilla.",
+    text: "Recomiendo al 100%, venia con muchos dolores de espalda y con las sesiones se fue disminuyendo demasiado junto a ejercicios que me mandaron, la verdad que fue un antes y un despues. Ademas de la buena onda y la amabilidad❤️",
     date: "Hace 2 meses"
   },
   {
     id: 5,
-    author: "Roberto Gómez",
+    author: "Analia Grynka",
     rating: 5,
-    text: "Instalaciones modernas y un equipo humano excepcional. Siempre puntualidad en los turnos.",
+    text: "Mi experiencia es muy positiva. Inicié tratamiento quiropráctico por dolores de cervical y lumbar los cuales fueron mejorando con las sesiones. Hoy estoy en mantenimiento mensual y sigo muy bien.",
     date: "Hace 1 semana"
   },
   {
     id: 6,
-    author: "Lucía Fernández",
+    author: "Xoana Drezek",
     rating: 5,
-    text: "Excelente servicio de quiropraxia. He notado una mejora increíble en mi postura y dolores de espalda.",
+    text: "Excelente atención y cuidado, te explican todo con detalle, están atentos a los ejercicios y son personalizados según el problema que tengas, el personal de recepción súper amorosos yos profesionales son muy simpáticos y alegres, excelente lugar y clima.",
     date: "Hace 3 días"
   }
 ];
@@ -139,7 +138,7 @@ export default function ReviewsSlider() {
                           <p className="font-bold text-[#1A3A5A]">{review.author}</p>
                         </div>
                         <img 
-                          src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_Logo.svg" 
+                          src="https://eaeapp.com/images-ia/benedetti/logo_google.png" 
                           alt="Google" 
                           className="h-4 opacity-50"
                           referrerPolicy="no-referrer"

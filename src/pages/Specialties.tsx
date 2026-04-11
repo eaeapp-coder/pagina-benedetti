@@ -19,7 +19,10 @@ export default function Specialties() {
 
           <div className="space-y-24">
             {SPECIALTIES.map((spec, index) => {
-              const docsInSpec = DOCTORS.filter(d => d.specialty === spec.name);
+              const isMainSpecialty = spec.id === 'kinesiology' || spec.id === 'chiropractic';
+              const docsInSpec = isMainSpecialty 
+                ? DOCTORS.filter(d => d.specialties.includes(spec.name))
+                : [];
               
               return (
                 <motion.section 
@@ -45,10 +48,12 @@ export default function Specialties() {
                           {spec.description}
                         </p>
                         <div className="flex flex-col space-y-4">
-                          <div className="flex items-center text-sm font-bold text-[#0088CC]">
-                            <User className="w-4 h-4 mr-2" />
-                            {docsInSpec.length} {docsInSpec.length === 1 ? 'Profesional' : 'Profesionales'}
-                          </div>
+                          {isMainSpecialty && (
+                            <div className="flex items-center text-sm font-bold text-[#0088CC]">
+                              <User className="w-4 h-4 mr-2" />
+                              {docsInSpec.length} {docsInSpec.length === 1 ? 'Profesional' : 'Profesionales'}
+                            </div>
+                          )}
                           <Link 
                             to={`/especialidades/${spec.id}`}
                             className="inline-flex items-center text-[#0088CC] font-bold hover:underline group"
@@ -58,37 +63,41 @@ export default function Specialties() {
                           </Link>
                         </div>
                       </div>
-
+ 
                       {/* Doctors List */}
                       <div className="lg:col-span-2">
-                        <h3 className="text-sm font-bold text-gray-400 uppercase tracking-widest mb-6">Profesionales en el área</h3>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                          {docsInSpec.length > 0 ? (
-                            docsInSpec.map(doc => (
-                              <Link 
-                                key={doc.id}
-                                to={`/profesionales/${doc.id}`}
-                                className="group flex items-center p-4 rounded-2xl border border-gray-100 hover:border-[#0088CC] hover:bg-blue-50/30 transition-all"
-                              >
-                                <img 
-                                  src={doc.image} 
-                                  alt={doc.name} 
-                                  className="w-14 h-14 rounded-xl object-cover mr-4 shadow-sm"
-                                  referrerPolicy="no-referrer"
-                                />
-                                <div className="flex-1">
-                                  <h4 className="font-bold text-[#1A3A5A] group-hover:text-[#0088CC] transition-colors">{doc.name}</h4>
-                                  <p className="text-xs text-gray-400">Ver perfil completo</p>
-                                </div>
-                                <ChevronRight className="w-5 h-5 text-gray-300 group-hover:text-[#0088CC] transform group-hover:translate-x-1 transition-all" />
-                              </Link>
-                            ))
-                          ) : (
-                            <div className="col-span-full p-8 bg-gray-50 rounded-2xl text-center text-gray-400 italic">
-                              Próximamente más profesionales en esta área.
+                        {isMainSpecialty ? (
+                          <>
+                            <h3 className="text-sm font-bold text-gray-400 uppercase tracking-widest mb-6">Profesionales en el área</h3>
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                              {docsInSpec.map(doc => (
+                                <Link 
+                                  key={doc.id}
+                                  to={`/profesionales/${doc.id}`}
+                                  className="group flex items-center p-4 rounded-2xl border border-gray-100 hover:border-[#0088CC] hover:bg-blue-50/30 transition-all"
+                                >
+                                  <img 
+                                    src={doc.image} 
+                                    alt={doc.name} 
+                                    className="w-14 h-14 rounded-xl object-cover mr-4 shadow-sm"
+                                    referrerPolicy="no-referrer"
+                                  />
+                                  <div className="flex-1">
+                                    <h4 className="font-bold text-[#1A3A5A] group-hover:text-[#0088CC] transition-colors">{doc.name}</h4>
+                                    <p className="text-xs text-gray-400">Ver perfil completo</p>
+                                  </div>
+                                  <ChevronRight className="w-5 h-5 text-gray-300 group-hover:text-[#0088CC] transform group-hover:translate-x-1 transition-all" />
+                                </Link>
+                              ))}
                             </div>
-                          )}
-                        </div>
+                          </>
+                        ) : (
+                          <div className="h-full flex items-center justify-center p-8 bg-gray-50 rounded-[2rem] border border-dashed border-gray-200">
+                            <p className="text-gray-400 italic text-center">
+                              Consulta por profesionales disponibles para esta especialidad.
+                            </p>
+                          </div>
+                        )}
                       </div>
                     </div>
                   </div>

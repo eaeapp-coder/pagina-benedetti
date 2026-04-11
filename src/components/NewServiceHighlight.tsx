@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { Activity, ArrowRight, Sparkles } from 'lucide-react';
+import { ArrowRight, Sparkles } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 export default function NewServiceHighlight() {
@@ -69,8 +69,13 @@ export default function NewServiceHighlight() {
                   transition={{ delay: 0.5, type: "spring", stiffness: 100 }}
                   className="relative"
                 >
-                  <div className="w-48 h-48 md:w-64 md:h-64 bg-white rounded-[2rem] shadow-xl flex items-center justify-center transform -rotate-6">
-                    <Activity className="w-24 h-24 md:w-32 md:h-32 text-[#0088CC]" />
+                  <div className="w-48 h-48 md:w-64 md:h-64 bg-white rounded-[2rem] shadow-xl overflow-hidden transform -rotate-6">
+                    <img 
+                      src="https://eaeapp.com/images-ia/benedetti/ortopedia.jpg" 
+                      alt="Ortopedia" 
+                      className="w-full h-full object-cover"
+                      referrerPolicy="no-referrer"
+                    />
                   </div>
                   
                   {/* Floating badges */}

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Mail, Phone, MapPin, Plus } from 'lucide-react';
+import { Phone, MapPin, Plus } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 export default function Footer() {
@@ -44,13 +44,12 @@ export default function Footer() {
                 <MapPin className="w-5 h-5 text-[#0088CC] shrink-0" />
                 <span>Dirección: 29 de Setiembre 2168, Lanús Este</span>
               </li>
-              <li className="flex items-center space-x-3 text-sm text-gray-600">
-                <Phone className="w-5 h-5 text-[#0088CC] shrink-0" />
-                <span>011 2288 3581</span>
-              </li>
-              <li className="flex items-center space-x-3 text-sm text-gray-600">
-                <Mail className="w-5 h-5 text-[#0088CC] shrink-0" />
-                <span>consultoro@benedetti.com</span>
+              <li className="flex items-start space-x-3 text-sm text-gray-600">
+                <Phone className="w-5 h-5 text-[#0088CC] shrink-0 mt-0.5" />
+                <div className="flex flex-col">
+                  <span>2071-7674 (Línea)</span>
+                  <span>011 2288-3581 (WhatsApp)</span>
+                </div>
               </li>
             </ul>
           </div>
@@ -63,6 +62,7 @@ export default function Footer() {
               <li><Link to="/especialidades" className="hover:text-[#0088CC]">Especialidades</Link></li>
               <li><Link to="/profesionales" className="hover:text-[#0088CC]">Profesionales</Link></li>
               <li><Link to="/obras-sociales" className="hover:text-[#0088CC]">Obras Sociales</Link></li>
+              <li><a href="https://pruebas.eaeapp.com/blog/" target="_blank" rel="noopener noreferrer" className="hover:text-[#0088CC]">Blog</a></li>
               <li><Link to="/contacto" className="hover:text-[#0088CC]">Contacto</Link></li>
             </ul>
           </div>
@@ -80,7 +80,7 @@ export default function Footer() {
         <div className="border-t border-gray-200 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-gray-400">
           <p>© 2026 Consultorios Benedetti. Todos los derechos reservados.</p>
           <div className="flex space-x-6 mt-4 md:mt-0">
-            <span>Diseño y Desarrollo por AI Studio</span>
+            <span>Diseño y Desarrollo <a href="https://eaeapp.com" target="_blank" rel="noopener noreferrer" className="text-[#FF3365] font-bold hover:opacity-80 transition-opacity">eaeapp</a></span>
           </div>
         </div>
       </div>

@@ -10,7 +10,7 @@ const BLOG_POSTS = [
     excerpt: "Descubre cómo los ajustes vertebrales pueden mejorar tu postura y reducir el estrés cotidiano.",
     date: "20 Mar, 2026",
     author: "Dr. Roberto Gómez",
-    image: "https://images.unsplash.com/photo-1537368910025-700350fe46c7?auto=format&fit=crop&q=80&w=800",
+    image: "https://eaeapp.com/images-ia/benedetti/fisio.webp",
     category: "Quiropraxia"
   },
   {
@@ -19,7 +19,7 @@ const BLOG_POSTS = [
     excerpt: "La forma en que caminamos influye en todo nuestro cuerpo. Aprende a prevenir lesiones desde la base.",
     date: "15 Mar, 2026",
     author: "Lic. Carlos Rodríguez",
-    image: "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&q=80&w=800",
+    image: "https://eaeapp.com/images-ia/benedetti/fisio.webp",
     category: "Kinesiología"
   },
   {
@@ -28,7 +28,7 @@ const BLOG_POSTS = [
     excerpt: "Consejos fundamentales de traumatología para mantenerte activo y evitar interrupciones en tu entrenamiento.",
     date: "10 Mar, 2026",
     author: "Dra. Ana Martínez",
-    image: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&q=80&w=800",
+    image: "https://eaeapp.com/images-ia/benedetti/fisio.webp",
     category: "Ortopedia"
   }
 ];

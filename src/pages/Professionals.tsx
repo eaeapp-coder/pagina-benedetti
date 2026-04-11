@@ -10,7 +10,7 @@ export default function Professionals() {
   const [selectedSpecialty, setSelectedSpecialty] = useState<string | null>(null);
 
   const filteredDoctors = selectedSpecialty 
-    ? DOCTORS.filter(d => d.specialty === selectedSpecialty)
+    ? DOCTORS.filter(d => d.specialties.includes(selectedSpecialty))
     : DOCTORS;
 
   const specialtiesList = SPECIALTIES.map(s => s.name);
@@ -65,7 +65,7 @@ export default function Professionals() {
             {/* Specialty Sections */}
             <div className="space-y-12">
               {specialtiesList.map(specName => {
-                const docsInSpec = filteredDoctors.filter(d => d.specialty === specName);
+                const docsInSpec = filteredDoctors.filter(d => d.specialties.includes(specName));
                 if (docsInSpec.length === 0) return null;
 
                 return (
@@ -93,7 +93,7 @@ export default function Professionals() {
                           </div>
                           <div className="p-6 text-center">
                             <h4 className="font-bold text-[#1A3A5A] text-lg mb-1">{doc.name}</h4>
-                            <p className="text-[#0088CC] text-sm font-medium mb-6">{doc.specialty}</p>
+                            <p className="text-[#0088CC] text-sm font-medium mb-6">{doc.specialties.join(', ')}</p>
                             <Link 
                               to={`/profesionales/${doc.id}`}
                               className="block w-full py-3 px-4 rounded-full border-2 border-[#0088CC] text-[#0088CC] font-bold text-sm hover:bg-[#0088CC] hover:text-white transition-all"

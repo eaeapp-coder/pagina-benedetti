@@ -24,7 +24,7 @@ export default function Header() {
         <div className="flex justify-between items-center h-20">
           <Link to="/" className="flex items-center">
             <img 
-              src="https://white-albatross-289547.hostingersite.com/imagenes/logo-Benedetti-300.webp" 
+              src="https://eaeapp.com/images-ia/benedetti/logo-benedetti.png" 
               alt="Consultorios Benedetti" 
               className="h-14 w-auto object-contain"
               referrerPolicy="no-referrer"
@@ -34,15 +34,27 @@ export default function Header() {
           {/* Desktop Nav */}
           <nav className="hidden md:flex items-center space-x-8">
             {navLinks.map((link) => (
-              <Link
-                key={link.path}
-                to={link.path}
-                className={`text-sm font-medium transition-colors hover:text-[#0088CC] ${
-                  isActive(link.path) ? 'text-[#0088CC] border-b-2 border-[#0088CC] pb-1' : 'text-gray-600'
-                }`}
-              >
-                {link.name}
-              </Link>
+              link.name === 'Blog' ? (
+                <a
+                  key={link.path}
+                  href="https://pruebas.eaeapp.com/blog/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm font-medium transition-colors hover:text-[#0088CC] text-gray-600"
+                >
+                  {link.name}
+                </a>
+              ) : (
+                <Link
+                  key={link.path}
+                  to={link.path}
+                  className={`text-sm font-medium transition-colors hover:text-[#0088CC] ${
+                    isActive(link.path) ? 'text-[#0088CC] border-b-2 border-[#0088CC] pb-1' : 'text-gray-600'
+                  }`}
+                >
+                  {link.name}
+                </Link>
+              )
             ))}
           </nav>
 
@@ -69,18 +81,31 @@ export default function Header() {
           >
             <div className="px-4 pt-2 pb-6 space-y-1">
               {navLinks.map((link) => (
-                <Link
-                  key={link.path}
-                  to={link.path}
-                  onClick={() => setIsOpen(false)}
-                  className={`block px-3 py-4 text-base font-medium rounded-md ${
-                    isActive(link.path)
-                      ? 'bg-blue-50 text-[#0088CC]'
-                      : 'text-gray-600 hover:bg-gray-50 hover:text-[#0088CC]'
-                  }`}
-                >
-                  {link.name}
-                </Link>
+                link.name === 'Blog' ? (
+                  <a
+                    key={link.path}
+                    href="https://pruebas.eaeapp.com/blog/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => setIsOpen(false)}
+                    className="block px-3 py-4 text-base font-medium rounded-md text-gray-600 hover:bg-gray-50 hover:text-[#0088CC]"
+                  >
+                    {link.name}
+                  </a>
+                ) : (
+                  <Link
+                    key={link.path}
+                    to={link.path}
+                    onClick={() => setIsOpen(false)}
+                    className={`block px-3 py-4 text-base font-medium rounded-md ${
+                      isActive(link.path)
+                        ? 'bg-blue-50 text-[#0088CC]'
+                        : 'text-gray-600 hover:bg-gray-50 hover:text-[#0088CC]'
+                    }`}
+                  >
+                    {link.name}
+                  </Link>
+                )
               ))}
             </div>
           </motion.div>

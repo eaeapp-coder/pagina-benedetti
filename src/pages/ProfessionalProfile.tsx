@@ -58,7 +58,7 @@ export default function ProfessionalProfile() {
                 </div>
 
                 <h1 className="text-2xl font-bold text-[#1A3A5A] mb-2">{doctor.name}</h1>
-                <p className="text-[#0088CC] font-semibold mb-6">{doctor.specialty}</p>
+                <p className="text-[#0088CC] font-semibold mb-6">{doctor.specialties.join(', ')}</p>
 
                 <div className="space-y-4 text-left border-t border-gray-100 pt-6">
                   {doctor.availability && (

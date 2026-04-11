@@ -3,7 +3,6 @@ import Hero from '../components/Hero';
 import SpecialtyCards from '../components/SpecialtyCards';
 import NewServiceHighlight from '../components/NewServiceHighlight';
 import ReviewsSlider from '../components/ReviewsSlider';
-import BlogSection from '../components/BlogSection';
 import { motion } from 'motion/react';
 import { CheckCircle2, Clock, User, Calendar } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -56,7 +55,7 @@ export default function Home() {
               <div className="relative">
                 <div className="rounded-3xl overflow-hidden shadow-2xl">
                   <img 
-                    src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&q=80&w=1000" 
+                    src="https://eaeapp.com/images-ia/benedetti/fisio.webp" 
                     alt="Doctor with patient"
                     className="w-full h-full object-cover"
                     referrerPolicy="no-referrer"
@@ -70,9 +69,6 @@ export default function Home() {
             </div>
           </div>
         </section>
-
-        {/* Blog Section */}
-        <BlogSection />
 
         {/* CTA Section */}
         <section className="py-20 bg-[#F8FAFC]">

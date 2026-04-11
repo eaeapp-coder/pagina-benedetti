@@ -8,7 +8,7 @@ import { ChevronRight, CheckCircle2, User, ArrowLeft } from 'lucide-react';
 export default function SpecialtyDetail() {
   const { id } = useParams<{ id: string }>();
   const specialty = SPECIALTIES.find(s => s.id === id);
-  const doctors = DOCTORS.filter(d => d.specialty === specialty?.name);
+  const doctors = DOCTORS.filter(d => specialty && d.specialties.includes(specialty.name));
 
   if (!specialty) {
     return <Navigate to="/especialidades" replace />;
@@ -66,37 +66,39 @@ export default function SpecialtyDetail() {
               </motion.div>
 
               {/* Associated Professional */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-              >
-                <h2 className="text-2xl font-bold text-[#1A3A5A] mb-8">Profesionales Asociados</h2>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                  {doctors.map(doc => (
-                    <Link 
-                      key={doc.id}
-                      to={`/profesionales/${doc.id}`}
-                      className="group bg-white p-6 rounded-3xl border border-gray-100 hover:border-[#0088CC] hover:shadow-xl transition-all flex items-center space-x-4"
-                    >
-                      <img 
-                        src={doc.image} 
-                        alt={doc.name} 
-                        className="w-20 h-20 rounded-2xl object-cover shadow-sm"
-                        referrerPolicy="no-referrer"
-                      />
-                      <div className="flex-1">
-                        <h4 className="font-bold text-[#1A3A5A] group-hover:text-[#0088CC] transition-colors">{doc.name}</h4>
-                        <div className="flex items-center text-xs text-gray-400 mt-1">
-                          <User className="w-3 h-3 mr-1" />
-                          Ver perfil completo
+              {doctors.length > 0 && (specialty.id === 'kinesiology' || specialty.id === 'chiropractic') && (
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                >
+                  <h2 className="text-2xl font-bold text-[#1A3A5A] mb-8">Profesionales Asociados</h2>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    {doctors.map(doc => (
+                      <Link 
+                        key={doc.id}
+                        to={`/profesionales/${doc.id}`}
+                        className="group bg-white p-6 rounded-3xl border border-gray-100 hover:border-[#0088CC] hover:shadow-xl transition-all flex items-center space-x-4"
+                      >
+                        <img 
+                          src={doc.image} 
+                          alt={doc.name} 
+                          className="w-20 h-20 rounded-2xl object-cover shadow-sm"
+                          referrerPolicy="no-referrer"
+                        />
+                        <div className="flex-1">
+                          <h4 className="font-bold text-[#1A3A5A] group-hover:text-[#0088CC] transition-colors">{doc.name}</h4>
+                          <div className="flex items-center text-xs text-gray-400 mt-1">
+                            <User className="w-3 h-3 mr-1" />
+                            Ver perfil completo
+                          </div>
                         </div>
-                      </div>
-                      <ChevronRight className="w-5 h-5 text-gray-300 group-hover:text-[#0088CC] transform group-hover:translate-x-1 transition-all" />
-                    </Link>
-                  ))}
-                </div>
-              </motion.div>
+                        <ChevronRight className="w-5 h-5 text-gray-300 group-hover:text-[#0088CC] transform group-hover:translate-x-1 transition-all" />
+                      </Link>
+                    ))}
+                  </div>
+                </motion.div>
+              )}
             </div>
 
             {/* Right Column: Images & CTA */}

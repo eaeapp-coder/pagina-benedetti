@@ -6,6 +6,7 @@
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
+import WhatsAppButton from './components/WhatsAppButton';
 import Home from './pages/Home';
 import Professionals from './pages/Professionals';
 import Specialties from './pages/Specialties';
@@ -52,6 +53,7 @@ export default function App() {
         <div className="flex-1">
           <AppRoutes />
         </div>
+        <WhatsAppButton />
         <Footer />
       </div>
     </Router>
