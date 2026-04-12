@@ -6,7 +6,7 @@ import { useSettings, AppSettings } from '../hooks/useSettings';
 import { useReviews } from '../hooks/useReviews';
 import { useProfessionals } from '../hooks/useProfessionals';
 import { useInsurances } from '../hooks/useInsurances';
-import { SPECIALTIES, Doctor, InsuranceProvider } from '../constants';
+import { SPECIALTIES, Doctor, InsuranceProvider, INSURANCE_PROVIDERS } from '../constants';
 import { 
   Lock, Save, LogOut, Settings as SettingsIcon, Loader2, MessageSquare, 
   Star as StarIcon, Plus, Eye, EyeOff, Users, Shield, Trash2, Edit2, X
@@ -32,6 +32,7 @@ export default function Admin() {
   const { professionals, addProfessional, updateProfessional, deleteProfessional } = useProfessionals();
   const { insurances, addInsurance, updateInsurance, deleteInsurance } = useInsurances();
   
+  const [isImporting, setIsImporting] = useState(false);
   const [formData, setFormData] = useState<AppSettings | null>(null);
   
   // Review form state
@@ -219,6 +220,26 @@ export default function Admin() {
     setInsLogo(ins.logo);
     setInsSpecialties(ins.specialties);
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleBulkImportInsurances = async () => {
+    if (!confirm('¿Deseas cargar la lista predefinida de obras sociales? Esto agregará las que no existan.')) return;
+    setIsImporting(true);
+    try {
+      const existingNames = new Set(insurances.map(i => i.name.toLowerCase()));
+      const toAdd = INSURANCE_PROVIDERS.filter(i => !existingNames.has(i.name.toLowerCase()));
+      
+      for (const ins of toAdd) {
+        const { id, ...data } = ins;
+        await addInsurance(data);
+      }
+      alert(`Se agregaron ${toAdd.length} obras sociales nuevas.`);
+    } catch (err) {
+      console.error(err);
+      alert('Error al importar obras sociales.');
+    } finally {
+      setIsImporting(false);
+    }
   };
 
   if (isAuthLoading) {
@@ -740,9 +761,19 @@ export default function Admin() {
           {/* Section: Insurances */}
           {activeTab === 'insurances' && (
             <div className="space-y-8">
-              <div className="mb-8">
-                <h1 className="text-3xl font-bold text-[#1A3A5A]">Obras Sociales</h1>
-                <p className="text-gray-500">Administra las coberturas médicas aceptadas</p>
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+                <div>
+                  <h1 className="text-3xl font-bold text-[#1A3A5A]">Obras Sociales</h1>
+                  <p className="text-gray-500">Administra las coberturas médicas aceptadas</p>
+                </div>
+                <button 
+                  onClick={handleBulkImportInsurances}
+                  disabled={isImporting}
+                  className="bg-blue-50 text-[#0088CC] px-6 py-2 rounded-xl font-bold hover:bg-blue-100 transition-all flex items-center space-x-2 disabled:opacity-50"
+                >
+                  {isImporting ? <Loader2 className="animate-spin w-4 h-4" /> : <Plus className="w-4 h-4" />}
+                  <span>Cargar Lista desde Web</span>
+                </button>
               </div>
 
               {/* Form to Add/Edit */}
