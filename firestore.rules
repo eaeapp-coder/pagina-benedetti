@@ -11,9 +11,11 @@ service cloud.firestore {
     
     function isAdmin() {
       return isAuthenticated() && 
-        (exists(/databases/$(database)/documents/users/$(request.auth.uid)) && 
-         get(/databases/$(database)/documents/users/$(request.auth.uid)).data.get('role', '') == 'admin' ||
-         request.auth.token.email == "CBenedetti@benedetti.com");
+        (
+          (exists(/databases/$(database)/documents/users/$(request.auth.uid)) && 
+           get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin') ||
+          request.auth.token.email.lower() == "cbenedetti@benedetti.com"
+        );
     }
 
     function isValidSettings(data) {
@@ -24,7 +26,7 @@ service cloud.firestore {
              data.hoursTueThu is string && data.hoursTueThu.size() < 100 &&
              data.hoursMonWedFri is string && data.hoursMonWedFri.size() < 100 &&
              data.aboutHero is string && data.aboutHero.size() < 500 &&
-             data.aboutText is string && data.aboutText.size() < 5000;
+             data.aboutText is string && data.aboutText.size() < 10000;
     }
 
     function isValidReview(data) {
@@ -52,7 +54,8 @@ service cloud.firestore {
 
     match /users/{userId} {
       allow read: if isAuthenticated() && request.auth.uid == userId;
-      allow create: if isAuthenticated() && request.auth.uid == userId && request.resource.data.role == 'admin' && isAdmin();
+      allow create: if isAuthenticated() && request.auth.uid == userId && 
+                    (request.auth.token.email.lower() == "cbenedetti@benedetti.com" || isAdmin());
       allow update: if isAdmin();
     }
   }

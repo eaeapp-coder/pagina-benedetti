@@ -46,7 +46,7 @@ export default function Admin() {
     setIsLoggingIn(true);
     setLoginError('');
     
-    // If user enters just "CBenedetti", we append the domain internally
+    // If user enters just "cbenedetti", we append the domain internally
     const loginEmail = username.includes('@') ? username : `${username}@benedetti.com`;
     
     try {
@@ -129,7 +129,7 @@ export default function Admin() {
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                   className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
-                  placeholder="CBenedetti"
+                  placeholder="cbenedetti"
                 />
               </div>
               <div>
