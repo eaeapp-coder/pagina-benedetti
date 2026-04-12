@@ -1,14 +1,23 @@
 import React from 'react';
-import { DOCTORS, SPECIALTIES } from '../constants';
+import { SPECIALTIES } from '../constants';
+import { useProfessionals } from '../hooks/useProfessionals';
 import { motion } from 'motion/react';
 import { Link } from 'react-router-dom';
 import PageTransition from '../components/PageTransition';
-import { ChevronRight, User, MessageSquare } from 'lucide-react';
+import { ChevronRight, User, Loader2 } from 'lucide-react';
 import SEO from '../components/SEO';
 import { useBusinessHours } from '../hooks/useBusinessHours';
 
 export default function Specialties() {
-  const { isOpen, statusMessage } = useBusinessHours();
+  const { professionals, loading } = useProfessionals();
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-[#F8FAFC]">
+        <Loader2 className="animate-spin text-[#0088CC] w-12 h-12" />
+      </div>
+    );
+  }
 
   return (
     <PageTransition>
@@ -27,10 +36,8 @@ export default function Specialties() {
 
           <div className="space-y-24">
             {SPECIALTIES.map((spec, index) => {
-              const isMainSpecialty = spec.id === 'kinesiology' || spec.id === 'chiropractic';
-              const docsInSpec = isMainSpecialty 
-                ? DOCTORS.filter(d => d.specialties.includes(spec.name))
-                : [];
+              const docsInSpec = professionals.filter(d => d.specialties.includes(spec.name));
+              const hasProfessionals = docsInSpec.length > 0;
               
               return (
                 <motion.section 
@@ -47,16 +54,16 @@ export default function Specialties() {
                     
                     <div className="relative grid grid-cols-1 lg:grid-cols-3 gap-12">
                       {/* Specialty Info */}
-                      <div className="lg:col-span-1">
+                      <div className={hasProfessionals ? "lg:col-span-1" : "lg:col-span-3"}>
                         <div className="bg-blue-50 w-16 h-16 rounded-2xl flex items-center justify-center mb-6">
                           <spec.icon className="w-8 h-8 text-[#0088CC]" />
                         </div>
                         <h2 className="text-3xl font-bold text-[#1A3A5A] mb-4">{spec.name}</h2>
-                        <p className="text-gray-600 leading-relaxed mb-8">
+                        <p className={`text-gray-600 leading-relaxed mb-8 ${!hasProfessionals ? 'max-w-3xl' : ''}`}>
                           {spec.description}
                         </p>
                         <div className="flex flex-col space-y-4">
-                          {isMainSpecialty && (
+                          {hasProfessionals && (
                             <div className="flex items-center text-sm font-bold text-[#0088CC]">
                               <User className="w-4 h-4 mr-2" />
                               {docsInSpec.length} {docsInSpec.length === 1 ? 'Profesional' : 'Profesionales'}
@@ -73,56 +80,32 @@ export default function Specialties() {
                       </div>
  
                       {/* Doctors List */}
-                      <div className="lg:col-span-2">
-                        {isMainSpecialty ? (
-                          <>
-                            <h3 className="text-sm font-bold text-gray-400 uppercase tracking-widest mb-6">Profesionales en el área</h3>
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                              {docsInSpec.map(doc => (
-                                <Link 
-                                  key={doc.id}
-                                  to={`/profesionales/${doc.id}`}
-                                  className="group flex items-center p-4 rounded-2xl border border-gray-100 hover:border-[#0088CC] hover:bg-blue-50/30 transition-all"
-                                >
-                                  <img 
-                                    src={doc.image} 
-                                    alt={doc.name} 
-                                    className="w-14 h-14 rounded-xl object-cover mr-4 shadow-sm"
-                                    referrerPolicy="no-referrer"
-                                  />
-                                  <div className="flex-1">
-                                    <h4 className="font-bold text-[#1A3A5A] group-hover:text-[#0088CC] transition-colors">{doc.name}</h4>
-                                    <p className="text-xs text-gray-400">Ver perfil completo</p>
-                                  </div>
-                                  <ChevronRight className="w-5 h-5 text-gray-300 group-hover:text-[#0088CC] transform group-hover:translate-x-1 transition-all" />
-                                </Link>
-                              ))}
-                            </div>
-                          </>
-                        ) : (
-                          <div className="h-full flex flex-col items-center justify-center p-8 bg-gray-50 rounded-[2rem] border border-dashed border-gray-200">
-                            <p className="text-gray-400 italic text-center mb-6">
-                              Consulta por profesionales disponibles para esta especialidad.
-                            </p>
-                            <div className="flex flex-col items-center">
-                              <a 
-                                href={`https://wa.me/5491122883581?text=${encodeURIComponent(`Hola, ¿qué profesional está asociado al área de ${spec.name}?`)}`}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="inline-flex items-center px-6 py-3 rounded-full font-bold transition-all shadow-md bg-[#0088CC] text-white hover:bg-[#0077B3] hover:shadow-lg transform hover:-translate-y-0.5"
+                      {hasProfessionals && (
+                        <div className="lg:col-span-2">
+                          <h3 className="text-sm font-bold text-gray-400 uppercase tracking-widest mb-6">Profesionales en el área</h3>
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            {docsInSpec.map(doc => (
+                              <Link 
+                                key={doc.id}
+                                to={`/profesionales/${doc.id}`}
+                                className="group flex items-center p-4 rounded-2xl border border-gray-100 hover:border-[#0088CC] hover:bg-blue-50/30 transition-all"
                               >
-                                <MessageSquare className="w-5 h-5 mr-2" />
-                                Consultar por WhatsApp
-                              </a>
-                              {!isOpen && (
-                                <p className="text-[10px] text-gray-400 mt-2 font-medium text-center">
-                                  {statusMessage}
-                                </p>
-                              )}
-                            </div>
+                                <img 
+                                  src={doc.image} 
+                                  alt={doc.name} 
+                                  className="w-14 h-14 rounded-xl object-cover mr-4 shadow-sm"
+                                  referrerPolicy="no-referrer"
+                                />
+                                <div className="flex-1">
+                                  <h4 className="font-bold text-[#1A3A5A] group-hover:text-[#0088CC] transition-colors">{doc.name}</h4>
+                                  <p className="text-xs text-gray-400">Ver perfil completo</p>
+                                </div>
+                                <ChevronRight className="w-5 h-5 text-gray-300 group-hover:text-[#0088CC] transform group-hover:translate-x-1 transition-all" />
+                              </Link>
+                            ))}
                           </div>
-                        )}
-                      </div>
+                        </div>
+                      )}
                     </div>
                   </div>
                 </motion.section>

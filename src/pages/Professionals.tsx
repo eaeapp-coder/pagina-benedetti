@@ -78,49 +78,88 @@ export default function Professionals() {
 
             {/* Specialty Sections */}
             <div className="space-y-12">
-              {specialtiesList.map(specName => {
-                const docsInSpec = filteredDoctors.filter(d => d.specialties.includes(specName));
-                if (docsInSpec.length === 0) return null;
-
-                return (
-                  <div key={specName}>
-                    <h2 className="text-xl font-bold text-[#1A3A5A] mb-6 flex items-center">
-                      <span className="w-2 h-8 bg-[#0088CC] rounded-full mr-3"></span>
-                      {specName}
-                    </h2>
-                    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-                      {docsInSpec.map((doc) => (
-                        <motion.div
-                          layout
-                          initial={{ opacity: 0, scale: 0.9 }}
-                          animate={{ opacity: 1, scale: 1 }}
-                          key={doc.id}
-                          className="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 hover:shadow-md transition-all"
-                        >
-                          <div className="aspect-square overflow-hidden">
-                            <img 
-                              src={doc.image} 
-                              alt={doc.name} 
-                              className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
-                              referrerPolicy="no-referrer"
-                            />
-                          </div>
-                          <div className="p-6 text-center">
-                            <h4 className="font-bold text-[#1A3A5A] text-lg mb-1">{doc.name}</h4>
-                            <p className="text-[#0088CC] text-sm font-medium mb-6">{doc.specialties.join(', ')}</p>
-                            <Link 
-                              to={`/profesionales/${doc.id}`}
-                              className="block w-full py-3 px-4 rounded-full border-2 border-[#0088CC] text-[#0088CC] font-bold text-sm hover:bg-[#0088CC] hover:text-white transition-all"
-                            >
-                              Ver Perfil
-                            </Link>
-                          </div>
-                        </motion.div>
-                      ))}
-                    </div>
+              {selectedSpecialty ? (
+                <div>
+                  <h2 className="text-xl font-bold text-[#1A3A5A] mb-6 flex items-center">
+                    <span className="w-2 h-8 bg-[#0088CC] rounded-full mr-3"></span>
+                    {selectedSpecialty}
+                  </h2>
+                  <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+                    {filteredDoctors.map((doc) => (
+                      <motion.div
+                        layout
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        key={doc.id}
+                        className="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 hover:shadow-md transition-all"
+                      >
+                        <div className="aspect-square overflow-hidden">
+                          <img 
+                            src={doc.image} 
+                            alt={doc.name} 
+                            className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                            referrerPolicy="no-referrer"
+                          />
+                        </div>
+                        <div className="p-6 text-center">
+                          <h4 className="font-bold text-[#1A3A5A] text-lg mb-1">{doc.name}</h4>
+                          <p className="text-[#0088CC] text-sm font-medium mb-6">{doc.specialties.join(', ')}</p>
+                          <Link 
+                            to={`/profesionales/${doc.id}`}
+                            className="block w-full py-3 px-4 rounded-full border-2 border-[#0088CC] text-[#0088CC] font-bold text-sm hover:bg-[#0088CC] hover:text-white transition-all"
+                          >
+                            Ver Perfil
+                          </Link>
+                        </div>
+                      </motion.div>
+                    ))}
                   </div>
-                );
-              })}
+                </div>
+              ) : (
+                specialtiesList.map(specName => {
+                  const docsInSpec = professionals.filter(d => d.specialties.includes(specName));
+                  if (docsInSpec.length === 0) return null;
+
+                  return (
+                    <div key={specName}>
+                      <h2 className="text-xl font-bold text-[#1A3A5A] mb-6 flex items-center">
+                        <span className="w-2 h-8 bg-[#0088CC] rounded-full mr-3"></span>
+                        {specName}
+                      </h2>
+                      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+                        {docsInSpec.map((doc) => (
+                          <motion.div
+                            layout
+                            initial={{ opacity: 0, scale: 0.9 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            key={doc.id}
+                            className="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 hover:shadow-md transition-all"
+                          >
+                            <div className="aspect-square overflow-hidden">
+                              <img 
+                                src={doc.image} 
+                                alt={doc.name} 
+                                className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                                referrerPolicy="no-referrer"
+                              />
+                            </div>
+                            <div className="p-6 text-center">
+                              <h4 className="font-bold text-[#1A3A5A] text-lg mb-1">{doc.name}</h4>
+                              <p className="text-[#0088CC] text-sm font-medium mb-6">{doc.specialties.join(', ')}</p>
+                              <Link 
+                                to={`/profesionales/${doc.id}`}
+                                className="block w-full py-3 px-4 rounded-full border-2 border-[#0088CC] text-[#0088CC] font-bold text-sm hover:bg-[#0088CC] hover:text-white transition-all"
+                              >
+                                Ver Perfil
+                              </Link>
+                            </div>
+                          </motion.div>
+                        ))}
+                      </div>
+                    </div>
+                  );
+                })
+              )}
             </div>
           </main>
         </div>
