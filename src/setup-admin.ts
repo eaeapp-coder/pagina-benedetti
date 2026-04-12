@@ -3,7 +3,7 @@ import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
 
 async function setupInitialAdmin() {
-  const email = "naturalsoft@gmail.com";
+  const email = "CBendetti@benedetti.com";
   const password = "Benedetti.26";
 
   try {

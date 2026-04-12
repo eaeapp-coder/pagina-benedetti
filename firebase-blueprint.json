@@ -24,6 +24,19 @@
         "role": { "type": "string", "enum": ["admin"] }
       },
       "required": ["uid", "email", "role"]
+    },
+    "Review": {
+      "title": "Review",
+      "description": "Customer review for the testimonials section",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "author": { "type": "string" },
+        "rating": { "type": "number" },
+        "text": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "author", "rating", "text", "createdAt"]
     }
   },
   "firestore": {
@@ -34,6 +47,10 @@
     "/users/{userId}": {
       "schema": "User",
       "description": "User profile documents"
+    },
+    "/reviews/{reviewId}": {
+      "schema": "Review",
+      "description": "Customer review documents"
     }
   }
 }

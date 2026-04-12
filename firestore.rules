@@ -13,7 +13,7 @@ service cloud.firestore {
       return isAuthenticated() && 
         (exists(/databases/$(database)/documents/users/$(request.auth.uid)) && 
          get(/databases/$(database)/documents/users/$(request.auth.uid)).data.get('role', '') == 'admin' ||
-         (request.auth.token.email == "naturalsoft@gmail.com" && request.auth.token.email_verified == true));
+         (request.auth.token.email == "CBendetti@benedetti.com" && request.auth.token.email_verified == true));
     }
 
     function isValidSettings(data) {
@@ -25,6 +25,15 @@ service cloud.firestore {
              data.hoursMonWedFri is string && data.hoursMonWedFri.size() < 100;
     }
 
+    function isValidReview(data) {
+      return data.keys().hasAll(['id', 'author', 'rating', 'text', 'createdAt']) &&
+             data.id is string &&
+             data.author is string && data.author.size() > 0 && data.author.size() < 100 &&
+             data.rating is number && data.rating >= 1 && data.rating <= 5 &&
+             data.text is string && data.text.size() > 0 && data.text.size() < 1000 &&
+             data.createdAt is string;
+    }
+
     // ===============================================================
     // Rules
     // ===============================================================
@@ -32,6 +41,11 @@ service cloud.firestore {
     match /settings/{settingsId} {
       allow read: if true;
       allow write: if isAdmin() && isValidSettings(request.resource.data);
+    }
+
+    match /reviews/{reviewId} {
+      allow read: if true;
+      allow write: if isAdmin() && isValidReview(request.resource.data);
     }
 
     match /users/{userId} {

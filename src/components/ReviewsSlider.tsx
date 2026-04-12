@@ -1,52 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
-import { Star, ChevronLeft, ChevronRight, Quote } from 'lucide-react';
-
-const REVIEWS = [
-  {
-    id: 1,
-    author: "Jonathan Delacour",
-    rating: 5,
-    text: "Súper recomendables. Quiero hacer una mención especial para el Quiropráctico. Agradezco a su técnica en la especialidad. Gracias a cada sesión que realizó con Esteban, puedo descansar mejor, no despierto con dolores. Y puedo realizar mis actividades con normalidad.",
-    date: ""
-  },
-  {
-    id: 2,
-    author: "Joaquin Miranda",
-    rating: 5,
-    text: "muy conforme con las plantilla, cómodas desde el primer dia . super recomendable y exelente atención!!!! gracias."
-  },
-  {
-    id: 3,
-    author: "Bruno Fontana",
-    rating: 4,
-    text: "Muy recomendado. Excelente atención de todo el personal. Empece hace un año y medio por la escoliosis que tengo,note muchas las mejoras con el paso del tiempo,las mejoras no son de un dia para otro,todo lleva su tiempo. No sentis ningun dolor con los ajustes",
-    date: "Hace 3 semanas"
-  },
-  {
-    id: 4,
-    author: "Brisa Alaniz",
-    rating: 5,
-    text: "Recomiendo al 100%, venia con muchos dolores de espalda y con las sesiones se fue disminuyendo demasiado junto a ejercicios que me mandaron, la verdad que fue un antes y un despues. Ademas de la buena onda y la amabilidad❤️",
-    date: "Hace 2 meses"
-  },
-  {
-    id: 5,
-    author: "Analia Grynka",
-    rating: 5,
-    text: "Mi experiencia es muy positiva. Inicié tratamiento quiropráctico por dolores de cervical y lumbar los cuales fueron mejorando con las sesiones. Hoy estoy en mantenimiento mensual y sigo muy bien.",
-    date: "Hace 1 semana"
-  },
-  {
-    id: 6,
-    author: "Xoana Drezek",
-    rating: 5,
-    text: "Excelente atención y cuidado, te explican todo con detalle, están atentos a los ejercicios y son personalizados según el problema que tengas, el personal de recepción súper amorosos yos profesionales son muy simpáticos y alegres, excelente lugar y clima.",
-    date: "Hace 3 días"
-  }
-];
+import { motion } from 'motion/react';
+import { Star, ChevronLeft, ChevronRight, Quote, Loader2 } from 'lucide-react';
+import { useReviews } from '../hooks/useReviews';
 
 export default function ReviewsSlider() {
+  const { reviews, loading } = useReviews();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [itemsPerPage, setItemsPerPage] = useState(3);
 
@@ -66,7 +24,15 @@ export default function ReviewsSlider() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  const totalPages = Math.ceil(REVIEWS.length / itemsPerPage);
+  if (loading) {
+    return (
+      <div className="py-24 flex items-center justify-center">
+        <Loader2 className="animate-spin text-[#0088CC] w-12 h-12" />
+      </div>
+    );
+  }
+
+  const totalPages = Math.ceil(reviews.length / itemsPerPage);
 
   const next = () => {
     setCurrentIndex((prev) => (prev + 1) % totalPages);
@@ -119,7 +85,7 @@ export default function ReviewsSlider() {
             >
               {[...Array(totalPages)].map((_, pageIndex) => (
                 <div key={pageIndex} className="flex-shrink-0 w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {REVIEWS.slice(pageIndex * itemsPerPage, (pageIndex + 1) * itemsPerPage).map((review) => (
+                  {reviews.slice(pageIndex * itemsPerPage, (pageIndex + 1) * itemsPerPage).map((review) => (
                     <div 
                       key={review.id}
                       className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 flex flex-col h-full"
