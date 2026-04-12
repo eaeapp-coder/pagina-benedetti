@@ -46,6 +46,12 @@ export default function Admin() {
   const [profSpecialties, setProfSpecialties] = useState<string[]>([]);
   const [profBio, setProfBio] = useState('');
   const [profAvailability, setProfAvailability] = useState('');
+  const [profEducation, setProfEducation] = useState<string[]>([]);
+  const [profExperience, setProfExperience] = useState<string[]>([]);
+  const [profSpecializations, setProfSpecializations] = useState<string[]>([]);
+  const [newEdu, setNewEdu] = useState('');
+  const [newExp, setNewExp] = useState('');
+  const [newSpec, setNewSpec] = useState('');
 
   // Insurance form state
   const [editingInsurance, setEditingInsurance] = useState<InsuranceProvider | null>(null);
@@ -63,10 +69,10 @@ export default function Admin() {
   }, []);
 
   useEffect(() => {
-    if (settings && !formData) {
+    if (!settingsLoading && settings && !formData) {
       setFormData(settings);
     }
-  }, [settings, formData]);
+  }, [settings, settingsLoading, formData]);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -128,7 +134,10 @@ export default function Admin() {
       image: profImage,
       specialties: profSpecialties,
       bio: profBio,
-      availability: profAvailability
+      availability: profAvailability,
+      education: profEducation,
+      experience: profExperience,
+      specializations: profSpecializations
     };
 
     try {
@@ -153,6 +162,12 @@ export default function Admin() {
     setProfSpecialties([]);
     setProfBio('');
     setProfAvailability('');
+    setProfEducation([]);
+    setProfExperience([]);
+    setProfSpecializations([]);
+    setNewEdu('');
+    setNewExp('');
+    setNewSpec('');
   };
 
   const startEditProf = (prof: Doctor) => {
@@ -162,6 +177,9 @@ export default function Admin() {
     setProfSpecialties(prof.specialties);
     setProfBio(prof.bio || '');
     setProfAvailability(prof.availability || '');
+    setProfEducation(prof.education || []);
+    setProfExperience(prof.experience || []);
+    setProfSpecializations(prof.specializations || []);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -337,7 +355,14 @@ export default function Admin() {
                 <h1 className="text-3xl font-bold text-[#1A3A5A]">Información General</h1>
                 <p className="text-gray-500">Gestiona la información de contacto y horarios del sitio</p>
               </div>
-              <form onSubmit={handleSaveSettings} className="space-y-6">
+              
+              {settingsLoading || !formData ? (
+                <div className="bg-white rounded-[2rem] shadow-sm border border-gray-100 p-12 flex flex-col items-center justify-center">
+                  <Loader2 className="animate-spin text-[#0088CC] w-10 h-10 mb-4" />
+                  <p className="text-gray-500 font-medium">Cargando configuración...</p>
+                </div>
+              ) : (
+                <form onSubmit={handleSaveSettings} className="space-y-6">
                 <div className="bg-white rounded-[2rem] shadow-sm border border-gray-100 p-8 space-y-6">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="md:col-span-2">
@@ -401,6 +426,37 @@ export default function Admin() {
                         onChange={(e) => setFormData({...formData, aboutText: e.target.value})}
                         rows={10}
                         className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-500 outline-none resize-y font-mono text-sm"
+                        placeholder="Escribe la historia aquí. Usa Enter para separar párrafos."
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">Instagram (URL)</label>
+                      <input 
+                        type="text" 
+                        value={formData.instagramUrl || ''}
+                        onChange={(e) => setFormData({...formData, instagramUrl: e.target.value})}
+                        className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-500 outline-none"
+                        placeholder="https://www.instagram.com/..."
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">Facebook (URL)</label>
+                      <input 
+                        type="text" 
+                        value={formData.facebookUrl || ''}
+                        onChange={(e) => setFormData({...formData, facebookUrl: e.target.value})}
+                        className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-500 outline-none"
+                        placeholder="https://www.facebook.com/..."
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">LinkedIn (URL)</label>
+                      <input 
+                        type="text" 
+                        value={formData.linkedinUrl || ''}
+                        onChange={(e) => setFormData({...formData, linkedinUrl: e.target.value})}
+                        className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-500 outline-none"
+                        placeholder="https://www.linkedin.com/..."
                       />
                     </div>
                   </div>
@@ -416,8 +472,9 @@ export default function Admin() {
                   </div>
                 </div>
               </form>
-            </div>
-          )}
+            )}
+          </div>
+        )}
 
           {/* Section: Professionals */}
           {activeTab === 'professionals' && (
@@ -467,12 +524,123 @@ export default function Admin() {
                       </div>
                     </div>
                     <div className="md:col-span-2">
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Biografía Corta</label>
-                      <textarea value={profBio} onChange={e => setProfBio(e.target.value)} rows={3} className="w-full px-4 py-2 rounded-xl border border-gray-200 outline-none focus:ring-2 focus:ring-blue-500 resize-none" />
+                      <label className="block text-sm font-medium text-gray-700 mb-1">Biografía / Información Detallada</label>
+                      <textarea 
+                        value={profBio} 
+                        onChange={e => setProfBio(e.target.value)} 
+                        rows={6} 
+                        className="w-full px-4 py-3 rounded-xl border border-gray-200 outline-none focus:ring-2 focus:ring-blue-500 resize-y" 
+                        placeholder="Describe la trayectoria del profesional. Usa Enter para separar párrafos."
+                      />
                     </div>
                     <div className="md:col-span-2">
                       <label className="block text-sm font-medium text-gray-700 mb-1">Disponibilidad / Horarios</label>
                       <input type="text" value={profAvailability} onChange={e => setProfAvailability(e.target.value)} className="w-full px-4 py-2 rounded-xl border border-gray-200 outline-none focus:ring-2 focus:ring-blue-500" placeholder="Ej: Lunes y Miércoles 14:00 a 19:00" />
+                    </div>
+
+                    {/* Specializations */}
+                    <div className="md:col-span-2">
+                      <label className="block text-sm font-medium text-gray-700 mb-2">Áreas de Especialización</label>
+                      <div className="space-y-2 mb-3">
+                        {profSpecializations.map((spec, idx) => (
+                          <div key={idx} className="flex items-center justify-between bg-blue-50 px-4 py-2 rounded-xl">
+                            <span className="text-sm text-gray-700">{spec}</span>
+                            <button 
+                              type="button" 
+                              onClick={() => setProfSpecializations(profSpecializations.filter((_, i) => i !== idx))}
+                              className="text-red-400 hover:text-red-600"
+                            >
+                              <X size={16} />
+                            </button>
+                          </div>
+                        ))}
+                      </div>
+                      <div className="flex space-x-2">
+                        <input 
+                          type="text" 
+                          value={newSpec} 
+                          onChange={e => setNewSpec(e.target.value)} 
+                          className="flex-1 px-4 py-2 rounded-xl border border-gray-200 outline-none focus:ring-2 focus:ring-blue-500" 
+                          placeholder="Ej: Rehabilitación de columna" 
+                        />
+                        <button 
+                          type="button" 
+                          onClick={() => { if(newSpec) { setProfSpecializations([...profSpecializations, newSpec]); setNewSpec(''); } }}
+                          className="bg-blue-50 text-[#0088CC] px-4 py-2 rounded-xl font-bold hover:bg-blue-100"
+                        >
+                          Añadir
+                        </button>
+                      </div>
+                    </div>
+
+                    {/* Education */}
+                    <div className="md:col-span-2">
+                      <label className="block text-sm font-medium text-gray-700 mb-2">Formación Académica</label>
+                      <div className="space-y-2 mb-3">
+                        {profEducation.map((edu, idx) => (
+                          <div key={idx} className="flex items-center justify-between bg-blue-50 px-4 py-2 rounded-xl">
+                            <span className="text-sm text-gray-700">{edu}</span>
+                            <button 
+                              type="button" 
+                              onClick={() => setProfEducation(profEducation.filter((_, i) => i !== idx))}
+                              className="text-red-400 hover:text-red-600"
+                            >
+                              <X size={16} />
+                            </button>
+                          </div>
+                        ))}
+                      </div>
+                      <div className="flex space-x-2">
+                        <input 
+                          type="text" 
+                          value={newEdu} 
+                          onChange={e => setNewEdu(e.target.value)} 
+                          className="flex-1 px-4 py-2 rounded-xl border border-gray-200 outline-none focus:ring-2 focus:ring-blue-500" 
+                          placeholder="Ej: Lic. en Kinesiología - UBA" 
+                        />
+                        <button 
+                          type="button" 
+                          onClick={() => { if(newEdu) { setProfEducation([...profEducation, newEdu]); setNewEdu(''); } }}
+                          className="bg-blue-50 text-[#0088CC] px-4 py-2 rounded-xl font-bold hover:bg-blue-100"
+                        >
+                          Añadir
+                        </button>
+                      </div>
+                    </div>
+
+                    {/* Experience */}
+                    <div className="md:col-span-2">
+                      <label className="block text-sm font-medium text-gray-700 mb-2">Experiencia Profesional</label>
+                      <div className="space-y-2 mb-3">
+                        {profExperience.map((exp, idx) => (
+                          <div key={idx} className="flex items-center justify-between bg-blue-50 px-4 py-2 rounded-xl">
+                            <span className="text-sm text-gray-700">{exp}</span>
+                            <button 
+                              type="button" 
+                              onClick={() => setProfExperience(profExperience.filter((_, i) => i !== idx))}
+                              className="text-red-400 hover:text-red-600"
+                            >
+                              <X size={16} />
+                            </button>
+                          </div>
+                        ))}
+                      </div>
+                      <div className="flex space-x-2">
+                        <input 
+                          type="text" 
+                          value={newExp} 
+                          onChange={e => setNewExp(e.target.value)} 
+                          className="flex-1 px-4 py-2 rounded-xl border border-gray-200 outline-none focus:ring-2 focus:ring-blue-500" 
+                          placeholder="Ej: Especialista en rehabilitación funcional" 
+                        />
+                        <button 
+                          type="button" 
+                          onClick={() => { if(newExp) { setProfExperience([...profExperience, newExp]); setNewExp(''); } }}
+                          className="bg-blue-50 text-[#0088CC] px-4 py-2 rounded-xl font-bold hover:bg-blue-100"
+                        >
+                          Añadir
+                        </button>
+                      </div>
                     </div>
                   </div>
                   <div className="flex justify-end space-x-3 pt-4">

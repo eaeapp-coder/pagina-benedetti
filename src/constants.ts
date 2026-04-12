@@ -30,6 +30,7 @@ export interface Doctor {
   bio?: string;
   education?: string[];
   experience?: string[];
+  specializations?: string[];
   languages?: string[];
   availability?: string;
 }

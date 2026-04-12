@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { db } from '../firebase';
-import { collection, onSnapshot, query, addDoc, updateDoc, deleteDoc, doc, serverTimestamp } from 'firebase/firestore';
+import { collection, onSnapshot, query, addDoc, setDoc, deleteDoc, doc, serverTimestamp } from 'firebase/firestore';
 import { Doctor, DOCTORS } from '../constants';
 
 export function useProfessionals() {
@@ -34,10 +34,10 @@ export function useProfessionals() {
 
   const updateProfessional = async (id: string, professional: Partial<Doctor>) => {
     const docRef = doc(db, 'professionals', id);
-    await updateDoc(docRef, {
+    await setDoc(docRef, {
       ...professional,
       updatedAt: serverTimestamp()
-    });
+    }, { merge: true });
   };
 
   const deleteProfessional = async (id: string) => {

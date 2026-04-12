@@ -123,9 +123,15 @@ export default function ProfessionalProfile() {
                 className="bg-white rounded-3xl p-10 shadow-sm border border-gray-100"
               >
                 <h2 className="text-2xl font-bold text-[#1A3A5A] mb-6">Sobre el Profesional</h2>
-                <p className="text-gray-600 leading-relaxed text-lg">
-                  {doctor.bio || 'Información biográfica no disponible en este momento.'}
-                </p>
+                {doctor.bio ? (
+                  <div className="whitespace-pre-wrap text-gray-600 text-lg leading-relaxed">
+                    {doctor.bio}
+                  </div>
+                ) : (
+                  <p className="text-gray-600 leading-relaxed text-lg italic">
+                    Información biográfica no disponible en este momento.
+                  </p>
+                )}
               </motion.section>
 
               {/* Education & Experience */}
@@ -186,14 +192,18 @@ export default function ProfessionalProfile() {
               >
                 <h2 className="text-xl font-bold text-[#1A3A5A] mb-6">Áreas de Especialización</h2>
                 <div className="flex flex-wrap gap-3">
-                  {['Diagnóstico Preventivo', 'Atención Personalizada', 'Seguimiento Clínico', 'Tecnología Médica'].map((skill, i) => (
-                    <span 
-                      key={i} 
-                      className="bg-blue-50 text-[#0088CC] px-4 py-2 rounded-full text-sm font-medium"
-                    >
-                      {skill}
-                    </span>
-                  ))}
+                  {doctor.specializations && doctor.specializations.length > 0 ? (
+                    doctor.specializations.map((skill, i) => (
+                      <span 
+                        key={i} 
+                        className="bg-blue-50 text-[#0088CC] px-4 py-2 rounded-full text-sm font-medium"
+                      >
+                        {skill}
+                      </span>
+                    ))
+                  ) : (
+                    <p className="text-gray-400 italic">No especificadas</p>
+                  )}
                 </div>
               </motion.section>
             </div>

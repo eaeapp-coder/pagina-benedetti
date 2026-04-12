@@ -12,6 +12,9 @@
         "hoursMonWedFri": { "type": "string", "description": "Hours for Mon, Wed, Fri" },
         "aboutHero": { "type": "string", "description": "Hero text for the About Us page" },
         "aboutText": { "type": "string", "description": "Main text for the About Us page" },
+        "instagramUrl": { "type": "string", "description": "Instagram profile URL" },
+        "facebookUrl": { "type": "string", "description": "Facebook profile URL" },
+        "linkedinUrl": { "type": "string", "description": "LinkedIn profile URL" },
         "updatedAt": { "type": "string", "format": "date-time" }
       },
       "required": ["address", "phoneLine", "phoneWhatsapp", "hoursTueThu", "hoursMonWedFri", "aboutHero", "aboutText"]
@@ -52,6 +55,7 @@
         "bio": { "type": "string" },
         "education": { "type": "array", "items": { "type": "string" } },
         "experience": { "type": "array", "items": { "type": "string" } },
+        "specializations": { "type": "array", "items": { "type": "string" } },
         "languages": { "type": "array", "items": { "type": "string" } },
         "availability": { "type": "string" },
         "createdAt": { "type": "string", "format": "date-time" }

@@ -114,10 +114,9 @@ export default function About() {
                     <Loader2 className="animate-spin text-[#0088CC] w-8 h-8" />
                   </div>
                 ) : (
-                  <div 
-                    className="prose prose-lg max-w-none text-gray-600"
-                    dangerouslySetInnerHTML={{ __html: settings.aboutText }} 
-                  />
+                  <div className="whitespace-pre-wrap text-gray-600 text-lg leading-relaxed">
+                    {settings.aboutText}
+                  </div>
                 )}
               </div>
             </motion.div>

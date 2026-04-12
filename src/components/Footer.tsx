@@ -1,5 +1,5 @@
 import React from 'react';
-import { Phone, MapPin } from 'lucide-react';
+import { Phone, MapPin, Instagram, Facebook, Linkedin } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import { useSettings } from '../hooks/useSettings';
 
@@ -26,6 +26,23 @@ export default function Footer() {
               <p className="text-gray-500 text-sm leading-relaxed max-w-md">
                 Brindamos atención médica de excelencia con un equipo de profesionales altamente capacitados y tecnología de última generación.
               </p>
+              <div className="flex space-x-4 mt-6">
+                {settings.instagramUrl && (
+                  <a href={settings.instagramUrl} target="_blank" rel="noopener noreferrer" className="bg-white p-2 rounded-lg shadow-sm border border-gray-100 text-gray-400 hover:text-[#E1306C] transition-colors">
+                    <Instagram size={20} />
+                  </a>
+                )}
+                {settings.facebookUrl && (
+                  <a href={settings.facebookUrl} target="_blank" rel="noopener noreferrer" className="bg-white p-2 rounded-lg shadow-sm border border-gray-100 text-gray-400 hover:text-[#1877F2] transition-colors">
+                    <Facebook size={20} />
+                  </a>
+                )}
+                {settings.linkedinUrl && (
+                  <a href={settings.linkedinUrl} target="_blank" rel="noopener noreferrer" className="bg-white p-2 rounded-lg shadow-sm border border-gray-100 text-gray-400 hover:text-[#0A66C2] transition-colors">
+                    <Linkedin size={20} />
+                  </a>
+                )}
+              </div>
             </div>
 
             {/* Contact Info */}

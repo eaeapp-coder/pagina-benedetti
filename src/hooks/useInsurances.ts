@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { db } from '../firebase';
-import { collection, onSnapshot, query, addDoc, updateDoc, deleteDoc, doc, serverTimestamp } from 'firebase/firestore';
+import { collection, onSnapshot, query, addDoc, setDoc, deleteDoc, doc, serverTimestamp } from 'firebase/firestore';
 import { InsuranceProvider, INSURANCE_PROVIDERS } from '../constants';
 
 export function useInsurances() {
@@ -34,10 +34,10 @@ export function useInsurances() {
 
   const updateInsurance = async (id: string, insurance: Partial<InsuranceProvider>) => {
     const docRef = doc(db, 'insurances', id);
-    await updateDoc(docRef, {
+    await setDoc(docRef, {
       ...insurance,
       updatedAt: serverTimestamp()
-    });
+    }, { merge: true });
   };
 
   const deleteInsurance = async (id: string) => {

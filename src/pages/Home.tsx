@@ -48,8 +48,10 @@ export default function Home() {
       "closes": "20:00"
     },
     "sameAs": [
-      "https://www.instagram.com/consultoriosbenedetti"
-    ]
+      settings.instagramUrl,
+      settings.facebookUrl,
+      settings.linkedinUrl
+    ].filter(Boolean)
   };
 
   return (

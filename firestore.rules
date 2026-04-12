@@ -26,7 +26,10 @@ service cloud.firestore {
              data.hoursTueThu is string && data.hoursTueThu.size() < 100 &&
              data.hoursMonWedFri is string && data.hoursMonWedFri.size() < 100 &&
              data.aboutHero is string && data.aboutHero.size() < 500 &&
-             data.aboutText is string && data.aboutText.size() < 10000;
+             data.aboutText is string && data.aboutText.size() < 10000 &&
+             (!('instagramUrl' in data) || data.instagramUrl is string) &&
+             (!('facebookUrl' in data) || data.facebookUrl is string) &&
+             (!('linkedinUrl' in data) || data.linkedinUrl is string);
     }
 
     function isValidReview(data) {
@@ -39,10 +42,15 @@ service cloud.firestore {
     }
 
     function isValidProfessional(data) {
-      return data.keys().hasAll(['name', 'specialties', 'image']) &&
+      return data.keys().hasAll(['name', 'specialties', 'image', 'bio', 'availability']) &&
              data.name is string && data.name.size() < 100 &&
              data.specialties is list &&
-             data.image is string && data.image.size() < 500;
+             data.image is string && data.image.size() < 500 &&
+             data.bio is string && data.bio.size() < 10000 &&
+             data.availability is string && data.availability.size() < 200 &&
+             (!('education' in data) || data.education is list) &&
+             (!('experience' in data) || data.experience is list) &&
+             (!('specializations' in data) || data.specializations is list);
     }
 
     function isValidInsurance(data) {
@@ -58,22 +66,22 @@ service cloud.firestore {
 
     match /settings/{settingsId} {
       allow read: if true;
-      allow write: if isAdmin() && isValidSettings(request.resource.data);
+      allow write: if isAdmin() && (request.method == 'delete' || isValidSettings(request.resource.data));
     }
 
     match /reviews/{reviewId} {
       allow read: if true;
-      allow write: if isAdmin() && isValidReview(request.resource.data);
+      allow write: if isAdmin() && (request.method == 'delete' || isValidReview(request.resource.data));
     }
 
     match /professionals/{id} {
       allow read: if true;
-      allow write: if isAdmin() && isValidProfessional(request.resource.data);
+      allow write: if isAdmin() && (request.method == 'delete' || isValidProfessional(request.resource.data));
     }
 
     match /insurances/{id} {
       allow read: if true;
-      allow write: if isAdmin() && isValidInsurance(request.resource.data);
+      allow write: if isAdmin() && (request.method == 'delete' || isValidInsurance(request.resource.data));
     }
 
     match /users/{userId} {

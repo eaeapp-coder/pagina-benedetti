@@ -5,6 +5,7 @@ import {
   MapPin, 
   Instagram, 
   Facebook, 
+  Linkedin,
   Clock,
   MessageSquare
 } from 'lucide-react';
@@ -155,12 +156,21 @@ export default function Contact() {
                 <div className="absolute top-0 right-0 w-32 h-32 bg-blue-400 rounded-full blur-3xl opacity-20 -mr-16 -mt-16"></div>
                 <h3 className="text-xl font-bold mb-6 relative z-10">Síguenos</h3>
                 <div className="flex space-x-4 relative z-10">
-                  <a href="https://www.instagram.com/consultoriosbenedetti" target="_blank" rel="noopener noreferrer" className="bg-white/10 hover:bg-white/20 p-4 rounded-2xl transition-colors">
-                    <Instagram className="w-6 h-6" />
-                  </a>
-                  <a href="https://www.facebook.com/consultoriosbenedetti/" target="_blank" rel="noopener noreferrer" className="bg-white/10 hover:bg-white/20 p-4 rounded-2xl transition-colors">
-                    <Facebook className="w-6 h-6" />
-                  </a>
+                  {settings.instagramUrl && (
+                    <a href={settings.instagramUrl} target="_blank" rel="noopener noreferrer" className="bg-white/10 hover:bg-white/20 p-4 rounded-2xl transition-colors">
+                      <Instagram className="w-6 h-6" />
+                    </a>
+                  )}
+                  {settings.facebookUrl && (
+                    <a href={settings.facebookUrl} target="_blank" rel="noopener noreferrer" className="bg-white/10 hover:bg-white/20 p-4 rounded-2xl transition-colors">
+                      <Facebook className="w-6 h-6" />
+                    </a>
+                  )}
+                  {settings.linkedinUrl && (
+                    <a href={settings.linkedinUrl} target="_blank" rel="noopener noreferrer" className="bg-white/10 hover:bg-white/20 p-4 rounded-2xl transition-colors">
+                      <Linkedin className="w-6 h-6" />
+                    </a>
+                  )}
                 </div>
               </motion.div>
             </div>
