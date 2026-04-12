@@ -69,7 +69,7 @@ export default function NewServiceHighlight() {
                   transition={{ delay: 0.5, type: "spring", stiffness: 100 }}
                   className="relative"
                 >
-                  <div className="w-80 h-80 md:w-[420px] md:h-[420px] bg-white rounded-[2rem] shadow-xl overflow-hidden transform -rotate-6">
+                  <div className="w-72 h-72 md:w-[378px] md:h-[378px] bg-white rounded-[2rem] shadow-xl overflow-hidden transform -rotate-6">
                     <img 
                       src="https://eaeapp.com/images-ia/benedetti/ortopedia.jpg" 
                       alt="Ortopedia" 
@@ -82,19 +82,19 @@ export default function NewServiceHighlight() {
                   <motion.div 
                     animate={{ y: [0, -10, 0] }}
                     transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                    className="absolute -top-6 -right-6 bg-white p-4 rounded-2xl shadow-lg border border-blue-50"
+                    className="absolute -top-2 -right-2 md:-top-6 md:-right-6 bg-white p-3 md:p-4 rounded-2xl shadow-lg border border-blue-50"
                   >
-                    <div className="text-[#0088CC] font-bold text-lg">Excelencia</div>
-                    <div className="text-gray-400 text-xs">Médica</div>
+                    <div className="text-[#0088CC] font-bold text-base md:text-lg">Excelencia</div>
+                    <div className="text-gray-400 text-[10px] md:text-xs">Médica</div>
                   </motion.div>
 
                   <motion.div 
                     animate={{ y: [0, 10, 0] }}
                     transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-                    className="absolute -bottom-8 -left-8 bg-white p-4 rounded-2xl shadow-lg border border-blue-50"
+                    className="absolute -bottom-4 -left-4 md:-bottom-8 md:-left-8 bg-white p-3 md:p-4 rounded-2xl shadow-lg border border-blue-50"
                   >
-                    <div className="text-[#1A3A5A] font-bold text-lg">Tecnología</div>
-                    <div className="text-gray-400 text-xs">de Punta</div>
+                    <div className="text-[#1A3A5A] font-bold text-base md:text-lg">Tecnología</div>
+                    <div className="text-gray-400 text-[10px] md:text-xs">de Punta</div>
                   </motion.div>
                 </motion.div>
               </div>

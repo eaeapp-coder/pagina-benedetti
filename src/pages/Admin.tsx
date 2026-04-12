@@ -3,7 +3,7 @@ import { auth, db } from '../firebase';
 import { signInWithEmailAndPassword, signOut, onAuthStateChanged, User } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
 import { useSettings, AppSettings } from '../hooks/useSettings';
-import { useReviews } from '../hooks/useReviews';
+import { useReviews, Review } from '../hooks/useReviews';
 import { useProfessionals } from '../hooks/useProfessionals';
 import { useInsurances } from '../hooks/useInsurances';
 import { SPECIALTIES, Doctor, InsuranceProvider, INSURANCE_PROVIDERS } from '../constants';
@@ -28,7 +28,7 @@ export default function Admin() {
   const [isMounted, setIsMounted] = useState(false);
   
   const { settings, loading: settingsLoading } = useSettings();
-  const { reviews, addReview } = useReviews();
+  const { reviews, addReview, updateReview, deleteReview } = useReviews();
   const { professionals, addProfessional, updateProfessional, deleteProfessional } = useProfessionals();
   const { insurances, addInsurance, updateInsurance, deleteInsurance } = useInsurances();
   
@@ -36,8 +36,10 @@ export default function Admin() {
   const [formData, setFormData] = useState<AppSettings | null>(null);
   const [showProfForm, setShowProfForm] = useState(false);
   const [showInsForm, setShowInsForm] = useState(false);
+  const [showReviewForm, setShowReviewForm] = useState(false);
   
   // Review form state
+  const [editingReview, setEditingReview] = useState<Review | null>(null);
   const [reviewAuthor, setReviewAuthor] = useState('');
   const [reviewRating, setReviewRating] = useState(5);
   const [reviewText, setReviewText] = useState('');
@@ -108,26 +110,50 @@ export default function Admin() {
     }
   };
 
-  const handleAddReview = async (e: React.FormEvent) => {
+  const handleReviewSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!reviewAuthor || !reviewText) return;
     setIsAddingReview(true);
     try {
-      await addReview({
-        author: reviewAuthor,
-        rating: reviewRating,
-        text: reviewText
-      });
-      setReviewAuthor('');
-      setReviewText('');
-      setReviewRating(5);
-      alert('Reseña agregada con éxito.');
+      if (editingReview) {
+        await updateReview(editingReview.id, {
+          author: reviewAuthor,
+          rating: reviewRating,
+          text: reviewText
+        });
+        alert('Reseña actualizada con éxito.');
+      } else {
+        await addReview({
+          author: reviewAuthor,
+          rating: reviewRating,
+          text: reviewText
+        });
+        alert('Reseña agregada con éxito.');
+      }
+      resetReviewForm();
     } catch (err) {
       console.error(err);
-      alert('Error al agregar la reseña.');
+      alert('Error al procesar la reseña.');
     } finally {
       setIsAddingReview(false);
     }
+  };
+
+  const resetReviewForm = () => {
+    setEditingReview(null);
+    setReviewAuthor('');
+    setReviewText('');
+    setReviewRating(5);
+    setShowReviewForm(false);
+  };
+
+  const startEditReview = (review: Review) => {
+    setEditingReview(review);
+    setReviewAuthor(review.author);
+    setReviewRating(review.rating);
+    setReviewText(review.text);
+    setShowReviewForm(true);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleProfessionalSubmit = async (e: React.FormEvent) => {
@@ -718,56 +744,84 @@ export default function Admin() {
           {/* Section: Reviews */}
           {activeTab === 'reviews' && (
             <div className="space-y-8">
-              <div className="mb-8">
-                <h1 className="text-3xl font-bold text-[#1A3A5A]">Reseñas</h1>
-                <p className="text-gray-500">Gestiona los testimonios que aparecen en la web</p>
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+                <div>
+                  <h1 className="text-3xl font-bold text-[#1A3A5A]">Reseñas</h1>
+                  <p className="text-gray-500">Gestiona los testimonios que aparecen en la web</p>
+                </div>
+                {!showReviewForm && (
+                  <button 
+                    onClick={() => setShowReviewForm(true)}
+                    className="bg-[#0088CC] text-white px-6 py-2 rounded-xl font-bold hover:bg-[#0077B3] transition-all flex items-center space-x-2"
+                  >
+                    <Plus className="w-4 h-4" />
+                    <span>Agregar Reseña</span>
+                  </button>
+                )}
               </div>
-              <div className="bg-white rounded-[2rem] shadow-sm border border-gray-100 p-8 space-y-6">
-                <form onSubmit={handleAddReview} className="bg-gray-50 p-6 rounded-2xl space-y-4">
-                  <h3 className="font-bold text-[#1A3A5A] flex items-center">
-                    <Plus className="w-4 h-4 mr-2" />
-                    Agregar Nueva Reseña
-                  </h3>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Firma (Nombre)</label>
-                      <input type="text" required value={reviewAuthor} onChange={(e) => setReviewAuthor(e.target.value)} className="w-full px-4 py-2 rounded-xl border border-gray-200 outline-none focus:ring-2 focus:ring-blue-500" />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Calificación (1-5)</label>
-                      <div className="flex items-center space-x-2 h-10">
-                        {[1, 2, 3, 4, 5].map((star) => (
-                          <button key={star} type="button" onClick={() => setReviewRating(star)} className="focus:outline-none">
-                            <StarIcon className={`w-6 h-6 ${star <= reviewRating ? 'fill-[#FABB05] text-[#FABB05]' : 'text-gray-300'}`} />
-                          </button>
-                        ))}
+
+              {showReviewForm && (
+                <div className="bg-white rounded-[2rem] shadow-sm border border-gray-100 p-8">
+                  <h2 className="text-xl font-bold text-[#1A3A5A] mb-6 flex items-center">
+                    {editingReview ? <Edit2 className="mr-2 text-[#0088CC]" /> : <Plus className="mr-2 text-[#0088CC]" />}
+                    {editingReview ? 'Editar Reseña' : 'Agregar Nueva Reseña'}
+                  </h2>
+                  <form onSubmit={handleReviewSubmit} className="space-y-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Firma (Nombre)</label>
+                        <input type="text" required value={reviewAuthor} onChange={(e) => setReviewAuthor(e.target.value)} className="w-full px-4 py-2 rounded-xl border border-gray-200 outline-none focus:ring-2 focus:ring-blue-500" />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Calificación (1-5)</label>
+                        <div className="flex items-center space-x-2 h-10">
+                          {[1, 2, 3, 4, 5].map((star) => (
+                            <button key={star} type="button" onClick={() => setReviewRating(star)} className="focus:outline-none">
+                              <StarIcon className={`w-6 h-6 ${star <= reviewRating ? 'fill-[#FABB05] text-[#FABB05]' : 'text-gray-300'}`} />
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                      <div className="md:col-span-2">
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Comentario</label>
+                        <textarea required value={reviewText} onChange={(e) => setReviewText(e.target.value)} rows={3} className="w-full px-4 py-2 rounded-xl border border-gray-200 outline-none focus:ring-2 focus:ring-blue-500 resize-none" />
                       </div>
                     </div>
-                    <div className="md:col-span-2">
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Comentario</label>
-                      <textarea required value={reviewText} onChange={(e) => setReviewText(e.target.value)} rows={3} className="w-full px-4 py-2 rounded-xl border border-gray-200 outline-none focus:ring-2 focus:ring-blue-500 resize-none" />
+                    <div className="flex justify-end space-x-3 pt-4">
+                      <button type="button" onClick={resetReviewForm} className="px-6 py-2 rounded-xl border border-gray-200 text-gray-500 hover:bg-gray-50 font-bold">
+                        {editingReview ? 'Cancelar' : 'Cerrar'}
+                      </button>
+                      <button type="submit" disabled={isAddingReview} className="bg-[#0088CC] text-white px-8 py-2 rounded-xl font-bold hover:bg-[#0077B3] transition-all flex items-center space-x-2 disabled:opacity-50">
+                        {isAddingReview ? <Loader2 className="animate-spin w-4 h-4" /> : (editingReview ? <Edit2 className="w-4 h-4" /> : <Plus className="w-4 h-4" />)}
+                        <span>{editingReview ? 'Actualizar' : 'Agregar'}</span>
+                      </button>
                     </div>
-                  </div>
-                  <div className="flex justify-end">
-                    <button type="submit" disabled={isAddingReview} className="bg-[#0088CC] text-white px-6 py-2 rounded-xl font-bold hover:bg-[#0077B3] transition-all flex items-center space-x-2 disabled:opacity-50">
-                      {isAddingReview ? <Loader2 className="animate-spin w-4 h-4" /> : <Plus className="w-4 h-4" />}
-                      <span>Agregar Reseña</span>
-                    </button>
-                  </div>
-                </form>
+                  </form>
+                </div>
+              )}
+
+              <div className="bg-white rounded-[2rem] shadow-sm border border-gray-100 p-8 space-y-6">
                 <div className="space-y-4">
                   <h3 className="font-bold text-[#1A3A5A]">Reseñas Actuales</h3>
                   <div className="grid grid-cols-1 gap-3">
                     {reviews.map((review) => (
-                      <div key={review.id} className="flex items-start justify-between p-4 bg-white border border-gray-100 rounded-xl shadow-sm">
+                      <div key={review.id} className="flex items-start justify-between p-4 bg-white border border-gray-100 rounded-xl shadow-sm group hover:border-blue-100 hover:bg-blue-50/30 transition-all">
                         <div className="flex-1">
                           <div className="flex items-center space-x-1 mb-1">
-                            {[...Array(review.rating)].map((_, i) => (
-                              <StarIcon key={i} className="w-3 h-3 fill-[#FABB05] text-[#FABB05]" />
+                            {[...Array(5)].map((_, i) => (
+                              <StarIcon key={i} className={`w-3 h-3 ${i < review.rating ? 'fill-[#FABB05] text-[#FABB05]' : 'text-gray-200'}`} />
                             ))}
                           </div>
                           <p className="text-sm text-gray-600 italic mb-1 line-clamp-2">"{review.text}"</p>
                           <p className="text-xs font-bold text-[#1A3A5A]">— {review.author}</p>
+                        </div>
+                        <div className="flex items-center space-x-1 ml-4">
+                          <button onClick={() => startEditReview(review)} className="p-2 text-gray-400 hover:text-[#0088CC] transition-colors">
+                            <Edit2 className="w-4 h-4" />
+                          </button>
+                          <button onClick={() => { if(confirm('¿Borrar reseña?')) deleteReview(review.id) }} className="p-2 text-gray-400 hover:text-red-500 transition-colors">
+                            <Trash2 className="w-4 h-4" />
+                          </button>
                         </div>
                       </div>
                     ))}

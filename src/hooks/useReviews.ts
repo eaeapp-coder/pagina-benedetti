@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { collection, query, orderBy, limit, onSnapshot, addDoc, getDocs, deleteDoc, doc } from 'firebase/firestore';
+import { collection, query, orderBy, limit, onSnapshot, addDoc, getDocs, deleteDoc, doc, updateDoc } from 'firebase/firestore';
 import { db } from '../firebase';
 import { handleFirestoreError, OperationType } from '../lib/firestore-utils';
 
@@ -62,7 +62,7 @@ export function useReviews() {
 
   useEffect(() => {
     const path = 'reviews';
-    const q = query(collection(db, 'reviews'), orderBy('createdAt', 'desc'), limit(6));
+    const q = query(collection(db, 'reviews'), orderBy('createdAt', 'desc'), limit(10));
     
     const unsubscribe = onSnapshot(q, (snapshot) => {
       if (!snapshot.empty) {
@@ -86,35 +86,32 @@ export function useReviews() {
   const addReview = async (newReview: Omit<Review, 'id' | 'createdAt'>) => {
     const path = 'reviews';
     try {
-      // 1. Get current reviews to see if we need to delete the oldest
-      const q = query(collection(db, 'reviews'), orderBy('createdAt', 'desc'));
-      const snapshot = await getDocs(q);
-      
-      // 2. Add the new review
       await addDoc(collection(db, 'reviews'), {
         ...newReview,
-        id: "temp", // Firestore will assign a real ID
         createdAt: new Date().toISOString()
       });
-
-      // 3. If we have 6 or more, delete the oldest ones to keep only 6
-      // (We check >= 6 because we just added one, so if it was 6, now it's 7)
-      if (snapshot.docs.length >= 6) {
-        // Sort by date ascending to find the oldest
-        const sortedDocs = snapshot.docs.sort((a, b) => 
-          new Date(a.data().createdAt).getTime() - new Date(b.data().createdAt).getTime()
-        );
-        
-        // Delete oldest docs until we have 5 (so the new one makes it 6)
-        const docsToDelete = sortedDocs.slice(0, snapshot.docs.length - 5);
-        for (const d of docsToDelete) {
-          await deleteDoc(doc(db, 'reviews', d.id));
-        }
-      }
     } catch (error) {
       handleFirestoreError(error, OperationType.WRITE, path);
     }
   };
 
-  return { reviews, loading, addReview };
+  const updateReview = async (id: string, updatedReview: Partial<Review>) => {
+    const path = `reviews/${id}`;
+    try {
+      await updateDoc(doc(db, 'reviews', id), updatedReview);
+    } catch (error) {
+      handleFirestoreError(error, OperationType.UPDATE, path);
+    }
+  };
+
+  const deleteReview = async (id: string) => {
+    const path = `reviews/${id}`;
+    try {
+      await deleteDoc(doc(db, 'reviews', id));
+    } catch (error) {
+      handleFirestoreError(error, OperationType.DELETE, path);
+    }
+  };
+
+  return { reviews, loading, addReview, updateReview, deleteReview };
 }
