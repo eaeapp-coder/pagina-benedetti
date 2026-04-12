@@ -167,10 +167,33 @@ export default function Admin() {
     );
   }
 
-  if (settingsLoading || !formData) {
+  if (settingsLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <Loader2 className="animate-spin text-[#0088CC] w-12 h-12" />
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="text-center">
+          <Loader2 className="animate-spin text-[#0088CC] w-12 h-12 mx-auto mb-4" />
+          <p className="text-gray-500 animate-pulse">Cargando configuración...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!formData) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="text-center p-8 bg-white rounded-3xl shadow-xl max-w-md">
+          <div className="bg-red-50 w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4">
+            <SettingsIcon className="text-red-500 w-8 h-8" />
+          </div>
+          <h2 className="text-xl font-bold text-gray-900 mb-2">Error de Carga</h2>
+          <p className="text-gray-500 mb-6">No se pudo cargar la configuración del sitio. Por favor, intenta recargar la página.</p>
+          <button 
+            onClick={() => window.location.reload()}
+            className="w-full bg-[#1A3A5A] text-white py-3 rounded-xl font-bold hover:bg-[#254a70] transition-all"
+          >
+            Recargar Página
+          </button>
+        </div>
       </div>
     );
   }
