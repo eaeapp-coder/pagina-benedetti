@@ -8,10 +8,12 @@ import { CheckCircle2, Clock, User, Calendar } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import SEO from '../components/SEO';
 import StructuredData from '../components/StructuredData';
+import { useSettings } from '../hooks/useSettings';
 
 import PageTransition from '../components/PageTransition';
 
 export default function Home() {
+  const { settings } = useSettings();
   const clinicSchema = {
     "@context": "https://schema.org",
     "@type": "MedicalClinic",
@@ -19,10 +21,10 @@ export default function Home() {
     "image": "https://eaeapp.com/images-ia/benedetti/favico.png",
     "@id": "https://consultoriosbenedetti.com.ar",
     "url": "https://consultoriosbenedetti.com.ar",
-    "telephone": "+541120717674",
+    "telephone": settings.phoneLine,
     "address": {
       "@type": "PostalAddress",
-      "streetAddress": "29 de Setiembre 2168",
+      "streetAddress": settings.address,
       "addressLocality": "Lanús Este",
       "addressRegion": "Buenos Aires",
       "postalCode": "1824",

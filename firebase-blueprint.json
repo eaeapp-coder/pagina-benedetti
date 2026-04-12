@@ -1,0 +1,39 @@
+{
+  "entities": {
+    "Settings": {
+      "title": "Settings",
+      "description": "Global application settings like contact info and business hours",
+      "type": "object",
+      "properties": {
+        "address": { "type": "string", "description": "Physical address" },
+        "phoneLine": { "type": "string", "description": "Landline phone number" },
+        "phoneWhatsapp": { "type": "string", "description": "WhatsApp phone number" },
+        "hoursTueThu": { "type": "string", "description": "Hours for Tue and Thu" },
+        "hoursMonWedFri": { "type": "string", "description": "Hours for Mon, Wed, Fri" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["address", "phoneLine", "phoneWhatsapp", "hoursTueThu", "hoursMonWedFri"]
+    },
+    "User": {
+      "title": "User",
+      "description": "User profile for administration",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string" },
+        "role": { "type": "string", "enum": ["admin"] }
+      },
+      "required": ["uid", "email", "role"]
+    }
+  },
+  "firestore": {
+    "/settings/{settingsId}": {
+      "schema": "Settings",
+      "description": "Global settings document"
+    },
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profile documents"
+    }
+  }
+}

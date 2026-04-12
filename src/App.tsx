@@ -20,6 +20,7 @@ import Insurances from './pages/Insurances';
 import BlogArchive from './pages/BlogArchive';
 import BlogPost from './pages/BlogPost';
 import About from './pages/About';
+import Admin from './pages/Admin';
 import { motion, AnimatePresence } from 'motion/react';
 
 function AppRoutes() {
@@ -38,6 +39,7 @@ function AppRoutes() {
         <Route path="/nosotros" element={<About />} />
         <Route path="/contacto" element={<Contact />} />
         <Route path="/turnos" element={<Booking />} />
+        <Route path="/admin" element={<Admin />} />
         {/* Fallback routes for demo */}
         <Route path="/nosotros" element={<Home />} />
         <Route path="/privacidad" element={<Home />} />

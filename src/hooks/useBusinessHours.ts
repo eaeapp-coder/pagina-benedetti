@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
+import { useSettings } from './useSettings';
 
 export function useBusinessHours() {
   const [isOpen, setIsOpen] = useState(true);
   const [statusMessage, setStatusMessage] = useState('');
+  const { settings } = useSettings();
 
   useEffect(() => {
     const checkStatus = () => {
@@ -18,25 +20,35 @@ export function useBusinessHours() {
       let open = false;
       let message = '';
 
-      // Business Hours:
-      // Mar. a Jue. – 11:00 a 20:00
-      // Lun. Mie. y Vie. – 08:00 a 18:00
+      // Parse hours from settings (Expected format: "HH:MM a HH:MM")
+      const parseHours = (hoursStr: string) => {
+        const match = hoursStr.match(/(\d{2}):(\d{2})\s*a\s*(\d{2}):(\d{2})/);
+        if (match) {
+          const start = parseInt(match[1]) + parseInt(match[2]) / 60;
+          const end = parseInt(match[3]) + parseInt(match[4]) / 60;
+          return { start, end };
+        }
+        return null;
+      };
+
+      const tueThu = parseHours(settings.hoursTueThu) || { start: 11, end: 20 };
+      const monWedFri = parseHours(settings.hoursMonWedFri) || { start: 8, end: 18 };
       
       if (day === 0 || day === 6) {
         // Saturday or Sunday
         open = false;
         message = 'Te responderemos el lunes a primera hora';
       } else if (day === 2 || day === 4) {
-        // Tuesday or Thursday (11:00 to 20:00)
-        if (currentTime >= 11 && currentTime < 20) {
+        // Tuesday or Thursday
+        if (currentTime >= tueThu.start && currentTime < tueThu.end) {
           open = true;
         } else {
           open = false;
           message = 'Te responderemos apenas reanudemos la atención';
         }
       } else {
-        // Monday, Wednesday, Friday (08:00 to 18:00)
-        if (currentTime >= 8 && currentTime < 18) {
+        // Monday, Wednesday, Friday
+        if (currentTime >= monWedFri.start && currentTime < monWedFri.end) {
           open = true;
         } else {
           open = false;
@@ -51,7 +63,7 @@ export function useBusinessHours() {
     checkStatus();
     const interval = setInterval(checkStatus, 60000); // Check every minute
     return () => clearInterval(interval);
-  }, []);
+  }, [settings]);
 
   return { isOpen, statusMessage };
 }

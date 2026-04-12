@@ -1,8 +1,10 @@
 import React from 'react';
 import { Phone, MapPin, Plus } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useSettings } from '../hooks/useSettings';
 
 export default function Footer() {
+  const { settings } = useSettings();
   return (
     <footer className="bg-[#F8FAFC] border-t border-gray-200 pt-16 pb-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -28,13 +30,13 @@ export default function Footer() {
             <ul className="space-y-4">
               <li className="flex items-start space-x-3 text-sm text-gray-600">
                 <MapPin className="w-5 h-5 text-[#0088CC] shrink-0" />
-                <span>Dirección: 29 de Setiembre 2168, Lanús Este</span>
+                <span>Dirección: {settings.address}</span>
               </li>
               <li className="flex items-start space-x-3 text-sm text-gray-600">
                 <Phone className="w-5 h-5 text-[#0088CC] shrink-0 mt-0.5" />
                 <div className="flex flex-col">
-                  <span>2071-7674 (Línea)</span>
-                  <span>011 2288-3581 (WhatsApp)</span>
+                  <span>{settings.phoneLine} (Línea)</span>
+                  <span>{settings.phoneWhatsapp} (WhatsApp)</span>
                 </div>
               </li>
             </ul>

@@ -11,9 +11,11 @@ import {
 import PageTransition from '../components/PageTransition';
 import SEO from '../components/SEO';
 import { useBusinessHours } from '../hooks/useBusinessHours';
+import { useSettings } from '../hooks/useSettings';
 
 export default function Contact() {
   const { isOpen, statusMessage } = useBusinessHours();
+  const { settings } = useSettings();
 
   return (
     <PageTransition>
@@ -66,7 +68,7 @@ export default function Contact() {
                     </div>
                     <div>
                       <h4 className="font-bold text-[#1A3A5A]">Ubicación</h4>
-                      <p className="text-gray-500 text-sm">29 de Setiembre 2168<br />Lanús Este, Buenos Aires</p>
+                      <p className="text-gray-500 text-sm">{settings.address}</p>
                     </div>
                   </div>
                 </motion.div>
@@ -84,7 +86,7 @@ export default function Contact() {
                     </div>
                     <div>
                       <h4 className="font-bold text-[#1A3A5A]">Teléfono</h4>
-                      <p className="text-gray-500 text-sm">20717674 (Linea)<br />011 2288 3581 (Whatsapp)</p>
+                      <p className="text-gray-500 text-sm">{settings.phoneLine} (Linea)<br />{settings.phoneWhatsapp} (Whatsapp)</p>
                     </div>
                   </div>
                 </motion.div>
@@ -137,7 +139,7 @@ export default function Contact() {
                     </div>
                     <div>
                       <h4 className="font-bold text-[#1A3A5A]">Horarios</h4>
-                      <p className="text-gray-500 text-sm">Mar. a Jue. – 11:00 a 20:00<br />Lun. Mie. y Vie. – 08:00 a 18:00</p>
+                      <p className="text-gray-500 text-sm">{settings.hoursTueThu}<br />{settings.hoursMonWedFri}</p>
                     </div>
                   </div>
                 </motion.div>
