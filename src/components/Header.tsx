@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Plus } from 'lucide-react';
+import { Menu, X, Plus, ExternalLink } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
+  const isAdminPage = location.pathname === '/admin';
 
   const navLinks = [
     { name: 'Inicio', path: '/' },
@@ -32,41 +33,70 @@ export default function Header() {
           </Link>
 
           {/* Desktop Nav */}
-          <nav className="hidden md:flex items-center space-x-8">
-            {navLinks.map((link) => (
-              link.name === 'Blog' ? (
-                <a
-                  key={link.path}
-                  href="https://pruebas.eaeapp.com/blog/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-sm font-medium transition-colors hover:text-[#0088CC] text-gray-600"
-                >
-                  {link.name}
-                </a>
-              ) : (
-                <Link
-                  key={link.path}
-                  to={link.path}
-                  className={`text-sm font-medium transition-colors hover:text-[#0088CC] ${
-                    isActive(link.path) ? 'text-[#0088CC] border-b-2 border-[#0088CC] pb-1' : 'text-gray-600'
-                  }`}
-                >
-                  {link.name}
-                </Link>
-              )
-            ))}
-          </nav>
+          {!isAdminPage ? (
+            <nav className="hidden md:flex items-center space-x-8">
+              {navLinks.map((link) => (
+                link.name === 'Blog' ? (
+                  <a
+                    key={link.path}
+                    href="https://pruebas.eaeapp.com/blog/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-sm font-medium transition-colors hover:text-[#0088CC] text-gray-600"
+                  >
+                    {link.name}
+                  </a>
+                ) : (
+                  <Link
+                    key={link.path}
+                    to={link.path}
+                    className={`text-sm font-medium transition-colors hover:text-[#0088CC] ${
+                      isActive(link.path) ? 'text-[#0088CC] border-b-2 border-[#0088CC] pb-1' : 'text-gray-600'
+                    }`}
+                  >
+                    {link.name}
+                  </Link>
+                )
+              ))}
+            </nav>
+          ) : (
+            <div className="hidden md:block">
+              <a 
+                href="/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="flex items-center text-sm font-medium text-[#0088CC] hover:text-[#1A3A5A] transition-colors"
+              >
+                Ver Sitio Web
+                <ExternalLink className="ml-2 w-4 h-4" />
+              </a>
+            </div>
+          )}
 
           {/* Mobile Menu Button */}
-          <div className="md:hidden">
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              className="text-gray-600 hover:text-[#0088CC] p-2"
-            >
-              {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-            </button>
-          </div>
+          {!isAdminPage && (
+            <div className="md:hidden">
+              <button
+                onClick={() => setIsOpen(!isOpen)}
+                className="text-gray-600 hover:text-[#0088CC] p-2"
+              >
+                {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              </button>
+            </div>
+          )}
+          
+          {isAdminPage && (
+            <div className="md:hidden">
+              <a 
+                href="/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-[#0088CC] p-2"
+              >
+                <ExternalLink className="w-6 h-6" />
+              </a>
+            </div>
+          )}
         </div>
       </div>
 
