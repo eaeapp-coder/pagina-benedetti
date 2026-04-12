@@ -241,6 +241,26 @@ export default function Admin() {
                       className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-500 outline-none"
                     />
                   </div>
+                  <div className="md:col-span-2">
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Resumen Página "Nosotros" (Hero)</label>
+                    <input 
+                      type="text" 
+                      value={formData.aboutHero}
+                      onChange={(e) => setFormData({...formData, aboutHero: e.target.value})}
+                      className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-500 outline-none"
+                      placeholder="Breve resumen debajo del título..."
+                    />
+                  </div>
+                  <div className="md:col-span-2">
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Historia Página "Nosotros" (Cuerpo)</label>
+                    <textarea 
+                      value={formData.aboutText}
+                      onChange={(e) => setFormData({...formData, aboutText: e.target.value})}
+                      rows={10}
+                      className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-500 outline-none resize-y"
+                      placeholder="Escribe aquí la historia completa..."
+                    />
+                  </div>
                 </div>
                 
                 <div className="flex justify-end pt-4">

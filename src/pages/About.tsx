@@ -1,10 +1,12 @@
 import React from 'react';
 import { motion } from 'motion/react';
 import PageTransition from '../components/PageTransition';
-import { Heart, Target, Eye, CheckCircle2, Users, Award } from 'lucide-react';
+import { Heart, Target, Eye, Users, Award, Loader2 } from 'lucide-react';
 import SEO from '../components/SEO';
+import { useSettings } from '../hooks/useSettings';
 
 export default function About() {
+  const { settings, loading } = useSettings();
   const values = [
     {
       icon: Heart,
@@ -51,7 +53,7 @@ export default function About() {
               transition={{ delay: 0.1 }}
               className="text-gray-500 text-lg max-w-3xl mx-auto leading-relaxed"
             >
-              Consultorios Benedetti es un centro de salud dedicado al cuidado del movimiento, la función y la calidad de vida de las personas.
+              {loading ? "..." : settings.aboutHero}
             </motion.p>
           </div>
 
@@ -107,24 +109,15 @@ export default function About() {
                 Una historia dedicada al <span className="text-[#0088CC]">bienestar</span> de la comunidad
               </h2>
               <div className="space-y-6 text-gray-600 leading-relaxed text-lg">
-                <p>
-                  Consultorios Benedetti es un centro de salud dedicado al cuidado del movimiento, la función y la calidad de vida de las personas. Nació hace más de diez años como un proyecto profesional centrado en la kinesiología, con el objetivo de acompañar procesos de rehabilitación y recuperación desde una mirada clínica, humana y personalizada.
-                </p>
-                <p>
-                  Desde sus inicios, el consultorio se orientó a la rehabilitación traumatológica, deportiva y postquirúrgica, acompañando a pacientes en procesos de recuperación funcional y en la mejora de su calidad de vida. Con el paso del tiempo, el proyecto fue creciendo, incorporando nuevas áreas de trabajo y profundizando en distintos enfoques terapéuticos, siempre con el mismo objetivo: ayudar a las personas a moverse mejor, sentirse mejor y recuperar su bienestar.
-                </p>
-                <p>
-                  A lo largo de estos años, el trabajo clínico se fue ampliando e integrando nuevas herramientas. El cuidado quiropráctico ocupa hoy un lugar central dentro del consultorio. Este enfoque busca mejorar la función de la columna vertebral y su relación con el sistema nervioso, entendiendo que una columna con mejor función puede impactar positivamente en la movilidad, el bienestar general y la calidad de vida. La quiropráctica no se plantea como un tratamiento aislado, sino como un proceso de cuidado progresivo que acompaña al paciente en la recuperación y el mantenimiento de su salud.
-                </p>
-                <p>
-                  En paralelo, el análisis de la pisada y la evaluación biomecánica se incorporaron como una herramienta fundamental para abordar alteraciones del apoyo plantar que pueden repercutir en pies, rodillas, cadera o columna. A partir de evaluaciones precisas, se diseñan y confeccionan soportes plantares personalizados, orientados a mejorar la función, corregir desequilibrios y favorecer tanto el rendimiento como el confort en la vida cotidiana.
-                </p>
-                <p>
-                  Más recientemente, el consultorio ha sumado un área vinculada a productos ortopédicos, orientada a brindar soluciones prácticas en procesos de rehabilitación, movilidad y cuidado postural. Esta incorporación forma parte de una visión integral que busca acompañar a cada persona no solo en el tratamiento clínico, sino también en las herramientas que facilitan su recuperación y autonomía.
-                </p>
-                <p>
-                  Con más de una década de trabajo sostenido, Consultorios Benedetti se ha consolidado como un espacio de referencia en la zona, combinando experiencia clínica, compromiso humano y una visión integral del cuidado de la salud. Nuestro propósito es claro: ayudar a cada persona a recuperar su función, mejorar su calidad de vida y sostener su bienestar a largo plazo.
-                </p>
+                {loading ? (
+                  <div className="flex justify-center py-12">
+                    <Loader2 className="animate-spin text-[#0088CC] w-8 h-8" />
+                  </div>
+                ) : (
+                  settings.aboutText.split('\n\n').map((paragraph, idx) => (
+                    <p key={idx}>{paragraph}</p>
+                  ))
+                )}
               </div>
             </motion.div>
           </div>

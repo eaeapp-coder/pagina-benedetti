@@ -17,12 +17,14 @@ service cloud.firestore {
     }
 
     function isValidSettings(data) {
-      return data.keys().hasAll(['address', 'phoneLine', 'phoneWhatsapp', 'hoursTueThu', 'hoursMonWedFri']) &&
+      return data.keys().hasAll(['address', 'phoneLine', 'phoneWhatsapp', 'hoursTueThu', 'hoursMonWedFri', 'aboutHero', 'aboutText']) &&
              data.address is string && data.address.size() < 200 &&
              data.phoneLine is string && data.phoneLine.size() < 50 &&
              data.phoneWhatsapp is string && data.phoneWhatsapp.size() < 50 &&
              data.hoursTueThu is string && data.hoursTueThu.size() < 100 &&
-             data.hoursMonWedFri is string && data.hoursMonWedFri.size() < 100;
+             data.hoursMonWedFri is string && data.hoursMonWedFri.size() < 100 &&
+             data.aboutHero is string && data.aboutHero.size() < 500 &&
+             data.aboutText is string && data.aboutText.size() < 5000;
     }
 
     function isValidReview(data) {

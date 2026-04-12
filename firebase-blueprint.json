@@ -10,9 +10,11 @@
         "phoneWhatsapp": { "type": "string", "description": "WhatsApp phone number" },
         "hoursTueThu": { "type": "string", "description": "Hours for Tue and Thu" },
         "hoursMonWedFri": { "type": "string", "description": "Hours for Mon, Wed, Fri" },
+        "aboutHero": { "type": "string", "description": "Hero text for the About Us page" },
+        "aboutText": { "type": "string", "description": "Main text for the About Us page" },
         "updatedAt": { "type": "string", "format": "date-time" }
       },
-      "required": ["address", "phoneLine", "phoneWhatsapp", "hoursTueThu", "hoursMonWedFri"]
+      "required": ["address", "phoneLine", "phoneWhatsapp", "hoursTueThu", "hoursMonWedFri", "aboutHero", "aboutText"]
     },
     "User": {
       "title": "User",
