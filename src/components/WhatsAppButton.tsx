@@ -1,9 +1,18 @@
 import React from 'react';
 import { motion } from 'motion/react';
+import { useLocation } from 'react-router-dom';
 import { useBusinessHours } from '../hooks/useBusinessHours';
+import { useSettings } from '../hooks/useSettings';
 
 export default function WhatsAppButton() {
+  const location = useLocation();
   const { isOpen, statusMessage } = useBusinessHours();
+  const { settings } = useSettings();
+  
+  // Hide on admin page
+  if (location.pathname === '/admin') return null;
+
+  const cleanNumber = settings.phoneWhatsapp.replace(/\D/g, '');
   const message = encodeURIComponent("¡Hola! Necesito consultar sobre Turnos y Servicios.");
   
   return (
@@ -14,7 +23,7 @@ export default function WhatsAppButton() {
         </span>
       )}
       <motion.a
-        href={`https://wa.me/5491122883581?text=${message}`}
+        href={`https://wa.me/54${cleanNumber}?text=${message}`}
         target="_blank"
         rel="noopener noreferrer"
         initial={{ scale: 0, opacity: 0 }}
