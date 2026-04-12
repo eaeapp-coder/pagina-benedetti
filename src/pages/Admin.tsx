@@ -34,6 +34,8 @@ export default function Admin() {
   
   const [isImporting, setIsImporting] = useState(false);
   const [formData, setFormData] = useState<AppSettings | null>(null);
+  const [showProfForm, setShowProfForm] = useState(false);
+  const [showInsForm, setShowInsForm] = useState(false);
   
   // Review form state
   const [reviewAuthor, setReviewAuthor] = useState('');
@@ -169,6 +171,7 @@ export default function Admin() {
     setNewEdu('');
     setNewExp('');
     setNewSpec('');
+    setShowProfForm(false);
   };
 
   const startEditProf = (prof: Doctor) => {
@@ -181,6 +184,7 @@ export default function Admin() {
     setProfEducation(prof.education || []);
     setProfExperience(prof.experience || []);
     setProfSpecializations(prof.specializations || []);
+    setShowProfForm(true);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -212,6 +216,7 @@ export default function Admin() {
     setInsName('');
     setInsLogo('');
     setInsSpecialties([]);
+    setShowInsForm(false);
   };
 
   const startEditIns = (ins: InsuranceProvider) => {
@@ -219,6 +224,7 @@ export default function Admin() {
     setInsName(ins.name);
     setInsLogo(ins.logo);
     setInsSpecialties(ins.specialties);
+    setShowInsForm(true);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -500,18 +506,30 @@ export default function Admin() {
           {/* Section: Professionals */}
           {activeTab === 'professionals' && (
             <div className="space-y-8">
-              <div className="mb-8">
-                <h1 className="text-3xl font-bold text-[#1A3A5A]">Profesionales</h1>
-                <p className="text-gray-500">Administra el equipo médico y sus especialidades</p>
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+                <div>
+                  <h1 className="text-3xl font-bold text-[#1A3A5A]">Profesionales</h1>
+                  <p className="text-gray-500">Administra el equipo médico y sus especialidades</p>
+                </div>
+                {!showProfForm && (
+                  <button 
+                    onClick={() => setShowProfForm(true)}
+                    className="bg-[#0088CC] text-white px-6 py-2 rounded-xl font-bold hover:bg-[#0077B3] transition-all flex items-center space-x-2"
+                  >
+                    <Plus className="w-4 h-4" />
+                    <span>Agregar Profesional</span>
+                  </button>
+                )}
               </div>
 
               {/* Form to Add/Edit */}
-              <div className="bg-white rounded-[2rem] shadow-sm border border-gray-100 p-8">
-                <h2 className="text-xl font-bold text-[#1A3A5A] mb-6 flex items-center">
-                  {editingProfessional ? <Edit2 className="mr-2 text-[#0088CC]" /> : <Plus className="mr-2 text-[#0088CC]" />}
-                  {editingProfessional ? 'Editar Profesional' : 'Agregar Nuevo Profesional'}
-                </h2>
-                <form onSubmit={handleProfessionalSubmit} className="space-y-4">
+              {showProfForm && (
+                <div className="bg-white rounded-[2rem] shadow-sm border border-gray-100 p-8">
+                  <h2 className="text-xl font-bold text-[#1A3A5A] mb-6 flex items-center">
+                    {editingProfessional ? <Edit2 className="mr-2 text-[#0088CC]" /> : <Plus className="mr-2 text-[#0088CC]" />}
+                    {editingProfessional ? 'Editar Profesional' : 'Agregar Nuevo Profesional'}
+                  </h2>
+                  <form onSubmit={handleProfessionalSubmit} className="space-y-4">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-1">Nombre Completo</label>
@@ -665,15 +683,16 @@ export default function Admin() {
                     </div>
                   </div>
                   <div className="flex justify-end space-x-3 pt-4">
-                    {editingProfessional && (
-                      <button type="button" onClick={resetProfForm} className="px-6 py-2 rounded-xl border border-gray-200 text-gray-500 hover:bg-gray-50 font-bold">Cancelar</button>
-                    )}
+                    <button type="button" onClick={resetProfForm} className="px-6 py-2 rounded-xl border border-gray-200 text-gray-500 hover:bg-gray-50 font-bold">
+                      {editingProfessional ? 'Cancelar' : 'Cerrar'}
+                    </button>
                     <button type="submit" className="bg-[#0088CC] text-white px-8 py-2 rounded-xl font-bold hover:bg-[#0077B3] transition-all">
                       {editingProfessional ? 'Actualizar' : 'Agregar'}
                     </button>
                   </div>
                 </form>
               </div>
+              )}
 
               {/* List */}
               <div className="grid grid-cols-1 gap-4">
@@ -766,23 +785,35 @@ export default function Admin() {
                   <h1 className="text-3xl font-bold text-[#1A3A5A]">Obras Sociales</h1>
                   <p className="text-gray-500">Administra las coberturas médicas aceptadas</p>
                 </div>
-                <button 
-                  onClick={handleBulkImportInsurances}
-                  disabled={isImporting}
-                  className="bg-blue-50 text-[#0088CC] px-6 py-2 rounded-xl font-bold hover:bg-blue-100 transition-all flex items-center space-x-2 disabled:opacity-50"
-                >
-                  {isImporting ? <Loader2 className="animate-spin w-4 h-4" /> : <Plus className="w-4 h-4" />}
-                  <span>Cargar Lista desde Web</span>
-                </button>
+                <div className="flex items-center space-x-3">
+                  {!showInsForm && (
+                    <button 
+                      onClick={() => setShowInsForm(true)}
+                      className="bg-[#0088CC] text-white px-6 py-2 rounded-xl font-bold hover:bg-[#0077B3] transition-all flex items-center space-x-2"
+                    >
+                      <Plus className="w-4 h-4" />
+                      <span>Agregar Obra Social</span>
+                    </button>
+                  )}
+                  <button 
+                    onClick={handleBulkImportInsurances}
+                    disabled={isImporting}
+                    className="bg-blue-50 text-[#0088CC] px-6 py-2 rounded-xl font-bold hover:bg-blue-100 transition-all flex items-center space-x-2 disabled:opacity-50"
+                  >
+                    {isImporting ? <Loader2 className="animate-spin w-4 h-4" /> : <Plus className="w-4 h-4" />}
+                    <span>Cargar Lista desde Web</span>
+                  </button>
+                </div>
               </div>
 
               {/* Form to Add/Edit */}
-              <div className="bg-white rounded-[2rem] shadow-sm border border-gray-100 p-8">
-                <h2 className="text-xl font-bold text-[#1A3A5A] mb-6 flex items-center">
-                  {editingInsurance ? <Edit2 className="mr-2 text-[#0088CC]" /> : <Plus className="mr-2 text-[#0088CC]" />}
-                  {editingInsurance ? 'Editar Obra Social' : 'Agregar Nueva Obra Social'}
-                </h2>
-                <form onSubmit={handleInsuranceSubmit} className="space-y-4">
+              {showInsForm && (
+                <div className="bg-white rounded-[2rem] shadow-sm border border-gray-100 p-8">
+                  <h2 className="text-xl font-bold text-[#1A3A5A] mb-6 flex items-center">
+                    {editingInsurance ? <Edit2 className="mr-2 text-[#0088CC]" /> : <Plus className="mr-2 text-[#0088CC]" />}
+                    {editingInsurance ? 'Editar Obra Social' : 'Agregar Nueva Obra Social'}
+                  </h2>
+                  <form onSubmit={handleInsuranceSubmit} className="space-y-4">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-1">Nombre de la Obra Social</label>
@@ -817,15 +848,16 @@ export default function Admin() {
                     </div>
                   </div>
                   <div className="flex justify-end space-x-3 pt-4">
-                    {editingInsurance && (
-                      <button type="button" onClick={resetInsForm} className="px-6 py-2 rounded-xl border border-gray-200 text-gray-500 hover:bg-gray-50 font-bold">Cancelar</button>
-                    )}
+                    <button type="button" onClick={resetInsForm} className="px-6 py-2 rounded-xl border border-gray-200 text-gray-500 hover:bg-gray-50 font-bold">
+                      {editingInsurance ? 'Cancelar' : 'Cerrar'}
+                    </button>
                     <button type="submit" className="bg-[#0088CC] text-white px-8 py-2 rounded-xl font-bold hover:bg-[#0077B3] transition-all">
                       {editingInsurance ? 'Actualizar' : 'Agregar'}
                     </button>
                   </div>
                 </form>
               </div>
+              )}
 
               {/* List */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
