@@ -114,9 +114,10 @@ export default function About() {
                     <Loader2 className="animate-spin text-[#0088CC] w-8 h-8" />
                   </div>
                 ) : (
-                  settings.aboutText.split('\n\n').map((paragraph, idx) => (
-                    <p key={idx}>{paragraph}</p>
-                  ))
+                  <div 
+                    className="prose prose-lg max-w-none text-gray-600"
+                    dangerouslySetInnerHTML={{ __html: settings.aboutText }} 
+                  />
                 )}
               </div>
             </motion.div>

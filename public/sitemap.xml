@@ -25,6 +25,12 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://consultoriosbenedetti.com.ar/blog/</loc>
+    <lastmod>2026-04-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://consultoriosbenedetti.com.ar/nosotros</loc>
     <lastmod>2026-04-11</lastmod>
     <changefreq>yearly</changefreq>

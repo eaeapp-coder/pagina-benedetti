@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import ReactQuill from 'react-quill';
 import { auth, db } from '../firebase';
 import { signInWithEmailAndPassword, signOut, onAuthStateChanged, User } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
@@ -45,7 +46,7 @@ export default function Admin() {
     setIsLoggingIn(true);
     setLoginError('');
     
-    // If user enters just "CBendetti", we append the domain internally
+    // If user enters just "CBenedetti", we append the domain internally
     const loginEmail = username.includes('@') ? username : `${username}@benedetti.com`;
     
     try {
@@ -93,6 +94,15 @@ export default function Admin() {
     }
   };
 
+  const quillModules = {
+    toolbar: [
+      [{ 'header': [1, 2, 3, false] }],
+      ['bold', 'italic', 'underline', 'strike'],
+      [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+      ['link', 'clean']
+    ],
+  };
+
   if (!user) {
     return (
       <PageTransition>
@@ -119,7 +129,7 @@ export default function Admin() {
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                   className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
-                  placeholder="CBendetti"
+                  placeholder="CBenedetti"
                 />
               </div>
               <div>
@@ -253,13 +263,15 @@ export default function Admin() {
                   </div>
                   <div className="md:col-span-2">
                     <label className="block text-sm font-medium text-gray-700 mb-1">Historia Página "Nosotros" (Cuerpo)</label>
-                    <textarea 
-                      value={formData.aboutText}
-                      onChange={(e) => setFormData({...formData, aboutText: e.target.value})}
-                      rows={10}
-                      className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-500 outline-none resize-y"
-                      placeholder="Escribe aquí la historia completa..."
-                    />
+                    <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
+                      <ReactQuill 
+                        theme="snow" 
+                        value={formData.aboutText} 
+                        onChange={(content) => setFormData({...formData, aboutText: content})}
+                        modules={quillModules}
+                        className="h-64 mb-12"
+                      />
+                    </div>
                   </div>
                 </div>
                 
