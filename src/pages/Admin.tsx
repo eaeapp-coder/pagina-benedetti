@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ReactQuill from 'react-quill';
 import { auth, db } from '../firebase';
 import { signInWithEmailAndPassword, signOut, onAuthStateChanged, User } from 'firebase/auth';
@@ -22,32 +22,34 @@ export default function Admin() {
   const { settings, loading: settingsLoading } = useSettings();
   const { reviews, addReview } = useReviews();
   const [formData, setFormData] = useState<AppSettings | null>(null);
+  const [isMounted, setIsMounted] = useState(false);
+  const [runtimeError, setRuntimeError] = useState<string | null>(null);
   
   // Review form state
   const [reviewAuthor, setReviewAuthor] = useState('');
   const [reviewRating, setReviewRating] = useState(5);
   const [reviewText, setReviewText] = useState('');
 
-  React.useEffect(() => {
+  useEffect(() => {
+    setIsMounted(true);
     const unsubscribe = onAuthStateChanged(auth, (u) => {
       setUser(u);
     });
     return () => unsubscribe();
   }, []);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (settings && !formData) {
       setFormData(settings);
     }
-  }, [settings]);
+  }, [settings, formData]);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoggingIn(true);
     setLoginError('');
     
-    // If user enters just "cbenedetti", we append the domain internally
-    const loginEmail = username.includes('@') ? username : `${username}@benedetti.com`;
+    const loginEmail = username.includes('@') ? username : `${username.toLowerCase()}@benedetti.com`;
     
     try {
       await signInWithEmailAndPassword(auth, loginEmail, password);
@@ -62,12 +64,12 @@ export default function Admin() {
     e.preventDefault();
     if (!formData) return;
     setIsSaving(true);
-    const path = 'settings/global';
     try {
       await setDoc(doc(db, 'settings', 'global'), { ...formData }, { merge: true });
       alert('Configuración guardada con éxito.');
     } catch (err) {
-      handleFirestoreError(err, OperationType.WRITE, path);
+      console.error(err);
+      alert('Error al guardar la configuración. Verifique sus permisos.');
     } finally {
       setIsSaving(false);
     }
@@ -89,19 +91,31 @@ export default function Admin() {
       alert('Reseña agregada con éxito.');
     } catch (err) {
       console.error(err);
+      alert('Error al agregar la reseña.');
     } finally {
       setIsAddingReview(false);
     }
   };
 
-  const quillModules = {
-    toolbar: [
-      [{ 'header': [1, 2, 3, false] }],
-      ['bold', 'italic', 'underline', 'strike'],
-      [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-      ['link', 'clean']
-    ],
-  };
+  if (runtimeError) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-red-50 p-4">
+        <div className="bg-white p-8 rounded-2xl shadow-xl max-w-lg w-full">
+          <h2 className="text-2xl font-bold text-red-600 mb-4">Error de Aplicación</h2>
+          <p className="text-gray-700 mb-4">Se ha producido un error inesperado:</p>
+          <pre className="bg-gray-100 p-4 rounded-lg text-xs overflow-auto mb-6 max-h-40">
+            {runtimeError}
+          </pre>
+          <button 
+            onClick={() => window.location.reload()}
+            className="w-full bg-red-600 text-white py-3 rounded-xl font-bold hover:bg-red-700 transition-all"
+          >
+            Reiniciar Aplicación
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   if (!user) {
     return (
@@ -167,39 +181,19 @@ export default function Admin() {
     );
   }
 
-  if (settingsLoading) {
+  if (settingsLoading || !formData || !isMounted) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
         <div className="text-center">
           <Loader2 className="animate-spin text-[#0088CC] w-12 h-12 mx-auto mb-4" />
-          <p className="text-gray-500 animate-pulse">Cargando configuración...</p>
+          <p className="text-gray-500 animate-pulse font-medium">Cargando panel de control...</p>
         </div>
       </div>
     );
   }
 
-  if (!formData) {
+  try {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
-        <div className="text-center p-8 bg-white rounded-3xl shadow-xl max-w-md">
-          <div className="bg-red-50 w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4">
-            <SettingsIcon className="text-red-500 w-8 h-8" />
-          </div>
-          <h2 className="text-xl font-bold text-gray-900 mb-2">Error de Carga</h2>
-          <p className="text-gray-500 mb-6">No se pudo cargar la configuración del sitio. Por favor, intenta recargar la página.</p>
-          <button 
-            onClick={() => window.location.reload()}
-            className="w-full bg-[#1A3A5A] text-white py-3 rounded-xl font-bold hover:bg-[#254a70] transition-all"
-          >
-            Recargar Página
-          </button>
-        </div>
-      </div>
-    );
-  }
-
-  return (
-    <PageTransition>
       <div className="min-h-screen bg-gray-50 pt-32 pb-20 px-4">
         <div className="max-w-4xl mx-auto">
           <div className="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
@@ -286,13 +280,12 @@ export default function Admin() {
                   </div>
                   <div className="md:col-span-2">
                     <label className="block text-sm font-medium text-gray-700 mb-1">Historia Página "Nosotros" (Cuerpo)</label>
-                    <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
-                      <ReactQuill 
-                        theme="snow" 
+                    <div className="bg-white rounded-xl border border-gray-200 overflow-hidden min-h-[300px]">
+                      <textarea 
                         value={formData.aboutText} 
-                        onChange={(content) => setFormData({...formData, aboutText: content})}
-                        modules={quillModules}
-                        className="h-64 mb-12"
+                        onChange={(e) => setFormData({...formData, aboutText: e.target.value})}
+                        className="w-full h-64 p-4 outline-none resize-none"
+                        placeholder="Escribe la historia aquí..."
                       />
                     </div>
                   </div>
@@ -401,6 +394,9 @@ export default function Admin() {
           </div>
         </div>
       </div>
-    </PageTransition>
-  );
+    );
+  } catch (err) {
+    setRuntimeError(err instanceof Error ? err.message : String(err));
+    return null;
+  }
 }
