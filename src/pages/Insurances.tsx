@@ -1,25 +1,35 @@
 import React, { useState, useMemo } from 'react';
-import { INSURANCE_PROVIDERS, SPECIALTIES } from '../constants';
+import { SPECIALTIES } from '../constants';
+import { useInsurances } from '../hooks/useInsurances';
 import { motion, AnimatePresence } from 'motion/react';
 import PageTransition from '../components/PageTransition';
-import { ShieldCheck, Filter, ChevronRight } from 'lucide-react';
+import { ShieldCheck, Filter, ChevronRight, Loader2 } from 'lucide-react';
 import SEO from '../components/SEO';
 
 export default function Insurances() {
   const [selectedSpecialty, setSelectedSpecialty] = useState<string | null>(null);
+  const { insurances, loading } = useInsurances();
 
   const availableSpecialties = useMemo(() => {
     const names = new Set<string>();
-    INSURANCE_PROVIDERS.forEach(p => p.specialties.forEach(s => names.add(s)));
+    insurances.forEach(p => p.specialties.forEach(s => names.add(s)));
     return SPECIALTIES.filter(s => names.has(s.name));
-  }, []);
+  }, [insurances]);
 
   const filteredProviders = useMemo(() => {
-    if (!selectedSpecialty) return INSURANCE_PROVIDERS;
-    return INSURANCE_PROVIDERS.filter(provider => 
+    if (!selectedSpecialty) return insurances;
+    return insurances.filter(provider => 
       provider.specialties.includes(selectedSpecialty)
     );
-  }, [selectedSpecialty]);
+  }, [selectedSpecialty, insurances]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-[#F8FAFC]">
+        <Loader2 className="animate-spin text-[#0088CC] w-12 h-12" />
+      </div>
+    );
+  }
 
   return (
     <PageTransition>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useParams, Link, Navigate } from 'react-router-dom';
-import { DOCTORS } from '../constants';
+import { useProfessionals } from '../hooks/useProfessionals';
 import { motion } from 'motion/react';
 import { 
   ChevronLeft, 
@@ -10,7 +10,8 @@ import {
   Languages, 
   Clock, 
   CheckCircle2,
-  Mail
+  Mail,
+  Loader2
 } from 'lucide-react';
 import PageTransition from '../components/PageTransition';
 import SEO from '../components/SEO';
@@ -18,7 +19,16 @@ import StructuredData from '../components/StructuredData';
 
 export default function ProfessionalProfile() {
   const { id } = useParams<{ id: string }>();
-  const doctor = DOCTORS.find(d => d.id === id);
+  const { professionals, loading } = useProfessionals();
+  const doctor = professionals.find(d => d.id === id);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-[#F8FAFC]">
+        <Loader2 className="animate-spin text-[#0088CC] w-12 h-12" />
+      </div>
+    );
+  }
 
   if (!doctor) {
     return <Navigate to="/profesionales" replace />;

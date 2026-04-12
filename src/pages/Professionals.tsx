@@ -1,20 +1,29 @@
 import React, { useState } from 'react';
-import { DOCTORS, SPECIALTIES } from '../constants';
+import { SPECIALTIES } from '../constants';
+import { useProfessionals } from '../hooks/useProfessionals';
 import { motion } from 'motion/react';
-import { Check, Search } from 'lucide-react';
+import { Check, Loader2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import SEO from '../components/SEO';
-
 import PageTransition from '../components/PageTransition';
 
 export default function Professionals() {
   const [selectedSpecialty, setSelectedSpecialty] = useState<string | null>(null);
+  const { professionals, loading } = useProfessionals();
 
   const filteredDoctors = selectedSpecialty 
-    ? DOCTORS.filter(d => d.specialties.includes(selectedSpecialty))
-    : DOCTORS;
+    ? professionals.filter(d => d.specialties.includes(selectedSpecialty))
+    : professionals;
 
   const specialtiesList = SPECIALTIES.map(s => s.name);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-[#F8FAFC]">
+        <Loader2 className="animate-spin text-[#0088CC] w-12 h-12" />
+      </div>
+    );
+  }
 
   return (
     <PageTransition>

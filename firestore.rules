@@ -38,6 +38,20 @@ service cloud.firestore {
              data.createdAt is string;
     }
 
+    function isValidProfessional(data) {
+      return data.keys().hasAll(['name', 'specialties', 'image']) &&
+             data.name is string && data.name.size() < 100 &&
+             data.specialties is list &&
+             data.image is string && data.image.size() < 500;
+    }
+
+    function isValidInsurance(data) {
+      return data.keys().hasAll(['name', 'logo', 'specialties']) &&
+             data.name is string && data.name.size() < 100 &&
+             data.logo is string && data.logo.size() < 500 &&
+             data.specialties is list;
+    }
+
     // ===============================================================
     // Rules
     // ===============================================================
@@ -50,6 +64,16 @@ service cloud.firestore {
     match /reviews/{reviewId} {
       allow read: if true;
       allow write: if isAdmin() && isValidReview(request.resource.data);
+    }
+
+    match /professionals/{id} {
+      allow read: if true;
+      allow write: if isAdmin() && isValidProfessional(request.resource.data);
+    }
+
+    match /insurances/{id} {
+      allow read: if true;
+      allow write: if isAdmin() && isValidInsurance(request.resource.data);
     }
 
     match /users/{userId} {

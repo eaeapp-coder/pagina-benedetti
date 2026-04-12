@@ -39,6 +39,37 @@
         "createdAt": { "type": "string", "format": "date-time" }
       },
       "required": ["id", "author", "rating", "text", "createdAt"]
+    },
+    "Professional": {
+      "title": "Professional",
+      "description": "Medical professional profile",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "specialties": { "type": "array", "items": { "type": "string" } },
+        "image": { "type": "string" },
+        "bio": { "type": "string" },
+        "education": { "type": "array", "items": { "type": "string" } },
+        "experience": { "type": "array", "items": { "type": "string" } },
+        "languages": { "type": "array", "items": { "type": "string" } },
+        "availability": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["name", "specialties", "image"]
+    },
+    "Insurance": {
+      "title": "Insurance",
+      "description": "Health insurance provider",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "logo": { "type": "string" },
+        "specialties": { "type": "array", "items": { "type": "string" } },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["name", "logo", "specialties"]
     }
   },
   "firestore": {
@@ -53,6 +84,14 @@
     "/reviews/{reviewId}": {
       "schema": "Review",
       "description": "Customer review documents"
+    },
+    "/professionals/{professionalId}": {
+      "schema": "Professional",
+      "description": "Professional profile documents"
+    },
+    "/insurances/{insuranceId}": {
+      "schema": "Insurance",
+      "description": "Insurance provider documents"
     }
   }
 }
