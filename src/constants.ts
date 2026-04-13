@@ -125,6 +125,7 @@ export interface InsuranceProvider {
   name: string;
   logo: string;
   specialties: string[];
+  isNew?: boolean;
 }
 
 export const INSURANCE_PROVIDERS: InsuranceProvider[] = [

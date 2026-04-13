@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { SPECIALTIES, DOCTORS } from '../constants';
+import { SPECIALTIES } from '../constants';
+import { useProfessionals } from '../hooks/useProfessionals';
 import { motion, AnimatePresence } from 'motion/react';
-import { CheckCircle2, ChevronRight, Phone, MessageSquare } from 'lucide-react';
+import { CheckCircle2, ChevronRight, Phone, MessageSquare, Loader2 } from 'lucide-react';
 import SEO from '../components/SEO';
 import PageTransition from '../components/PageTransition';
 import { useBusinessHours } from '../hooks/useBusinessHours';
@@ -11,6 +12,7 @@ export default function Booking() {
   const [selectedSpecialty, setSelectedSpecialty] = useState<string | null>(null);
   const [selectedDoctor, setSelectedDoctor] = useState<string | null>(null);
   const { isOpen, statusMessage } = useBusinessHours();
+  const { professionals, loading } = useProfessionals();
 
   const steps = [
     { id: 1, name: '1. Especialidad' },
@@ -25,6 +27,14 @@ export default function Booking() {
   const handleBack = () => {
     if (step > 1) setStep(step - 1);
   };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-[#F8FAFC]">
+        <Loader2 className="animate-spin text-[#0088CC] w-12 h-12" />
+      </div>
+    );
+  }
 
   return (
     <PageTransition>
@@ -110,7 +120,7 @@ export default function Booking() {
               >
                 <h3 className="text-lg font-bold text-[#1A3A5A] mb-6">Selecciona un profesional</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {DOCTORS.filter(d => !selectedSpecialty || d.specialties.includes(SPECIALTIES.find(s => s.id === selectedSpecialty)?.name || '')).map((doc) => (
+                  {professionals.filter(d => !selectedSpecialty || d.specialties.includes(SPECIALTIES.find(s => s.id === selectedSpecialty)?.name || '')).map((doc) => (
                     <button
                       key={doc.id}
                       onClick={() => setSelectedDoctor(doc.id)}
@@ -142,7 +152,7 @@ export default function Booking() {
                 </div>
                 <h3 className="text-2xl font-bold text-[#1A3A5A] mb-4">¡Casi listo!</h3>
                 <p className="text-gray-500 mb-8">
-                  Has seleccionado a <strong>{DOCTORS.find(d => d.id === selectedDoctor)?.name}</strong> para <strong>{SPECIALTIES.find(s => s.id === selectedSpecialty)?.name}</strong>.
+                  Has seleccionado a <strong>{professionals.find(d => d.id === selectedDoctor)?.name}</strong> para <strong>{SPECIALTIES.find(s => s.id === selectedSpecialty)?.name}</strong>.
                 </p>
                 <div className="grid grid-cols-3 gap-3 max-w-md mx-auto">
                   {['09:00', '10:30', '11:00', '14:00', '15:30', '17:00'].map(time => (

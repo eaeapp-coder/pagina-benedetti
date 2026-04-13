@@ -71,8 +71,9 @@ export default function Footer() {
                 <li><Link to="/especialidades" className="hover:text-[#0088CC]">Especialidades</Link></li>
                 <li><Link to="/profesionales" className="hover:text-[#0088CC]">Profesionales</Link></li>
                 <li><Link to="/obras-sociales" className="hover:text-[#0088CC]">Obras Sociales</Link></li>
-                <li><a href="https://pruebas.eaeapp.com/blog/" target="_blank" rel="noopener noreferrer" className="hover:text-[#0088CC]">Blog</a></li>
+                <li><Link to="/blog" className="hover:text-[#0088CC]">Blog</Link></li>
                 <li><Link to="/contacto" className="hover:text-[#0088CC]">Contacto</Link></li>
+                <li><Link to="/admin" className="hover:text-[#0088CC]">Admin</Link></li>
               </ul>
             </div>
           </div>

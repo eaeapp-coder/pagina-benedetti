@@ -58,7 +58,8 @@ service cloud.firestore {
       return data.keys().hasAll(['name', 'logo', 'specialties']) &&
              data.name is string && data.name.size() < 100 &&
              data.logo is string && data.logo.size() < 500 &&
-             data.specialties is list;
+             data.specialties is list &&
+             (!('isNew' in data) || data.isNew is bool);
     }
 
     function isValidBlogPost(data) {

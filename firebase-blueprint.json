@@ -71,6 +71,7 @@
         "name": { "type": "string" },
         "logo": { "type": "string" },
         "specialties": { "type": "array", "items": { "type": "string" } },
+        "isNew": { "type": "boolean" },
         "createdAt": { "type": "string", "format": "date-time" }
       },
       "required": ["name", "logo", "specialties"]

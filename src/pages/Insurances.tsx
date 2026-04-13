@@ -111,8 +111,13 @@ export default function Insurances() {
                       animate={{ opacity: 1, scale: 1 }}
                       exit={{ opacity: 0, scale: 0.9 }}
                       transition={{ duration: 0.3, delay: (index % 10) * 0.05 }}
-                      className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex flex-col items-center justify-center hover:shadow-md hover:border-[#0088CC]/30 transition-all group"
+                      className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex flex-col items-center justify-center hover:shadow-md hover:border-[#0088CC]/30 transition-all group relative"
                     >
+                      {provider.isNew && (
+                        <span className="absolute -top-2 -right-2 bg-[#0088CC] text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-lg border border-white z-10">
+                          NUEVA
+                        </span>
+                      )}
                       <div className="h-20 w-full flex items-center justify-center mb-4 p-2">
                         <img 
                           src={provider.logo} 

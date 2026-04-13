@@ -76,6 +76,7 @@ export default function Admin() {
   const [insName, setInsName] = useState('');
   const [insLogo, setInsLogo] = useState('');
   const [insSpecialties, setInsSpecialties] = useState<string[]>([]);
+  const [insIsNew, setInsIsNew] = useState(false);
 
   useEffect(() => {
     setIsMounted(true);
@@ -232,7 +233,8 @@ export default function Admin() {
     const data = {
       name: insName,
       logo: insLogo,
-      specialties: insSpecialties
+      specialties: insSpecialties,
+      isNew: insIsNew
     };
 
     try {
@@ -255,6 +257,7 @@ export default function Admin() {
     setInsName('');
     setInsLogo('');
     setInsSpecialties([]);
+    setInsIsNew(false);
     setShowInsForm(false);
   };
 
@@ -263,6 +266,7 @@ export default function Admin() {
     setInsName(ins.name);
     setInsLogo(ins.logo);
     setInsSpecialties(ins.specialties);
+    setInsIsNew(ins.isNew || false);
     setShowInsForm(true);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -940,6 +944,17 @@ export default function Admin() {
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-1">URL Logo</label>
                       <input type="text" required value={insLogo} onChange={e => setInsLogo(e.target.value)} className="w-full px-4 py-2 rounded-xl border border-gray-200 outline-none focus:ring-2 focus:ring-blue-500" placeholder="https://..." />
+                    </div>
+                    <div className="md:col-span-2">
+                      <label className="flex items-center space-x-3 cursor-pointer">
+                        <input 
+                          type="checkbox" 
+                          checked={insIsNew} 
+                          onChange={e => setInsIsNew(e.target.checked)} 
+                          className="w-5 h-5 text-[#0088CC] rounded border-gray-300 focus:ring-[#0088CC]"
+                        />
+                        <span className="text-sm font-medium text-gray-700">Marcar como "NUEVA"</span>
+                      </label>
                     </div>
                     <div className="md:col-span-2">
                       <label className="block text-sm font-medium text-gray-700 mb-2">Especialidades Cubiertas</label>

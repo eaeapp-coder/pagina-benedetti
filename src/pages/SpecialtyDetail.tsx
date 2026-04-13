@@ -1,17 +1,27 @@
 import React from 'react';
 import { useParams, Link, Navigate } from 'react-router-dom';
-import { SPECIALTIES, DOCTORS } from '../constants';
+import { SPECIALTIES } from '../constants';
+import { useProfessionals } from '../hooks/useProfessionals';
 import { motion } from 'motion/react';
 import PageTransition from '../components/PageTransition';
-import { ChevronRight, CheckCircle2, User, ArrowLeft, MessageSquare } from 'lucide-react';
+import { ChevronRight, CheckCircle2, User, ArrowLeft, MessageSquare, Loader2 } from 'lucide-react';
 import SEO from '../components/SEO';
 import { useBusinessHours } from '../hooks/useBusinessHours';
 
 export default function SpecialtyDetail() {
   const { id } = useParams<{ id: string }>();
   const specialty = SPECIALTIES.find(s => s.id === id);
-  const doctors = DOCTORS.filter(d => specialty && d.specialties.includes(specialty.name));
+  const { professionals, loading } = useProfessionals();
+  const doctors = professionals.filter(d => specialty && d.specialties.includes(specialty.name));
   const { isOpen, statusMessage } = useBusinessHours();
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-[#F8FAFC]">
+        <Loader2 className="animate-spin text-[#0088CC] w-12 h-12" />
+      </div>
+    );
+  }
 
   if (!specialty) {
     return <Navigate to="/especialidades" replace />;
