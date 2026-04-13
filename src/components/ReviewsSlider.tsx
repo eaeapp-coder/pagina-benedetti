@@ -105,7 +105,7 @@ export default function ReviewsSlider() {
                           <p className="font-bold text-[#1A3A5A]">{review.author}</p>
                         </div>
                         <img 
-                          src="https://eaeapp.com/images-ia/benedetti/logo_google.png" 
+                          src="https://lh3.googleusercontent.com/d/1zfwYE_sICziwt9xglF_h1VfvqlMWYvxG" 
                           alt="Google" 
                           className="h-4 opacity-50"
                           referrerPolicy="no-referrer"

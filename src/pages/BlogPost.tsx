@@ -29,7 +29,7 @@ export default function BlogPost() {
       "name": "Consultorios Benedetti",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://eaeapp.com/images-ia/benedetti/favico.png"
+        "url": "https://lh3.googleusercontent.com/d/1IncE6jsDm_W4K_tY7q3vuSILtGPXlhe4"
       }
     },
     "datePublished": post.date,

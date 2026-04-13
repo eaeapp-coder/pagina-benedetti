@@ -18,7 +18,7 @@ export default function Home() {
     "@context": "https://schema.org",
     "@type": "MedicalClinic",
     "name": "Consultorios Benedetti",
-    "image": "https://eaeapp.com/images-ia/benedetti/favico.png",
+    "image": "https://lh3.googleusercontent.com/d/1IncE6jsDm_W4K_tY7q3vuSILtGPXlhe4",
     "@id": "https://consultoriosbenedetti.com.ar",
     "url": "https://consultoriosbenedetti.com.ar",
     "telephone": settings.phoneLine,
@@ -104,7 +104,7 @@ export default function Home() {
               <div className="relative">
                 <div className="rounded-3xl overflow-hidden shadow-2xl">
                   <img 
-                    src="https://eaeapp.com/images-ia/benedetti/fisio.webp" 
+                    src="https://lh3.googleusercontent.com/d/1LOXqn-eOuM5tTno7lRElV6_aA3UZprLa" 
                     alt="Doctor with patient"
                     className="w-full h-full object-cover"
                     referrerPolicy="no-referrer"

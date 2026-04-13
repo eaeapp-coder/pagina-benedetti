@@ -68,7 +68,7 @@ export default function About() {
               <div className="relative">
                 <div className="rounded-[3rem] overflow-hidden shadow-2xl aspect-square lg:aspect-auto lg:h-[500px]">
                   <img 
-                    src="https://images.pexels.com/photos/8219160/pexels-photo-8219160.jpeg" 
+                    src="https://lh3.googleusercontent.com/d/1hRpUDspEZRzElN1d250bU65UT5AQQ4IL" 
                     alt="Mariano Benedetti - Kinesiología" 
                     className="w-full h-full object-cover"
                     referrerPolicy="no-referrer"
@@ -82,7 +82,7 @@ export default function About() {
 
               <div className="rounded-[3rem] overflow-hidden shadow-2xl aspect-square lg:aspect-auto lg:h-[500px] scale-90">
                 <img 
-                  src="https://white-albatross-289547.hostingersite.com/prueba/pexels-kinesiologia.jpg" 
+                  src="https://lh3.googleusercontent.com/d/1hRpUDspEZRzElN1d250bU65UT5AQQ4IL" 
                   alt="Kinesiología" 
                   className="w-full h-full object-cover"
                   referrerPolicy="no-referrer"

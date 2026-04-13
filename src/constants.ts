@@ -60,7 +60,7 @@ export const SPECIALTIES: Specialty[] = [
       'Corrección postural y ergonomía'
     ],
     images: [
-      'https://eaeapp.com/images-ia/benedetti/fisio.webp',
+      'https://lh3.googleusercontent.com/d/1LOXqn-eOuM5tTno7lRElV6_aA3UZprLa',
       'https://white-albatross-289547.hostingersite.com/prueba/pexels-kinesiologia.jpg'
     ]
   },
@@ -182,7 +182,7 @@ export const DOCTORS: Doctor[] = [
     id: '1',
     name: 'Lic. Mariano Benedetti',
     specialties: ['Kinesiología'],
-    image: 'https://eaeapp.com/images-ia/benedetti/avatar_mariano.jpg',
+    image: 'https://lh3.googleusercontent.com/d/1hRpUDspEZRzElN1d250bU65UT5AQQ4IL',
     bio: 'Director de Consultorios Benedetti. Especialista en Quiropraxia y Kinesiología con amplia trayectoria en el tratamiento de la columna vertebral.',
     education: ['Lic. en Kinesiología y Fisiatría - UBA', 'Especialista en Quiropraxia'],
     languages: ['Español', 'Inglés'],

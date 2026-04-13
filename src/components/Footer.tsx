@@ -17,7 +17,7 @@ export default function Footer() {
             <div className="col-span-1 md:col-span-5">
               <Link to="/" className="inline-block mb-6">
                 <img 
-                  src="https://eaeapp.com/images-ia/benedetti/logo-benedetti.png" 
+                  src="https://lh3.googleusercontent.com/d/1IncE6jsDm_W4K_tY7q3vuSILtGPXlhe4" 
                   alt="Consultorios Benedetti" 
                   className="h-16 w-auto object-contain"
                   referrerPolicy="no-referrer"
