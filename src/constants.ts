@@ -61,7 +61,7 @@ export const SPECIALTIES: Specialty[] = [
     ],
     images: [
       'https://eaeapp.com/images-ia/benedetti/fisio.webp',
-      'https://images.unsplash.com/photo-1597452485669-2c7bb5fef90d?auto=format&fit=crop&q=80&w=800'
+      'https://white-albatross-289547.hostingersite.com/prueba/pexels-kinesiologia.jpg'
     ]
   },
   { 

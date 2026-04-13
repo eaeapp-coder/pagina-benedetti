@@ -34,7 +34,7 @@ export default function Specialties() {
             </p>
           </div>
 
-          <div className="space-y-12">
+          <div className="space-y-8">
             {SPECIALTIES.map((spec, index) => {
               const docsInSpec = professionals.filter(d => d.specialties.includes(spec.name));
               const hasProfessionals = docsInSpec.length > 0;

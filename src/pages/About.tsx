@@ -60,15 +60,15 @@ export default function About() {
           {/* History Section */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start mb-32">
             <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               className="space-y-16"
             >
               <div className="relative">
                 <div className="rounded-[3rem] overflow-hidden shadow-2xl aspect-square lg:aspect-auto lg:h-[500px]">
                   <img 
-                    src="https://eaeapp.com/images-ia/benedetti/mariano-kinesiologia.jpg" 
+                    src="https://images.pexels.com/photos/8219160/pexels-photo-8219160.jpeg" 
                     alt="Mariano Benedetti - Kinesiología" 
                     className="w-full h-full object-cover"
                     referrerPolicy="no-referrer"
@@ -80,10 +80,10 @@ export default function About() {
                 </div>
               </div>
 
-              <div className="rounded-[3rem] overflow-hidden shadow-2xl aspect-square lg:aspect-auto lg:h-[500px]">
+              <div className="rounded-[3rem] overflow-hidden shadow-2xl aspect-square lg:aspect-auto lg:h-[500px] scale-90">
                 <img 
-                  src="https://eaeapp.com/images-ia/benedetti/esteban_imagen%203.jpg" 
-                  alt="Esteban Benedetti - Quiropraxia" 
+                  src="https://white-albatross-289547.hostingersite.com/prueba/pexels-kinesiologia.jpg" 
+                  alt="Kinesiología" 
                   className="w-full h-full object-cover"
                   referrerPolicy="no-referrer"
                 />

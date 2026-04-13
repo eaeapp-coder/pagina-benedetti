@@ -74,7 +74,7 @@ export default function SpecialtyDetail() {
               </motion.div>
 
               {/* Associated Professional */}
-              {doctors.length > 0 && (specialty.id === 'kinesiology' || specialty.id === 'chiropractic') ? (
+              {doctors.length > 0 && (
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -104,33 +104,6 @@ export default function SpecialtyDetail() {
                         <ChevronRight className="w-5 h-5 text-gray-300 group-hover:text-[#0088CC] transform group-hover:translate-x-1 transition-all" />
                       </Link>
                     ))}
-                  </div>
-                </motion.div>
-              ) : (
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  className="bg-gray-50 p-8 rounded-[2.5rem] border border-dashed border-gray-200 text-center"
-                >
-                  <p className="text-gray-500 italic mb-6">
-                    Consulta por profesionales disponibles para esta especialidad.
-                  </p>
-                  <div className="flex flex-col items-center">
-                    <a 
-                      href={`https://wa.me/5491122883581?text=${encodeURIComponent(`Hola, ¿qué profesional está asociado al área de ${specialty.name}?`)}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center px-8 py-4 rounded-full font-bold transition-all shadow-lg bg-[#0088CC] text-white hover:bg-[#0077B3] transform hover:-translate-y-1"
-                    >
-                      <MessageSquare className="w-5 h-5 mr-2" />
-                      Consultar por WhatsApp
-                    </a>
-                    {!isOpen && (
-                      <p className="text-[10px] text-gray-400 mt-2 font-medium text-center">
-                        {statusMessage}
-                      </p>
-                    )}
                   </div>
                 </motion.div>
               )}
