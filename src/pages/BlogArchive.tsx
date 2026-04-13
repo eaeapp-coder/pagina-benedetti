@@ -1,12 +1,22 @@
 import React from 'react';
 import { motion } from 'motion/react';
 import { Link } from 'react-router-dom';
-import { BLOG_POSTS } from '../constants';
+import { useBlog } from '../hooks/useBlog';
 import PageTransition from '../components/PageTransition';
-import { Calendar, User, ChevronRight } from 'lucide-react';
+import { Calendar, ChevronRight, Loader2 } from 'lucide-react';
 import SEO from '../components/SEO';
 
 export default function BlogArchive() {
+  const { posts, loading } = useBlog();
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-[#F8FAFC]">
+        <Loader2 className="animate-spin text-[#0088CC] w-12 h-12" />
+      </div>
+    );
+  }
+
   return (
     <PageTransition>
       <SEO 
@@ -36,7 +46,7 @@ export default function BlogArchive() {
 
           {/* Blog Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {BLOG_POSTS.map((post, index) => (
+            {posts.map((post, index) => (
               <motion.article
                 key={post.id}
                 initial={{ opacity: 0, y: 20 }}
@@ -69,7 +79,7 @@ export default function BlogArchive() {
                     </Link>
                   </h2>
                   
-                  <p className="text-gray-500 text-sm leading-relaxed mb-6 flex-1">
+                  <p className="text-gray-500 text-sm leading-relaxed mb-6 flex-1 line-clamp-3">
                     {post.excerpt}
                   </p>
 

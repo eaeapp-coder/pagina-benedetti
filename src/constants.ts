@@ -78,7 +78,7 @@ export const SPECIALTIES: Specialty[] = [
       'Mejora del rendimiento deportivo'
     ],
     images: [
-      'https://images.unsplash.com/photo-1537368910025-700350fe46c7?auto=format&fit=crop&q=80&w=800',
+      'https://lh3.googleusercontent.com/d/12k77RAeoYWEk-A8oKvf3eNSZZvWTtEET',
       'https://images.unsplash.com/photo-1519824145371-296894a0daa9?auto=format&fit=crop&q=80&w=800'
     ]
   },
@@ -96,8 +96,8 @@ export const SPECIALTIES: Specialty[] = [
       'Seguimiento personalizado en la recuperación'
     ],
     images: [
-      'https://images.unsplash.com/photo-1581595224492-38411d8188f9?auto=format&fit=crop&q=80&w=800',
-      'https://images.unsplash.com/photo-1551076805-e1869033e561?auto=format&fit=crop&q=80&w=800'
+      'https://lh3.googleusercontent.com/d/1qBQzJqATDR02AuGz2E6_zErBuo3hNt1i',
+      'https://images.pexels.com/photos/6129045/pexels-photo-6129045.jpeg'
     ]
   },
   { 
@@ -114,8 +114,8 @@ export const SPECIALTIES: Specialty[] = [
       'Optimización del rendimiento en corredores y deportistas'
     ],
     images: [
-      'https://images.unsplash.com/photo-1562157873-818bc0726f68?auto=format&fit=crop&q=80&w=800',
-      'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&q=80&w=800'
+      'https://lh3.googleusercontent.com/d/1fnDJQeRgythL_8ll01eMIsqzBzJPxuHB',
+      'https://lh3.googleusercontent.com/d/1bTqo6znGM4RuPtqpmDQKCqVK5iwyazp2'
     ]
   }
 ];
@@ -182,7 +182,7 @@ export const DOCTORS: Doctor[] = [
     id: '1',
     name: 'Lic. Mariano Benedetti',
     specialties: ['Kinesiología'],
-    image: 'https://lh3.googleusercontent.com/d/1hRpUDspEZRzElN1d250bU65UT5AQQ4IL',
+    image: 'https://lh3.googleusercontent.com/d/12k77RAeoYWEk-A8oKvf3eNSZZvWTtEET',
     bio: 'Director de Consultorios Benedetti. Especialista en Quiropraxia y Kinesiología con amplia trayectoria en el tratamiento de la columna vertebral.',
     education: ['Lic. en Kinesiología y Fisiatría - UBA', 'Especialista en Quiropraxia'],
     languages: ['Español', 'Inglés'],
@@ -192,7 +192,7 @@ export const DOCTORS: Doctor[] = [
     id: '2',
     name: 'Lic. Esteban Benedetti',
     specialties: ['Quiropraxia'],
-    image: 'https://eaeapp.com/images-ia/benedetti/avatar_esteban.jpg',
+    image: 'https://lh3.googleusercontent.com/d/1T6bjjARDGEzuVvc-mjFfVHcjc-smQwlo',
     bio: 'Co-director. Especialista en rehabilitación funcional y kinesiología deportiva.',
     education: ['Lic. en Kinesiología y Fisiatría - UBA'],
     languages: ['Español'],
@@ -226,7 +226,6 @@ export interface BlogPost {
   excerpt: string;
   content: string;
   date: string;
-  author: string;
   category: string;
   image: string;
 }
@@ -244,7 +243,6 @@ export const BLOG_POSTS: BlogPost[] = [
       Muchos deportistas de élite incluyen la quiropraxia como parte de su rutina de entrenamiento regular, notando beneficios inmediatos en su flexibilidad y capacidad de recuperación tras esfuerzos intensos.
     `,
     date: '2024-03-15',
-    author: 'Dra. Lucía Fernández',
     category: 'Quiropraxia',
     image: 'https://images.unsplash.com/photo-1537368910025-700350fe46c7?auto=format&fit=crop&q=80&w=800'
   },
@@ -260,7 +258,6 @@ export const BLOG_POSTS: BlogPost[] = [
       Si sufres de dolores recurrentes de espalda o rodilla, el problema podría estar en tu forma de caminar. Un estudio a tiempo puede prevenir patologías crónicas y mejorar significativamente tu postura diaria.
     `,
     date: '2024-03-10',
-    author: 'Lic. Sergio Torres',
     category: 'Análisis de la pisada',
     image: 'https://images.unsplash.com/photo-1562157873-818bc0726f68?auto=format&fit=crop&q=80&w=800'
   },
@@ -276,8 +273,7 @@ export const BLOG_POSTS: BlogPost[] = [
       El objetivo final es la autonomía del paciente. No solo tratamos el síntoma, sino que buscamos la causa raíz del problema para evitar recaídas y fortalecer el cuerpo de manera integral.
     `,
     date: '2024-03-05',
-    author: 'Dr. Roberto Gomez',
     category: 'Kinesiología',
-    image: 'https://eaeapp.com/images-ia/benedetti/fisio.webp'
+    image: 'https://lh3.googleusercontent.com/d/1LOXqn-eOuM5tTno7lRElV6_aA3UZprLa'
   }
 ];

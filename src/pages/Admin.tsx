@@ -6,13 +6,15 @@ import { useSettings, AppSettings } from '../hooks/useSettings';
 import { useReviews, Review } from '../hooks/useReviews';
 import { useProfessionals } from '../hooks/useProfessionals';
 import { useInsurances } from '../hooks/useInsurances';
-import { SPECIALTIES, Doctor, InsuranceProvider, INSURANCE_PROVIDERS } from '../constants';
+import { useBlog } from '../hooks/useBlog';
+import { SPECIALTIES, Doctor, InsuranceProvider, INSURANCE_PROVIDERS, BlogPost } from '../constants';
 import { 
   Lock, Save, LogOut, Settings as SettingsIcon, Loader2, MessageSquare, 
-  Star as StarIcon, Plus, Eye, EyeOff, Users, Shield, Trash2, Edit2, X
+  Star as StarIcon, Plus, Eye, EyeOff, Users, Shield, Trash2, Edit2, X,
+  FileText
 } from 'lucide-react';
 
-type AdminTab = 'general' | 'professionals' | 'reviews' | 'insurances';
+type AdminTab = 'general' | 'professionals' | 'reviews' | 'insurances' | 'blog';
 
 export default function Admin() {
   const [user, setUser] = useState<User | null>(null);
@@ -31,18 +33,29 @@ export default function Admin() {
   const { reviews, addReview, updateReview, deleteReview } = useReviews();
   const { professionals, addProfessional, updateProfessional, deleteProfessional } = useProfessionals();
   const { insurances, addInsurance, updateInsurance, deleteInsurance } = useInsurances();
+  const { posts, addPost, updatePost, deletePost } = useBlog();
   
   const [isImporting, setIsImporting] = useState(false);
   const [formData, setFormData] = useState<AppSettings | null>(null);
   const [showProfForm, setShowProfForm] = useState(false);
   const [showInsForm, setShowInsForm] = useState(false);
   const [showReviewForm, setShowReviewForm] = useState(false);
+  const [showBlogForm, setShowBlogForm] = useState(false);
   
   // Review form state
   const [editingReview, setEditingReview] = useState<Review | null>(null);
   const [reviewAuthor, setReviewAuthor] = useState('');
   const [reviewRating, setReviewRating] = useState(5);
   const [reviewText, setReviewText] = useState('');
+
+  // Blog form state
+  const [editingPost, setEditingPost] = useState<BlogPost | null>(null);
+  const [blogTitle, setBlogTitle] = useState('');
+  const [blogExcerpt, setBlogExcerpt] = useState('');
+  const [blogContent, setBlogContent] = useState('');
+  const [blogDate, setBlogDate] = useState(new Date().toISOString().split('T')[0]);
+  const [blogCategory, setBlogCategory] = useState('');
+  const [blogImage, setBlogImage] = useState('');
 
   // Professional form state
   const [editingProfessional, setEditingProfessional] = useState<Doctor | null>(null);
@@ -254,6 +267,55 @@ export default function Admin() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const handleBlogSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const data = {
+      title: blogTitle,
+      excerpt: blogExcerpt,
+      content: blogContent,
+      date: blogDate,
+      category: blogCategory,
+      image: blogImage
+    };
+
+    try {
+      if (editingPost) {
+        await updatePost(editingPost.id, data);
+        alert('Artículo actualizado.');
+      } else {
+        await addPost(data);
+        alert('Artículo agregado.');
+      }
+      resetBlogForm();
+    } catch (err) {
+      console.error(err);
+      alert('Error al procesar el artículo.');
+    }
+  };
+
+  const resetBlogForm = () => {
+    setEditingPost(null);
+    setBlogTitle('');
+    setBlogExcerpt('');
+    setBlogContent('');
+    setBlogDate(new Date().toISOString().split('T')[0]);
+    setBlogCategory('');
+    setBlogImage('');
+    setShowBlogForm(false);
+  };
+
+  const startEditBlog = (post: BlogPost) => {
+    setEditingPost(post);
+    setBlogTitle(post.title);
+    setBlogExcerpt(post.excerpt);
+    setBlogContent(post.content);
+    setBlogDate(post.date);
+    setBlogCategory(post.category);
+    setBlogImage(post.image);
+    setShowBlogForm(true);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   const handleBulkImportInsurances = async () => {
     if (!confirm('¿Deseas cargar la lista predefinida de obras sociales? Esto agregará las que no existan.')) return;
     setIsImporting(true);
@@ -377,6 +439,7 @@ export default function Admin() {
           <NavItem id="professionals" label="Profesionales" icon={Users} />
           <NavItem id="reviews" label="Reviews" icon={MessageSquare} />
           <NavItem id="insurances" label="Obras Sociales" icon={Shield} />
+          <NavItem id="blog" label="Blog" icon={FileText} />
         </div>
         <div className="absolute bottom-8 w-full px-6">
           <button 
@@ -399,6 +462,7 @@ export default function Admin() {
             <button onClick={() => setActiveTab('professionals')} className={`px-4 py-2 rounded-lg text-sm whitespace-nowrap ${activeTab === 'professionals' ? 'bg-blue-50 text-[#0088CC] font-bold' : 'text-gray-500'}`}>Profesionales</button>
             <button onClick={() => setActiveTab('reviews')} className={`px-4 py-2 rounded-lg text-sm whitespace-nowrap ${activeTab === 'reviews' ? 'bg-blue-50 text-[#0088CC] font-bold' : 'text-gray-500'}`}>Reviews</button>
             <button onClick={() => setActiveTab('insurances')} className={`px-4 py-2 rounded-lg text-sm whitespace-nowrap ${activeTab === 'insurances' ? 'bg-blue-50 text-[#0088CC] font-bold' : 'text-gray-500'}`}>Obras Sociales</button>
+            <button onClick={() => setActiveTab('blog')} className={`px-4 py-2 rounded-lg text-sm whitespace-nowrap ${activeTab === 'blog' ? 'bg-blue-50 text-[#0088CC] font-bold' : 'text-gray-500'}`}>Blog</button>
           </div>
 
           {/* Section: General Settings */}
@@ -929,6 +993,104 @@ export default function Admin() {
                     <div className="flex items-center space-x-2">
                       <button onClick={() => startEditIns(ins)} className="p-2 text-gray-400 hover:text-blue-500 transition-colors"><Edit2 size={18} /></button>
                       <button onClick={() => { if(confirm('¿Borrar obra social?')) deleteInsurance(ins.id) }} className="p-2 text-gray-400 hover:text-red-500 transition-colors"><Trash2 size={18} /></button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Section: Blog */}
+          {activeTab === 'blog' && (
+            <div className="space-y-8">
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+                <div>
+                  <h1 className="text-3xl font-bold text-[#1A3A5A]">Blog</h1>
+                  <p className="text-gray-500">Administra los artículos y noticias del sitio</p>
+                </div>
+                {!showBlogForm && (
+                  <button 
+                    onClick={() => setShowBlogForm(true)}
+                    className="bg-[#0088CC] text-white px-6 py-2 rounded-xl font-bold hover:bg-[#0077B3] transition-all flex items-center space-x-2"
+                  >
+                    <Plus className="w-4 h-4" />
+                    <span>Nuevo Artículo</span>
+                  </button>
+                )}
+              </div>
+
+              {showBlogForm && (
+                <div className="bg-white rounded-[2rem] shadow-sm border border-gray-100 p-8">
+                  <h2 className="text-xl font-bold text-[#1A3A5A] mb-6 flex items-center">
+                    {editingPost ? <Edit2 className="mr-2 text-[#0088CC]" /> : <Plus className="mr-2 text-[#0088CC]" />}
+                    {editingPost ? 'Editar Artículo' : 'Nuevo Artículo'}
+                  </h2>
+                  <form onSubmit={handleBlogSubmit} className="space-y-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div className="md:col-span-2">
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Título</label>
+                        <input type="text" required value={blogTitle} onChange={e => setBlogTitle(e.target.value)} className="w-full px-4 py-2 rounded-xl border border-gray-200 outline-none focus:ring-2 focus:ring-blue-500" />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Fecha de Publicación</label>
+                        <input type="date" required value={blogDate} onChange={e => setBlogDate(e.target.value)} className="w-full px-4 py-2 rounded-xl border border-gray-200 outline-none focus:ring-2 focus:ring-blue-500" />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Categoría</label>
+                        <select 
+                          required 
+                          value={blogCategory} 
+                          onChange={e => setBlogCategory(e.target.value)} 
+                          className="w-full px-4 py-2 rounded-xl border border-gray-200 outline-none focus:ring-2 focus:ring-blue-500"
+                        >
+                          <option value="">Seleccionar categoría</option>
+                          {SPECIALTIES.map(s => (
+                            <option key={s.id} value={s.name}>{s.name}</option>
+                          ))}
+                        </select>
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">URL Imagen Destacada</label>
+                        <input type="text" required value={blogImage} onChange={e => setBlogImage(e.target.value)} className="w-full px-4 py-2 rounded-xl border border-gray-200 outline-none focus:ring-2 focus:ring-blue-500" placeholder="https://..." />
+                      </div>
+                      <div className="md:col-span-2">
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Resumen (Excerpt)</label>
+                        <textarea required value={blogExcerpt} onChange={e => setBlogExcerpt(e.target.value)} rows={2} className="w-full px-4 py-2 rounded-xl border border-gray-200 outline-none focus:ring-2 focus:ring-blue-500 resize-none" />
+                      </div>
+                      <div className="md:col-span-2">
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Contenido</label>
+                        <textarea required value={blogContent} onChange={e => setBlogContent(e.target.value)} rows={10} className="w-full px-4 py-2 rounded-xl border border-gray-200 outline-none focus:ring-2 focus:ring-blue-500 resize-y font-mono text-sm" placeholder="Usa Enter para separar párrafos." />
+                      </div>
+                    </div>
+                    <div className="flex justify-end space-x-3 pt-4">
+                      <button type="button" onClick={resetBlogForm} className="px-6 py-2 rounded-xl border border-gray-200 text-gray-500 hover:bg-gray-50 font-bold">
+                        Cancelar
+                      </button>
+                      <button type="submit" className="bg-[#0088CC] text-white px-8 py-2 rounded-xl font-bold hover:bg-[#0077B3] transition-all">
+                        {editingPost ? 'Actualizar' : 'Publicar'}
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              )}
+
+              <div className="grid grid-cols-1 gap-4">
+                {posts.map(post => (
+                  <div key={post.id} className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex items-center justify-between">
+                    <div className="flex items-center space-x-4">
+                      <img src={post.image} alt={post.title} className="w-16 h-16 rounded-xl object-cover" referrerPolicy="no-referrer" />
+                      <div>
+                        <h3 className="font-bold text-[#1A3A5A] line-clamp-1">{post.title}</h3>
+                        <div className="flex items-center space-x-2 text-xs text-gray-400">
+                          <span>{post.date}</span>
+                          <span>•</span>
+                          <span className="text-[#0088CC] font-medium">{post.category}</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <button onClick={() => startEditBlog(post)} className="p-2 text-gray-400 hover:text-blue-500 transition-colors"><Edit2 size={18} /></button>
+                      <button onClick={() => { if(confirm('¿Borrar artículo?')) deletePost(post.id) }} className="p-2 text-gray-400 hover:text-red-500 transition-colors"><Trash2 size={18} /></button>
                     </div>
                   </div>
                 ))}

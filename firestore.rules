@@ -14,7 +14,8 @@ service cloud.firestore {
         (
           (exists(/databases/$(database)/documents/users/$(request.auth.uid)) && 
            get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin') ||
-          request.auth.token.email.lower() == "cbenedetti@benedetti.com"
+          request.auth.token.email.lower() == "cbenedetti@benedetti.com" ||
+          request.auth.token.email.lower() == "naturalsoft@gmail.com"
         );
     }
 
@@ -60,6 +61,16 @@ service cloud.firestore {
              data.specialties is list;
     }
 
+    function isValidBlogPost(data) {
+      return data.keys().hasAll(['title', 'excerpt', 'content', 'date', 'category', 'image']) &&
+             data.title is string && data.title.size() < 200 &&
+             data.excerpt is string && data.excerpt.size() < 500 &&
+             data.content is string && data.content.size() < 50000 &&
+             data.date is string &&
+             data.category is string && data.category.size() < 100 &&
+             data.image is string && data.image.size() < 500;
+    }
+
     // ===============================================================
     // Rules
     // ===============================================================
@@ -82,6 +93,11 @@ service cloud.firestore {
     match /insurances/{id} {
       allow read: if true;
       allow write: if isAdmin() && (request.method == 'delete' || isValidInsurance(request.resource.data));
+    }
+
+    match /blog/{id} {
+      allow read: if true;
+      allow write: if isAdmin() && (request.method == 'delete' || isValidBlogPost(request.resource.data));
     }
 
     match /users/{userId} {

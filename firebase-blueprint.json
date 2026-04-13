@@ -74,6 +74,21 @@
         "createdAt": { "type": "string", "format": "date-time" }
       },
       "required": ["name", "logo", "specialties"]
+    },
+    "BlogPost": {
+      "title": "BlogPost",
+      "description": "Blog article document",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "excerpt": { "type": "string" },
+        "content": { "type": "string" },
+        "date": { "type": "string", "format": "date" },
+        "category": { "type": "string" },
+        "image": { "type": "string" }
+      },
+      "required": ["title", "excerpt", "content", "date", "category", "image"]
     }
   },
   "firestore": {
@@ -96,6 +111,10 @@
     "/insurances/{insuranceId}": {
       "schema": "Insurance",
       "description": "Insurance provider documents"
+    },
+    "/blog/{postId}": {
+      "schema": "BlogPost",
+      "description": "Blog article documents"
     }
   }
 }

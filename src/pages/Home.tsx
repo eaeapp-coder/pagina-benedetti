@@ -4,16 +4,20 @@ import SpecialtyCards from '../components/SpecialtyCards';
 import NewServiceHighlight from '../components/NewServiceHighlight';
 import ReviewsSlider from '../components/ReviewsSlider';
 import { motion } from 'motion/react';
-import { CheckCircle2, Clock, User, Calendar } from 'lucide-react';
+import { CheckCircle2, Clock, User, Calendar, ChevronRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import SEO from '../components/SEO';
 import StructuredData from '../components/StructuredData';
 import { useSettings } from '../hooks/useSettings';
+import { useBlog } from '../hooks/useBlog';
 
 import PageTransition from '../components/PageTransition';
 
 export default function Home() {
   const { settings } = useSettings();
+  const { posts } = useBlog();
+  const latestPosts = posts.slice(0, 3);
+
   const clinicSchema = {
     "@context": "https://schema.org",
     "@type": "MedicalClinic",
@@ -104,8 +108,8 @@ export default function Home() {
               <div className="relative">
                 <div className="rounded-3xl overflow-hidden shadow-2xl">
                   <img 
-                    src="https://lh3.googleusercontent.com/d/1LOXqn-eOuM5tTno7lRElV6_aA3UZprLa" 
-                    alt="Doctor with patient"
+                    src="https://lh3.googleusercontent.com/d/12k77RAeoYWEk-A8oKvf3eNSZZvWTtEET" 
+                    alt="Lic. Mariano Benedetti"
                     className="w-full h-full object-cover"
                     referrerPolicy="no-referrer"
                   />
@@ -115,6 +119,56 @@ export default function Home() {
                   <p className="text-sm opacity-80">Años de experiencia</p>
                 </div>
               </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Latest Blog Posts */}
+        <section className="py-24 bg-white border-t border-gray-100">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-16">
+              <h2 className="text-3xl md:text-5xl font-bold text-[#1A3A5A] mb-6">Últimas Novedades</h2>
+              <p className="text-gray-500 text-lg max-w-2xl mx-auto">Mantente informado con nuestros últimos artículos y consejos de salud.</p>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {latestPosts.map((post, index) => (
+                <motion.article
+                  key={post.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1 }}
+                  className="bg-[#F8FAFC] rounded-[2.5rem] overflow-hidden shadow-sm border border-gray-100 hover:shadow-xl transition-all group flex flex-col h-full"
+                >
+                  <Link to={`/blog/${post.id}`} className="block overflow-hidden aspect-[16/10]">
+                    <img src={post.image} alt={post.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" referrerPolicy="no-referrer" />
+                  </Link>
+                  <div className="p-8 flex-1 flex flex-col">
+                    <div className="mb-4">
+                      <span className="px-3 py-1 bg-blue-50 text-[#0088CC] text-xs font-bold rounded-full">{post.category}</span>
+                    </div>
+                    <h3 className="text-xl font-bold text-[#1A3A5A] mb-4 group-hover:text-[#0088CC] transition-colors">
+                      <Link to={`/blog/${post.id}`}>{post.title}</Link>
+                    </h3>
+                    <p className="text-gray-500 text-sm leading-relaxed mb-6 flex-1 line-clamp-3">{post.excerpt}</p>
+                    <div className="pt-6 border-t border-gray-100 flex items-center justify-between">
+                      <div className="flex items-center text-xs text-gray-400">
+                        <Calendar className="w-3 h-3 mr-1" />
+                        {post.date}
+                      </div>
+                      <Link to={`/blog/${post.id}`} className="inline-flex items-center text-[#0088CC] font-bold text-sm group/link">
+                        Leer más
+                        <ChevronRight className="w-4 h-4 ml-1 transform group-hover/link:translate-x-1 transition-transform" />
+                      </Link>
+                    </div>
+                  </div>
+                </motion.article>
+              ))}
+            </div>
+            <div className="text-center mt-12">
+              <Link to="/blog" className="inline-flex items-center justify-center px-8 py-4 bg-[#0088CC] text-white rounded-2xl font-bold hover:bg-[#0077B3] transition-all shadow-lg hover:shadow-xl hover:-translate-y-1">
+                Ver todos los artículos
+              </Link>
             </div>
           </div>
         </section>

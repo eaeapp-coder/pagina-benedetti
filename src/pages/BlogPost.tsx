@@ -1,15 +1,24 @@
 import React from 'react';
 import { useParams, Link, Navigate } from 'react-router-dom';
-import { BLOG_POSTS } from '../constants';
+import { useBlog } from '../hooks/useBlog';
 import { motion } from 'motion/react';
 import PageTransition from '../components/PageTransition';
-import { Calendar, User, ArrowLeft, Share2, MessageSquare } from 'lucide-react';
+import { Calendar, User, ArrowLeft, Share2, MessageSquare, Loader2 } from 'lucide-react';
 import SEO from '../components/SEO';
 import StructuredData from '../components/StructuredData';
 
 export default function BlogPost() {
   const { id } = useParams<{ id: string }>();
-  const post = BLOG_POSTS.find(p => p.id === id);
+  const { posts, loading } = useBlog();
+  const post = posts.find(p => p.id === id);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-[#F8FAFC]">
+        <Loader2 className="animate-spin text-[#0088CC] w-12 h-12" />
+      </div>
+    );
+  }
 
   if (!post) {
     return <Navigate to="/blog" replace />;
@@ -20,10 +29,6 @@ export default function BlogPost() {
     "@type": "BlogPosting",
     "headline": post.title,
     "image": post.image,
-    "author": {
-      "@type": "Person",
-      "name": post.author
-    },
     "publisher": {
       "@type": "Organization",
       "name": "Consultorios Benedetti",
@@ -72,15 +77,6 @@ export default function BlogPost() {
               </h1>
               
               <div className="flex flex-wrap items-center gap-6 pt-4 border-t border-gray-100">
-                <div className="flex items-center space-x-3">
-                  <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
-                    <User className="w-5 h-5 text-[#0088CC]" />
-                  </div>
-                  <div>
-                    <p className="text-sm font-bold text-[#1A3A5A]">{post.author}</p>
-                    <p className="text-xs text-gray-400">Especialista</p>
-                  </div>
-                </div>
                 <div className="flex items-center text-sm text-gray-400">
                   <Calendar className="w-4 h-4 mr-2" />
                   {post.date}

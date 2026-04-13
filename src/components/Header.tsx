@@ -15,6 +15,7 @@ export default function Header() {
     { name: 'Blog', path: '/blog' },
     { name: 'Nosotros', path: '/nosotros' },
     { name: 'Contacto', path: '/contacto' },
+    { name: 'Admin', path: '/admin' },
   ];
 
   const isActive = (path: string) => location.pathname === path;
@@ -36,27 +37,15 @@ export default function Header() {
           {!isAdminPage ? (
             <nav className="hidden md:flex items-center space-x-8">
               {navLinks.map((link) => (
-                link.name === 'Blog' ? (
-                  <a
-                    key={link.path}
-                    href="https://pruebas.eaeapp.com/blog/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-sm font-medium transition-colors hover:text-[#0088CC] text-gray-600"
-                  >
-                    {link.name}
-                  </a>
-                ) : (
-                  <Link
-                    key={link.path}
-                    to={link.path}
-                    className={`text-sm font-medium transition-colors hover:text-[#0088CC] ${
-                      isActive(link.path) ? 'text-[#0088CC] border-b-2 border-[#0088CC] pb-1' : 'text-gray-600'
-                    }`}
-                  >
-                    {link.name}
-                  </Link>
-                )
+                <Link
+                  key={link.path}
+                  to={link.path}
+                  className={`text-sm font-medium transition-colors hover:text-[#0088CC] ${
+                    isActive(link.path) ? 'text-[#0088CC] border-b-2 border-[#0088CC] pb-1' : 'text-gray-600'
+                  }`}
+                >
+                  {link.name}
+                </Link>
               ))}
             </nav>
           ) : (
@@ -111,31 +100,18 @@ export default function Header() {
           >
             <div className="px-4 pt-2 pb-6 space-y-1">
               {navLinks.map((link) => (
-                link.name === 'Blog' ? (
-                  <a
-                    key={link.path}
-                    href="https://pruebas.eaeapp.com/blog/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={() => setIsOpen(false)}
-                    className="block px-3 py-4 text-base font-medium rounded-md text-gray-600 hover:bg-gray-50 hover:text-[#0088CC]"
-                  >
-                    {link.name}
-                  </a>
-                ) : (
-                  <Link
-                    key={link.path}
-                    to={link.path}
-                    onClick={() => setIsOpen(false)}
-                    className={`block px-3 py-4 text-base font-medium rounded-md ${
-                      isActive(link.path)
-                        ? 'bg-blue-50 text-[#0088CC]'
-                        : 'text-gray-600 hover:bg-gray-50 hover:text-[#0088CC]'
-                    }`}
-                  >
-                    {link.name}
-                  </Link>
-                )
+                <Link
+                  key={link.path}
+                  to={link.path}
+                  onClick={() => setIsOpen(false)}
+                  className={`block px-3 py-4 text-base font-medium rounded-md ${
+                    isActive(link.path)
+                      ? 'bg-blue-50 text-[#0088CC]'
+                      : 'text-gray-600 hover:bg-gray-50 hover:text-[#0088CC]'
+                  }`}
+                >
+                  {link.name}
+                </Link>
               ))}
             </div>
           </motion.div>

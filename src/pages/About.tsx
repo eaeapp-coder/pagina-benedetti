@@ -68,7 +68,7 @@ export default function About() {
               <div className="relative">
                 <div className="rounded-[3rem] overflow-hidden shadow-2xl aspect-square lg:aspect-auto lg:h-[500px]">
                   <img 
-                    src="https://lh3.googleusercontent.com/d/1hRpUDspEZRzElN1d250bU65UT5AQQ4IL" 
+                    src="https://lh3.googleusercontent.com/d/12k77RAeoYWEk-A8oKvf3eNSZZvWTtEET" 
                     alt="Mariano Benedetti - Kinesiología" 
                     className="w-full h-full object-cover"
                     referrerPolicy="no-referrer"
@@ -82,7 +82,7 @@ export default function About() {
 
               <div className="rounded-[3rem] overflow-hidden shadow-2xl aspect-square lg:aspect-auto lg:h-[500px] scale-90">
                 <img 
-                  src="https://lh3.googleusercontent.com/d/1hRpUDspEZRzElN1d250bU65UT5AQQ4IL" 
+                  src="https://lh3.googleusercontent.com/d/12k77RAeoYWEk-A8oKvf3eNSZZvWTtEET" 
                   alt="Kinesiología" 
                   className="w-full h-full object-cover"
                   referrerPolicy="no-referrer"
@@ -91,7 +91,7 @@ export default function About() {
 
               <div className="rounded-[3rem] overflow-hidden shadow-2xl aspect-square lg:aspect-auto lg:h-[500px]">
                 <img 
-                  src="https://eaeapp.com/images-ia/benedetti/mariano-y-esteban-juntos.jpeg" 
+                  src="https://lh3.googleusercontent.com/d/15M9bIsXu3zng75DmqQ4VAK5Yuzko1drv" 
                   alt="Esteban y Mariano Benedetti juntos" 
                   className="w-full h-full object-cover"
                   referrerPolicy="no-referrer"
