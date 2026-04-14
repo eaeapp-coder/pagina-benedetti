@@ -60,8 +60,8 @@ export const SPECIALTIES: Specialty[] = [
       'Corrección postural y ergonomía'
     ],
     images: [
-      'https://lh3.googleusercontent.com/d/1LOXqn-eOuM5tTno7lRElV6_aA3UZprLa',
-      'https://white-albatross-289547.hostingersite.com/prueba/pexels-kinesiologia.jpg'
+      'https://eaeapp.com/imagenes-ia/benedetti/pexels-kinesiologia.jpg',
+      'https://eaeapp.com/imagenes-ia/benedetti/kinesiologia-1.webp'
     ]
   },
   { 
@@ -78,8 +78,8 @@ export const SPECIALTIES: Specialty[] = [
       'Mejora del rendimiento deportivo'
     ],
     images: [
-      'https://lh3.googleusercontent.com/d/12k77RAeoYWEk-A8oKvf3eNSZZvWTtEET',
-      'https://images.unsplash.com/photo-1519824145371-296894a0daa9?auto=format&fit=crop&q=80&w=800'
+      'https://eaeapp.com/imagenes-ia/benedetti/esteban_quiropraxia.jpg',
+      'https://eaeapp.com/imagenes-ia/benedetti/quiropraxia_2.jpg'
     ]
   },
   { 
@@ -96,7 +96,7 @@ export const SPECIALTIES: Specialty[] = [
       'Seguimiento personalizado en la recuperación'
     ],
     images: [
-      'https://lh3.googleusercontent.com/d/1qBQzJqATDR02AuGz2E6_zErBuo3hNt1i',
+      'https://eaeapp.com/imagenes-ia/benedetti/ortopedia.jpg',
       'https://images.pexels.com/photos/6129045/pexels-photo-6129045.jpeg'
     ]
   },
@@ -114,8 +114,8 @@ export const SPECIALTIES: Specialty[] = [
       'Optimización del rendimiento en corredores y deportistas'
     ],
     images: [
-      'https://lh3.googleusercontent.com/d/1fnDJQeRgythL_8ll01eMIsqzBzJPxuHB',
-      'https://lh3.googleusercontent.com/d/1bTqo6znGM4RuPtqpmDQKCqVK5iwyazp2'
+      'https://eaeapp.com/imagenes-ia/benedetti/mariano_analisis_pisada.jpeg',
+      'https://eaeapp.com/imagenes-ia/benedetti/analisis-pisada.jpg'
     ]
   }
 ];
@@ -183,7 +183,7 @@ export const DOCTORS: Doctor[] = [
     id: '1',
     name: 'Lic. Mariano Benedetti',
     specialties: ['Kinesiología'],
-    image: 'https://lh3.googleusercontent.com/d/12k77RAeoYWEk-A8oKvf3eNSZZvWTtEET',
+    image: 'https://eaeapp.com/imagenes-ia/benedetti/lic_mariano_benedetti.jpg',
     bio: 'Director de Consultorios Benedetti. Especialista en Quiropraxia y Kinesiología con amplia trayectoria en el tratamiento de la columna vertebral.',
     education: ['Lic. en Kinesiología y Fisiatría - UBA', 'Especialista en Quiropraxia'],
     languages: ['Español', 'Inglés'],
@@ -193,31 +193,11 @@ export const DOCTORS: Doctor[] = [
     id: '2',
     name: 'Lic. Esteban Benedetti',
     specialties: ['Quiropraxia'],
-    image: 'https://lh3.googleusercontent.com/d/1T6bjjARDGEzuVvc-mjFfVHcjc-smQwlo',
+    image: 'https://eaeapp.com/imagenes-ia/benedetti/lic_esteban_benedetti.jpg',
     bio: 'Co-director. Especialista en rehabilitación funcional y kinesiología deportiva.',
     education: ['Lic. en Kinesiología y Fisiatría - UBA'],
     languages: ['Español'],
     availability: 'Mar. a Jue. 11:00 a 20:00 | Lun. Mie. y Vie. 08:00 a 18:00'
-  },
-  { 
-    id: '9', 
-    name: 'Dr. Marcos Paz', 
-    specialties: ['Ortopedia'], 
-    image: 'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&q=80&w=400&h=400',
-    bio: 'Cirujano ortopédico especializado en articulaciones y medicina deportiva.',
-    education: ['Médico - UBA', 'Especialista en Ortopedia y Traumatología'],
-    languages: ['Español'],
-    availability: 'Lunes y Miércoles de 14:00 a 19:00'
-  },
-  { 
-    id: '10', 
-    name: 'Lic. Sergio Torres', 
-    specialties: ['Análisis de la pisada'], 
-    image: 'https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&q=80&w=400&h=400',
-    bio: 'Experto en biomecánica de la marcha y diseño de plantillas ortopédicas personalizadas.',
-    education: ['Lic. en Kinesiología', 'Especialista en Biomecánica'],
-    languages: ['Español'],
-    availability: 'Viernes de 09:00 a 15:00'
   },
 ];
 

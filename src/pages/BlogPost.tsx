@@ -34,7 +34,7 @@ export default function BlogPost() {
       "name": "Consultorios Benedetti",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://lh3.googleusercontent.com/d/1IncE6jsDm_W4K_tY7q3vuSILtGPXlhe4"
+        "url": "https://eaeapp.com/imagenes-ia/benedetti/logo-benedetti.png"
       }
     },
     "datePublished": post.date,

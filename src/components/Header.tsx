@@ -25,7 +25,7 @@ export default function Header() {
         <div className="flex justify-between items-center h-20">
           <Link to="/" className="flex items-center">
             <img 
-              src="https://lh3.googleusercontent.com/d/1IncE6jsDm_W4K_tY7q3vuSILtGPXlhe4" 
+              src="https://eaeapp.com/imagenes-ia/benedetti/logo-benedetti.png" 
               alt="Consultorios Benedetti" 
               className="h-14 w-auto object-contain"
               referrerPolicy="no-referrer"

@@ -22,7 +22,7 @@ export default function Home() {
     "@context": "https://schema.org",
     "@type": "MedicalClinic",
     "name": "Consultorios Benedetti",
-    "image": "https://lh3.googleusercontent.com/d/1IncE6jsDm_W4K_tY7q3vuSILtGPXlhe4",
+    "image": "https://eaeapp.com/imagenes-ia/benedetti/logo-benedetti.png",
     "@id": "https://consultoriosbenedetti.com.ar",
     "url": "https://consultoriosbenedetti.com.ar",
     "telephone": settings.phoneLine,
@@ -108,7 +108,7 @@ export default function Home() {
               <div className="relative">
                 <div className="rounded-3xl overflow-hidden shadow-2xl">
                   <img 
-                    src="https://lh3.googleusercontent.com/d/12k77RAeoYWEk-A8oKvf3eNSZZvWTtEET" 
+                    src="https://eaeapp.com/imagenes-ia/benedetti/kinesiologia-1.webp" 
                     alt="Lic. Mariano Benedetti"
                     className="w-full h-full object-cover"
                     referrerPolicy="no-referrer"

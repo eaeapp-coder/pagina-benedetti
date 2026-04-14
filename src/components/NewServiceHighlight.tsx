@@ -71,7 +71,7 @@ export default function NewServiceHighlight() {
                 >
                   <div className="w-72 h-72 md:w-[378px] md:h-[378px] bg-white rounded-[2rem] shadow-xl overflow-hidden transform -rotate-6">
                     <img 
-                      src="https://lh3.googleusercontent.com/d/1qBQzJqATDR02AuGz2E6_zErBuo3hNt1i" 
+                      src="https://eaeapp.com/imagenes-ia/benedetti/ortopedia.jpg" 
                       alt="Ortopedia" 
                       className="w-full h-full object-cover -scale-x-100"
                       referrerPolicy="no-referrer"
