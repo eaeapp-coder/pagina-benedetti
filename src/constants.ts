@@ -50,7 +50,7 @@ export const SPECIALTIES: Specialty[] = [
     id: 'kinesiology', 
     name: 'Kinesiología', 
     icon: Accessibility, 
-    description: 'Nuestros especialistas estan formados para trabajar en la mejora y el mantenimiento de la capacidad fisiológica de los pacientes y la prevención de sus alteraciones',
+    description: 'Rehabilitación profesional para que tu cuerpo vuelva a funcionar al máximo. Tratamos lesiones traumatológicas, deportivas y posquirúrgicas con un enfoque personalizado y basado en evidencia.',
     fullDescription: 'La kinesiología es una disciplina de la salud que se enfoca en el estudio del movimiento humano y su aplicación para la rehabilitación, prevención y mejora del rendimiento físico. En nuestro consultorio, utilizamos técnicas manuales, ejercicios terapéuticos y agentes físicos para tratar diversas patologías musculoesqueléticas, neurológicas y respiratorias. Nuestro objetivo es restaurar la función motora, aliviar el dolor y mejorar la calidad de vida de nuestros pacientes a través de un enfoque personalizado y basado en la evidencia científica.',
     benefits: [
       'Rehabilitación post-quirúrgica y post-traumática',
@@ -68,7 +68,7 @@ export const SPECIALTIES: Specialty[] = [
     id: 'chiropractic', 
     name: 'Quiropraxia', 
     icon: Activity, 
-    description: 'La quiropraxia es una profesión de la salud que estudia la columna vertebral y su relación con el sistema nervioso. Analiza, detecta y corrige desalineamientos de la columna vertebral.',
+    description: 'Tu columna vertebral es el eje de tu salud. A través de la quiropraxia analizamos, detectamos y corregimos alteraciones vertebrales para mejorar tu calidad de vida desde la raíz.',
     fullDescription: 'La quiropraxia se centra en la relación entre la estructura de la columna vertebral y el funcionamiento del sistema nervioso. Los quiroprácticos realizan ajustes específicos para corregir subluxaciones vertebrales, que son desalineamientos que interfieren con la comunicación entre el cerebro y el resto del cuerpo. Al restaurar la alineación correcta, se permite que el cuerpo funcione a su máximo potencial de autocuración. Es un tratamiento seguro, natural y efectivo para personas de todas las edades que buscan mejorar su salud integral.',
     benefits: [
       'Alivio de dolores de espalda y cuello',
@@ -83,28 +83,10 @@ export const SPECIALTIES: Specialty[] = [
     ]
   },
   { 
-    id: 'traumatology', 
-    name: 'Ortopedia', 
-    icon: Activity, 
-    description: 'Especialidad dedicada al diagnóstico, tratamiento, rehabilitación y prevención de lesiones y enfermedades del sistema musculoesquelético.',
-    fullDescription: 'La ortopedia y traumatología es la rama de la medicina que se ocupa del estudio y tratamiento de las afecciones del sistema locomotor. Esto incluye huesos, articulaciones, ligamentos, tendones y músculos. En nuestro centro, brindamos atención especializada para fracturas, esguinces, lesiones deportivas, enfermedades degenerativas como la artrosis y deformidades congénitas o adquiridas. Contamos con profesionales expertos que utilizan las últimas tecnologías y técnicas quirúrgicas y no quirúrgicas para asegurar una recuperación óptima y el retorno a las actividades diarias.',
-    benefits: [
-      'Diagnóstico preciso de lesiones óseas y articulares',
-      'Tratamientos mínimamente invasivos',
-      'Manejo especializado de fracturas y luxaciones',
-      'Atención integral de patologías de columna y miembros',
-      'Seguimiento personalizado en la recuperación'
-    ],
-    images: [
-      'https://eaeapp.com/imagenes-ia/benedetti/ortopedia.jpg',
-      'https://images.pexels.com/photos/6129045/pexels-photo-6129045.jpeg'
-    ]
-  },
-  { 
     id: 'gait-analysis', 
     name: 'Análisis de la pisada', 
     icon: Footprints, 
-    description: 'Nos proporciona valores para la prevención, corrección, diagnóstico y tratamiento de problemas de pisada.',
+    description: 'Todo empieza desde el primer paso. Analizamos tu pisada con tecnología especializada y confeccionamos plantillas urbanas, deportivas y ortopédicas diseñadas específicamente para vos.',
     fullDescription: 'El análisis de la pisada o estudio baropodométrico es una evaluación biomecánica avanzada que permite conocer cómo apoyamos los pies tanto en posición estática como durante la marcha. Mediante el uso de plataformas de presiones digitales, detectamos anomalías en la distribución del peso, puntos de presión excesiva y desequilibrios que pueden causar dolor no solo en los pies, sino también en tobillos, rodillas, cadera y columna. Este estudio es fundamental para el diseño de plantillas ortopédicas personalizadas de alta precisión, mejorando la postura y previniendo lesiones a largo plazo.',
     benefits: [
       'Detección precoz de anomalías en la marcha',
@@ -116,6 +98,24 @@ export const SPECIALTIES: Specialty[] = [
     images: [
       'https://eaeapp.com/imagenes-ia/benedetti/mariano_analisis_pisada.jpeg',
       'https://eaeapp.com/imagenes-ia/benedetti/analisis-pisada.jpg'
+    ]
+  },
+  { 
+    id: 'traumatology', 
+    name: 'Ortopedia', 
+    icon: Activity, 
+    description: 'El tratamiento no termina en el consultorio. Contamos con todo lo que necesitás para acompañar tu recuperación: elementos, ayudas técnicas y productos ortopédicos de calidad, disponibles para la venta y el alquiler.',
+    fullDescription: 'La ortopedia y traumatología es la rama de la medicina que se ocupa del estudio y tratamiento de las afecciones del sistema locomotor. Esto incluye huesos, articulaciones, ligamentos, tendones y músculos. En nuestro centro, brindamos atención especializada para fracturas, esguinces, lesiones deportivas, enfermedades degenerativas como la artrosis y deformidades congénitas o adquiridas. Contamos con profesionales expertos que utilizan las últimas tecnologías y técnicas quirúrgicas y no quirúrgicas para asegurar una recuperación óptima y el retorno a las actividades diarias.',
+    benefits: [
+      'Diagnóstico preciso de lesiones óseas y articulares',
+      'Tratamientos mínimamente invasivos',
+      'Manejo especializado de fracturas y luxaciones',
+      'Atención integral de patologías de columna y miembros',
+      'Seguimiento personalizado en la recuperación'
+    ],
+    images: [
+      'https://eaeapp.com/imagenes-ia/benedetti/ortopedia.jpg',
+      'https://images.pexels.com/photos/6129045/pexels-photo-6129045.jpeg'
     ]
   }
 ];

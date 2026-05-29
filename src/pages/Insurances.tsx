@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { SPECIALTIES } from '../constants';
 import { useInsurances } from '../hooks/useInsurances';
+import { useSettings } from '../hooks/useSettings';
 import { motion, AnimatePresence } from 'motion/react';
 import PageTransition from '../components/PageTransition';
 import { ShieldCheck, Filter, ChevronRight, Loader2 } from 'lucide-react';
@@ -9,6 +10,7 @@ import SEO from '../components/SEO';
 export default function Insurances() {
   const [selectedSpecialty, setSelectedSpecialty] = useState<string | null>(null);
   const { insurances, loading } = useInsurances();
+  const { settings } = useSettings();
 
   const availableSpecialties = useMemo(() => {
     const names = new Set<string>();
@@ -96,6 +98,21 @@ export default function Insurances() {
                     * Las especialidades de Quiropraxia, Ortopedia y Análisis de la pisada se atienden de forma <span className="font-semibold">particular</span>.
                   </p>
                 </div>
+              </div>
+              
+              <div className="bg-white rounded-3xl p-6 shadow-sm border border-gray-100 mt-6 sticky top-[calc(6rem+24rem)]">
+                <h3 className="font-bold text-[#1A3A5A] mb-3">¿Atención particular?</h3>
+                <p className="text-sm text-gray-600 mb-4 leading-relaxed">
+                  También brindamos atención para pacientes sin cobertura o con reintegro parcial.
+                </p>
+                <a
+                  href={`https://wa.me/${settings.phoneWhatsapp}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block w-full text-center bg-[#0088CC] text-white py-2.5 rounded-xl font-bold hover:bg-[#0077B3] transition-all"
+                >
+                  Consultar Valores
+                </a>
               </div>
             </aside>
 

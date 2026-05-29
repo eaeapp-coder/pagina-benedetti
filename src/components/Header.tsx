@@ -10,7 +10,8 @@ export default function Header() {
 
   const navLinks = [
     { name: 'Inicio', path: '/' },
-    { name: 'Especialidades', path: '/especialidades' },
+    { name: 'Servicios', path: '/especialidades' },
+    { name: 'Ortopedia', path: '/ortopedia', isNew: true },
     { name: 'Obras Sociales', path: '/obras-sociales' },
     { name: 'Blog', path: '/blog' },
     { name: 'Nosotros', path: '/nosotros' },
@@ -25,7 +26,7 @@ export default function Header() {
         <div className="flex justify-between items-center h-20">
           <Link to="/" className="flex items-center">
             <img 
-              src="https://eaeapp.com/imagenes-ia/benedetti/logo-benedetti.png" 
+              src="https://eaeapp.com/imagenes-ia/benedetti/logo_benedetti_10_sin_fondo.png" 
               alt="Consultorios Benedetti" 
               className="h-14 w-auto object-contain"
               referrerPolicy="no-referrer"
@@ -39,11 +40,14 @@ export default function Header() {
                 <Link
                   key={link.path}
                   to={link.path}
-                  className={`text-sm font-medium transition-colors hover:text-[#0088CC] ${
+                  className={`text-sm font-medium transition-colors hover:text-[#0088CC] flex items-center ${
                     isActive(link.path) ? 'text-[#0088CC] border-b-2 border-[#0088CC] pb-1' : 'text-gray-600'
                   }`}
                 >
                   {link.name}
+                  {link.isNew && (
+                    <span className="ml-2 text-[10px] bg-red-500 text-white px-1.5 py-0.5 rounded-full font-bold">NUEVO</span>
+                  )}
                 </Link>
               ))}
             </nav>
@@ -103,13 +107,16 @@ export default function Header() {
                   key={link.path}
                   to={link.path}
                   onClick={() => setIsOpen(false)}
-                  className={`block px-3 py-4 text-base font-medium rounded-md ${
+                  className={`block px-3 py-4 text-base font-medium rounded-md flex items-center justify-between ${
                     isActive(link.path)
                       ? 'bg-blue-50 text-[#0088CC]'
                       : 'text-gray-600 hover:bg-gray-50 hover:text-[#0088CC]'
                   }`}
                 >
                   {link.name}
+                  {link.isNew && (
+                    <span className="text-[10px] bg-red-500 text-white px-1.5 py-0.5 rounded-full font-bold">NUEVO</span>
+                  )}
                 </Link>
               ))}
             </div>

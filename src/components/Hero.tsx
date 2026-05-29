@@ -21,10 +21,10 @@ export default function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="text-5xl md:text-6xl font-bold text-[#1A3A5A] leading-tight mb-6"
+            className="text-5xl md:text-6xl font-bold text-[#1A3A5A] leading-[1.1] mb-6"
           >
-            Tu Salud,<br />
-            <span className="text-[#0088CC]">Nuestra Prioridad</span>
+            Más de <span className="text-[#0088CC]">10 años</span> acompañando<br />
+            tu recuperación
           </motion.h1>
           
           <motion.p 
@@ -33,7 +33,7 @@ export default function Hero() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-lg text-gray-600 mb-10 max-w-lg"
           >
-            Contamos con un equipo de Profesionales dedicados y amplias instalaciones preparadas para brindarle un servicio cálido, eficiente y de calidad.
+            Somos un equipo de profesionales de la salud con más de una década de experiencia en kinesiología, quiropraxia, análisis de pisada y ortopedia. Atención personalizada y seguimiento constante para recuperar tu calidad de vida.
           </motion.p>
         </div>
       </div>

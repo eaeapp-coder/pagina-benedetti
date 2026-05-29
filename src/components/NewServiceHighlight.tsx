@@ -26,7 +26,7 @@ export default function NewServiceHighlight() {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.3 }}
-                className="inline-flex items-center space-x-2 bg-blue-50 text-[#0088CC] px-4 py-2 rounded-full text-sm font-bold mb-8 w-fit"
+                className="inline-flex items-center space-x-2 bg-red-500 text-white px-4 py-2 rounded-full text-sm font-bold mb-8 w-fit"
               >
                 <Sparkles className="w-4 h-4" />
                 <span>NUEVA ESPECIALIDAD</span>
@@ -37,9 +37,7 @@ export default function NewServiceHighlight() {
               </h2>
               
               <p className="text-gray-600 text-lg mb-10 leading-relaxed max-w-xl">
-                Ampliamos nuestros servicios para brindarte una atención aún más completa. 
-                Nuestro equipo de especialistas en ortopedia está listo para ayudarte con el diagnóstico, 
-                tratamiento y rehabilitación de lesiones del sistema musculoesquelético.
+                En Consultorios Benedetti sabemos que una buena recuperación necesita el apoyo correcto también fuera de la sesión. Por eso contamos con una línea completa de productos ortopédicos seleccionados por nuestros profesionales: desde fajas, rodilleras, tobilleras y collarines, hasta muletas, bastones, sillas de ruedas, andadores y botas walker. Todos nuestros productos están pensados para complementar el tratamiento y acompañar cada etapa de la recuperación, con el asesoramiento de quienes conocen tu caso. Porque la diferencia entre recuperarse bien y recuperarse rápido muchas veces está en tener el elemento indicado en el momento justo.
               </p>
 
               <div className="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4">
