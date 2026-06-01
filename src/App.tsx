@@ -13,6 +13,7 @@ import Home from './pages/Home';
 import Professionals from './pages/Professionals';
 import Specialties from './pages/Specialties';
 import SpecialtyDetail from './pages/SpecialtyDetail';
+import Orthopedics from './pages/Orthopedics';
 import ProfessionalProfile from './pages/ProfessionalProfile';
 import Contact from './pages/Contact';
 import Booking from './pages/Booking';
@@ -33,6 +34,7 @@ function AppRoutes() {
         <Route path="/profesionales/:id" element={<ProfessionalProfile />} />
         <Route path="/especialidades" element={<Specialties />} />
         <Route path="/especialidades/:id" element={<SpecialtyDetail />} />
+        <Route path="/ortopedia" element={<Orthopedics />} />
         <Route path="/obras-sociales" element={<Insurances />} />
         <Route path="/blog" element={<BlogArchive />} />
         <Route path="/blog/:id" element={<BlogPost />} />
