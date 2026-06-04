@@ -79,18 +79,18 @@ export default function Home() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
               <div>
                 <h2 className="text-3xl md:text-4xl font-bold text-[#1A3A5A] mb-6">
-                  Atención Médica de <span className="text-[#0088CC]">Excelencia</span>
+                  Más de <span className="text-[#0088CC]">10 años</span> acompañando tu recuperación
                 </h2>
                 <p className="text-gray-600 mb-10 leading-relaxed">
-                  En Consultorios Benedetti nos esforzamos por brindar una experiencia de salud integral, combinando calidez humana con los últimos avances tecnológicos.
+                  Somos un equipo de profesionales de la salud con una década de experiencia en kinesiología, quiropraxia, análisis de pisada y ortopedia. Cada paciente recibe atención personalizada, seguimiento constante y todo lo necesario para recuperar su calidad de vida. Una década de confianza. Un compromiso que crece.
                 </p>
                 
                 <div className="space-y-6">
                   {[
-                    { icon: User, title: 'Profesionales Destacados', desc: 'Médicos con amplia trayectoria y especialización.' },
-                    { icon: Clock, title: 'Horarios Flexibles', desc: 'Atención extendida para adaptarnos a tu rutina.' },
-                    { icon: CheckCircle2, title: 'Tecnología de Punta', desc: 'Equipamiento moderno para diagnósticos precisos.' },
-                    { icon: CheckCircle2, title: 'Obras Sociales', desc: 'Trabajamos con más de 50 coberturas médicas.' },
+                    { icon: User, title: 'Equipo profesional especializado', desc: 'Kinesiólogos con formación universitaria, posgrados y actualización continua.' },
+                    { icon: Clock, title: 'Cuatro áreas de atención integradas', desc: 'Kinesiología, quiropraxia, análisis de pisada y ortopedia bajo un mismo techo.' },
+                    { icon: CheckCircle2, title: 'Tecnología aplicada al tratamiento', desc: 'Baropodometría computarizada y herramientas de última generación.' },
+                    { icon: CheckCircle2, title: 'Obras sociales y atención particular', desc: 'Trabajamos con múltiples coberturas para que el acceso no sea un obstáculo.' },
                   ].map((item, i) => (
                     <div key={i} className="flex items-start space-x-4">
                       <div className="bg-blue-50 p-2 rounded-lg">
@@ -127,7 +127,7 @@ export default function Home() {
         <section className="py-24 bg-white border-t border-gray-100">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-5xl font-bold text-[#1A3A5A] mb-6">Últimas Novedades</h2>
+              <h2 className="text-3xl md:text-5xl font-bold text-[#1A3A5A] mb-6">Nuestro Blog</h2>
               <p className="text-gray-500 text-lg max-w-2xl mx-auto">Mantente informado con nuestros últimos artículos y consejos de salud.</p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">

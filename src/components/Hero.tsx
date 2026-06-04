@@ -21,7 +21,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="text-5xl md:text-6xl font-bold text-[#1A3A5A] leading-[1.1] mb-6"
+            className="text-4xl md:text-6xl font-bold text-[#1A3A5A] leading-tight md:leading-[1.1] mb-6"
           >
             Más de <span className="text-[#0088CC]">10 años</span> acompañando<br />
             tu recuperación
@@ -39,13 +39,15 @@ export default function Hero() {
       </div>
 
       {/* Decorative element */}
-      <div className="absolute right-0 top-1/2 -translate-y-1/2 hidden lg:block">
-        <motion.div
+      <div className="absolute right-32 top-1/2 -translate-y-1/2 hidden lg:block">
+        <motion.img
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1 }}
-          className="w-[500px] h-[500px] bg-[#0088CC]/10 rounded-full blur-3xl"
-        ></motion.div>
+          src="https://eaeapp.com/imagenes-ia/benedetti/10.png"
+          alt="10 Años Logo"
+          className="w-64 h-auto"
+        />
       </div>
     </section>
   );

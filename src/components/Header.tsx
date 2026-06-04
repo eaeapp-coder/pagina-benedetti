@@ -21,7 +21,7 @@ export default function Header() {
   const isActive = (path: string) => location.pathname === path;
 
   return (
-    <header className="bg-white border-b border-gray-100 sticky top-0 z-50">
+    <header className={`${location.pathname === '/ortopedia' ? 'bg-transparent border-none absolute' : 'bg-white border-b border-gray-100 sticky'} top-0 z-50 w-full`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
           <Link to="/" className="flex items-center">
@@ -40,8 +40,10 @@ export default function Header() {
                 <Link
                   key={link.path}
                   to={link.path}
-                  className={`text-sm font-medium transition-colors hover:text-[#0088CC] flex items-center ${
-                    isActive(link.path) ? 'text-[#0088CC] border-b-2 border-[#0088CC] pb-1' : 'text-gray-600'
+                  className={`text-sm font-medium transition-colors flex items-center ${
+                    isActive(link.path)
+                      ? (location.pathname === '/ortopedia' ? 'text-white border-b-2 border-white pb-1' : 'text-[#0088CC] border-b-2 border-[#0088CC] pb-1')
+                      : (location.pathname === '/ortopedia' ? 'text-white hover:text-white/80' : 'text-gray-600 hover:text-[#0088CC]')
                   }`}
                 >
                   {link.name}

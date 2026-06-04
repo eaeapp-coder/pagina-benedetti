@@ -49,7 +49,7 @@ export const SPECIALTIES: Specialty[] = [
   { 
     id: 'kinesiology', 
     name: 'Kinesiología', 
-    icon: Accessibility, 
+    icon: Activity, 
     description: 'Rehabilitación profesional para que tu cuerpo vuelva a funcionar al máximo. Tratamos lesiones traumatológicas, deportivas y posquirúrgicas con un enfoque personalizado y basado en evidencia.',
     fullDescription: 'La kinesiología es una disciplina de la salud que se enfoca en el estudio del movimiento humano y su aplicación para la rehabilitación, prevención y mejora del rendimiento físico. En nuestro consultorio, utilizamos técnicas manuales, ejercicios terapéuticos y agentes físicos para tratar diversas patologías musculoesqueléticas, neurológicas y respiratorias. Nuestro objetivo es restaurar la función motora, aliviar el dolor y mejorar la calidad de vida de nuestros pacientes a través de un enfoque personalizado y basado en la evidencia científica.',
     benefits: [
@@ -67,7 +67,7 @@ export const SPECIALTIES: Specialty[] = [
   { 
     id: 'chiropractic', 
     name: 'Quiropraxia', 
-    icon: Activity, 
+    icon: Accessibility, 
     description: 'Tu columna vertebral es el eje de tu salud. A través de la quiropraxia analizamos, detectamos y corregimos alteraciones vertebrales para mejorar tu calidad de vida desde la raíz.',
     fullDescription: 'La quiropraxia se centra en la relación entre la estructura de la columna vertebral y el funcionamiento del sistema nervioso. Los quiroprácticos realizan ajustes específicos para corregir subluxaciones vertebrales, que son desalineamientos que interfieren con la comunicación entre el cerebro y el resto del cuerpo. Al restaurar la alineación correcta, se permite que el cuerpo funcione a su máximo potencial de autocuración. Es un tratamiento seguro, natural y efectivo para personas de todas las edades que buscan mejorar su salud integral.',
     benefits: [
@@ -103,7 +103,7 @@ export const SPECIALTIES: Specialty[] = [
   { 
     id: 'traumatology', 
     name: 'Ortopedia', 
-    icon: Activity, 
+    icon: Bone, 
     description: 'El tratamiento no termina en el consultorio. Contamos con todo lo que necesitás para acompañar tu recuperación: elementos, ayudas técnicas y productos ortopédicos de calidad, disponibles para la venta y el alquiler.',
     fullDescription: 'La ortopedia y traumatología es la rama de la medicina que se ocupa del estudio y tratamiento de las afecciones del sistema locomotor. Esto incluye huesos, articulaciones, ligamentos, tendones y músculos. En nuestro centro, brindamos atención especializada para fracturas, esguinces, lesiones deportivas, enfermedades degenerativas como la artrosis y deformidades congénitas o adquiridas. Contamos con profesionales expertos que utilizan las últimas tecnologías y técnicas quirúrgicas y no quirúrgicas para asegurar una recuperación óptima y el retorno a las actividades diarias.',
     benefits: [
@@ -199,6 +199,58 @@ export const DOCTORS: Doctor[] = [
     languages: ['Español'],
     availability: 'Mar. a Jue. 11:00 a 20:00 | Lun. Mie. y Vie. 08:00 a 18:00'
   },
+];
+
+export const CATALOG_CATEGORIES = [
+  {
+    id: 'spine',
+    title: 'Columna y espalda',
+    description: 'Collares cervicales, correctores de postura, fajas sacrolumbares, fajas de trabajo y fajas compresivas. Para el cuidado diario y la recuperación.',
+    items: ['Collar cervical de espuma 7 cm (T1 / T2 / T3)', 'Collar cervical de espuma 10 cm (T1 / T2 / T3)', 'Corrector de postura regulable elástico', 'Corrector de postura universal regulable', 'Faja compresiva 3 bandas 24 cm', 'Faja sacrolumbar 2 ballenas', 'Faja sacrolumbar 5 ballenas', 'Faja de trabajo'],
+    image: 'spine_back_support'
+  },
+  {
+    id: 'upper-limb',
+    title: 'Miembro superior',
+    description: 'Cabestrillos, coderas, muñequeras e inmovilizadores para hombro, codo, muñeca y dedos.',
+    items: ['Cabestrillo común derecho', 'Cabestrillo común izquierdo', 'Cabestrillo Vietnam (Universal)', 'Codera larga sin velcro', 'Codera de tenista / golfista', 'Muñequera boomerang con dedo de neoprene M4', 'Muñequera boomerang con inmovilización dedo pulgar M5', 'Inmovilizador de dedo'],
+    image: 'upper_limb_support'
+  },
+  {
+    id: 'lower-limb',
+    title: 'Miembro inferior',
+    description: 'Musleras, rodilleras, gemeleras, tobilleras y abductores de juanete en distintas versiones. Inmovilizador de rodilla y bota walker para post-operatorio y lesiones agudas.',
+    items: ['Muslera de neoprene', 'Rodillera con apertura rotuliana de neoprene R3', 'Rodillera con refuerzo rotuliano de neoprene R2', 'Rodillera con ballenas laterales de neoprene R8', 'Inmovilizador de rodilla DEMA (corto 42 / mediano 52 / largo 62 cm)', 'Gemelera de neoprene', 'Tobillera de neoprene T1', 'Tobillera con ajuste en ocho de neoprene T2', 'Tobillera con ballenas laterales de neoprene T3', 'Abductor de juanete de neoprene'],
+    image: 'lower_limb_support'
+  },
+  {
+    id: 'bandages',
+    title: 'Vendajes y temperatura',
+    description: 'Cintas de kinesiotaping, vendas cohesivas y deportivas, bolsas de frío/calor y packs de gel.',
+    items: ['Cinta kinesiotaping 5 cm', 'Venda cohesiva Pro Sport 5 / 7 / 10 cm', 'Venda deportiva 5 / 7 / 10 cm', 'Almohadilla térmica', 'Bolsa para hielo y agua caliente', 'Pack gel frío-calor 13×25 cm (×5 unidades)'],
+    image: 'bandages_therapy'
+  },
+  {
+    id: 'compression',
+    title: 'Compresión',
+    description: 'Medias de compresión graduada en dos niveles de presión y cinco talles.',
+    items: ['Media compresión 8/15 mmHg — negra — talles S / M / L / XL / XXL', 'Media compresión 15/20 mmHg — negra — talles S / M / L / XL / XXL'],
+    image: 'compression_stockings'
+  },
+  {
+    id: 'mobility',
+    title: 'Movilidad y ayudas técnicas',
+    description: 'Muletas, bastones, andadores, sillas de ruedas y accesorios de movilidad. Disponibles para la venta y el alquiler.',
+    items: ['Muletas de aluminio', 'Bastón canadiense (par)', 'Bastón trípode', 'Bastón aluminio regulable', 'Silla de ruedas 41 cm', 'Silla de ruedas 46 cm', 'Andador paso a paso', 'Andador tijera', 'Elevador de inodoro', 'Pedalera', 'Bota walker'],
+    image: 'mobility_aids'
+  },
+  {
+    id: 'rehab',
+    title: 'Rehabilitación y entrenamiento',
+    description: 'Bandas elásticas, pelotas medicinales, foam roller, accesorios de mano y elementos de confort postural.',
+    items: ['Mini band baja / media / alta', 'Banda larga baja / media / alta', 'Pelota medicinal', 'Pelota chica de propiocepción', 'Foam roller', 'Pelota miofascial', 'Pelota de mano', 'Masilla terapéutica', 'Hand grip', 'Almohadón lumbar', 'Almohadón de asiento', 'Almohada cervical', 'Mancuernas 1 kg', 'Mancuernas 2 kg', 'Tobillera con peso'],
+    image: 'rehab_training'
+  }
 ];
 
 export interface BlogPost {

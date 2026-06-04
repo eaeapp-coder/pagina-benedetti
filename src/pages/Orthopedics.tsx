@@ -1,33 +1,62 @@
 import React from 'react';
-import { ShoppingCart, Accessibility, Activity, MessageSquare } from 'lucide-react';
+import { ShoppingCart, Accessibility, Activity, MessageSquare, Facebook, Instagram, Star, ShoppingBag, Shield, Dumbbell } from 'lucide-react';
+import { motion } from 'motion/react';
+import { CATALOG_CATEGORIES } from '../constants';
 
 export default function Orthopedics() {
   return (
     <div className="bg-white">
       {/* Hero Section */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24 grid md:grid-cols-2 gap-12 items-center">
-        <div className="space-y-8">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-[#1A3A5A] leading-tight">
-            Ortopedia Benedetti — Todo para tu recuperación
-          </h1>
-          <p className="text-xl text-gray-600 max-w-lg">
-            Brindamos soluciones integrales de movilidad y rehabilitación con el respaldo de profesionales especializados.
-          </p>
-          <div className="flex gap-4">
-            <a href="#catalogo" className="bg-[#0088CC] text-white px-8 py-4 rounded-lg font-bold hover:bg-[#006699] transition-colors">
-              Ver Catálogo
-            </a>
-            <a href="#servicios" className="border-2 border-[#0088CC] text-[#0088CC] px-8 py-4 rounded-lg font-bold hover:bg-blue-50 transition-colors">
-              Nuestros Servicios
-            </a>
+      <section className="relative w-full h-[90vh] flex items-center overflow-hidden pt-20">
+        {/* Background Image */}
+        <div 
+          className="absolute inset-0 bg-cover bg-bottom" 
+          style={{ backgroundImage: 'url("https://eaeapp.com/imagenes-ia/benedetti/fondo-hero-ortopedia.jpg")' }}
+        >
+        </div>
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative">
+          <div className="grid md:grid-cols-2 gap-8 items-center">
+            {/* Left Container */}
+            <div className="bg-white/30 p-8 rounded-3xl shadow-xl backdrop-blur-md border border-white/20 max-w-lg space-y-6 relative">
+              {/* Social Icons */}
+              <div className="absolute top-4 right-4 flex gap-2">
+                <a href="#" className="p-1.5 bg-[#0088CC] text-white rounded-full hover:bg-[#0077aa] transition"><Facebook size={14} /></a>
+                <a href="#" className="p-1.5 bg-[#0088CC] text-white rounded-full hover:bg-[#0077aa] transition"><Instagram size={14} /></a>
+              </div>
+
+              <h1 className="mt-4 text-[34px] font-bold text-[#1A3A5A] leading-[40px]">
+                <span className="text-[#0088CC]">Ortopedia Benedetti</span> Todo para tu recuperación, en un solo lugar.
+              </h1>
+              <p className="text-lg text-gray-600">
+                Incorporamos un área de ortopedia y rehabilitación. Productos seleccionados por profesionales, para venta y alquiler. Consultanos y te orientamos sin compromiso.
+              </p>
+              <a href="#catalogo" className="inline-block bg-[#0088CC] text-white px-8 py-4 rounded-xl font-bold hover:bg-[#006699] transition-all shadow-lg hover:shadow-blue-500/30">
+                Reserva tu consulta
+              </a>
+              
+              {/* Social Proof */}
+              <div className="flex items-center gap-4 pt-4 border-t border-gray-200">
+                <div className="flex -space-x-2">
+                  {[1, 2, 3].map(i => <div key={i} className="w-8 h-8 rounded-full border-2 border-white bg-gray-200" />)}
+                </div>
+                <div>
+                  <div className="flex gap-1 text-yellow-400">
+                    {[1, 2, 3, 4, 5].map(i => <Star key={i} size={16} fill="currentColor" />)}
+                  </div>
+                  <p className="text-xs text-gray-500 font-semibold uppercase tracking-wider">Más de 500 pacientes satisfechos</p>
+                </div>
+              </div>
+            </div>
+            
+            {/* Right side space for the floating card, usually empty in split screen, card is positioned absolutely below */}
           </div>
         </div>
-        <div className="relative group">
-          <img 
-            alt="Professional Orthopedic Care"
-            className="rounded-2xl shadow-2xl object-cover aspect-[4/3] w-full"
-            src="https://lh3.googleusercontent.com/aida-public/AB6AXuAZ5ma--r5YZkyJNO2HUqYiD6yUp-9MdPdYENE-3lcBdqSwjxZ1qgEYmwDsN0kcvkiLpaYl8CyCCBKVUhomMNqJ6dlNIgj7n4fab9NcNu0-QdoXi7Uz8zMucx1wz3kPXPCOONM46HiIleLxm70SC4XD6CgOKJvPjauH61x8ysw2dtaSf0SK8hDAzGv4LV2wNN1hZmhy8dq68ibGE2YwyDunp_h31UzE0Q4SSAU7ty5SZqctB-565Hg78LwG6H80ypgi3hCNR6VHsVfu"
-          />
+
+        {/* Floating Card (positioned absolutely in bottom right) */}
+        <div className="absolute bottom-10 right-10 bg-white p-4 rounded-2xl shadow-2xl max-w-[200px] hidden md:block">
+          <p className="text-sm font-bold text-gray-900">Congreso de Ortopedia 2026</p>
+          <p className="text-xs text-gray-500">15-17 Octubre, 2026</p>
         </div>
       </section>
 
@@ -37,9 +66,9 @@ export default function Orthopedics() {
           <h2 className="text-3xl font-bold text-center text-[#1A3A5A] mb-16">Servicios Especializados</h2>
           <div className="grid md:grid-cols-3 gap-8">
             {[
-              { icon: ShoppingCart, title: 'Venta y alquiler', desc: 'Amplio stock de muletas, bastones y sillas de ruedas.' },
-              { icon: Accessibility, title: 'Elementos de neoprene', desc: 'Rodilleras, fajas y soportes de alta calidad.' },
-              { icon: Activity, title: 'Rehabilitación en casa', desc: 'Equipamiento para continuar tu tratamiento en casa.' },
+              { icon: ShoppingBag, title: 'Venta y alquiler', desc: 'Amplio catálogo de muletas, bastones, sillas de ruedas, andadores y más.' },
+              { icon: Shield, title: 'Elementos de neoprene', desc: 'Rodilleras, tobilleras, muñequeras, coderas y fajas.' },
+              { icon: Dumbbell, title: 'Rehabilitación en casa', desc: 'Bandas elásticas, pelotas medicinales, foam roller y accesorios.' },
             ].map((s, i) => (
               <div key={i} className="bg-white p-8 rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
                 <s.icon className="w-12 h-12 text-[#0088CC] mb-6" />
@@ -54,9 +83,9 @@ export default function Orthopedics() {
       {/* Trust Section */}
       <section className="py-20 bg-[#0088CC] text-white">
         <div className="max-w-7xl mx-auto px-4 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6">Respaldado por profesionales</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-6">Respaldado por profesionales de la salud</h2>
           <p className="text-lg opacity-90 max-w-2xl mx-auto">
-            Cada artículo es evaluado por expertos en kinesiología para asegurar que cumpla con los estándares terapéuticos necesarios.
+            Cada producto de nuestro catálogo fue elegido por kinesiólogos. Si tenés dudas sobre cuál es el elemento más adecuado para vos, estamos para ayudarte.
           </p>
         </div>
       </section>
@@ -64,33 +93,72 @@ export default function Orthopedics() {
       {/* Catalog Section */}
       <section className="py-24 bg-white" id="catalogo">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-[#1A3A5A] mb-16 text-center">Nuestro Catálogo</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[
-              { title: 'Columna y espalda', items: ['Fajas lumbares', 'Correctores de postura', 'Collares cervicales'] },
-              { title: 'Miembro superior', items: ['Cabestrillos', 'Muñequeras', 'Inmovilizadores'] },
-              { title: 'Miembro inferior', items: ['Rodilleras articuladas', 'Bota walker', 'Musleras y tobilleras'] },
-              { title: 'Movilidad', items: ['Sillas de ruedas', 'Andadores', 'Muletas axilares'] },
-              { title: 'Rehabilitación', items: ['Foam roller', 'Mini bands', 'Mancuernas y pelotas'] },
-            ].map((cat, i) => (
-              <div key={i} className="bg-gray-50 p-8 rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
-                <h3 className="text-xl font-bold text-[#0088CC] mb-4">{cat.title}</h3>
-                <ul className="space-y-2">
-                  {cat.items.map((item, j) => (
-                    <li key={j} className="flex items-center gap-2 text-gray-700">
-                      <span className="w-1.5 h-1.5 bg-[#0088CC] rounded-full"></span> {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
+          <h2 className="text-3xl font-bold text-[#1A3A5A] mb-8 text-center">Nuestro Catálogo</h2>
+          <div className="flex justify-center mb-16">
+            <img src="https://eaeapp.com/imagenes-ia/benedetti/top-catalogo-2.jpg" alt="Catálogo" className="max-w-full h-auto rounded-3xl" />
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {CATALOG_CATEGORIES.map((cat, i) => (
+              <motion.div 
+                key={i} 
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: i * 0.1 }}
+                className="bg-gradient-to-br from-gray-50 to-blue-50 p-8 rounded-3xl border border-blue-100 shadow-sm transition-shadow flex flex-col"
+              >
+                <div className="flex flex-col flex-grow">
+                  <h3 className="text-2xl font-bold text-[#1A3A5A] mb-4">{cat.title}</h3>
+                  <p className="text-gray-600 mb-6">{cat.description}</p>
+                  <ul className="mb-4">
+                    {cat.items.map((item, j) => (
+                      <li key={j} className="flex items-center gap-3 text-gray-700 text-sm py-3 border-b border-gray-200 last:border-0">
+                        <span className="w-1.5 h-1.5 bg-[#0088CC] rounded-full flex-shrink-0"></span> {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </motion.div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Nuevo CTA Section */}
+      <section className="py-0 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="bg-gray-50 rounded-3xl p-8 md:p-12 shadow-sm border border-gray-100 flex flex-col md:flex-row items-center gap-12">
+            {/* Columna Izquierda */}
+            <div className="flex-1 space-y-6">
+              <h2 className="text-3xl md:text-4xl font-bold text-[#1A3A5A] tracking-tight">
+                ¿Necesitás algo puntual o no sabés cuál es el producto indicado?
+              </h2>
+              <p className="text-lg text-gray-600">
+                Consultanos, te ayudamos a elegir.
+              </p>
+              <a 
+                href="https://wa.me/54911XXXXXXXX" 
+                className="inline-flex items-center gap-3 bg-[#25D366] text-white px-8 py-4 rounded-full font-bold hover:bg-[#128C7E] transition-all text-lg shadow-lg hover:shadow-green-500/20"
+              >
+                <MessageSquare className="w-6 h-6" />
+                Comunicate por WhatsApp
+              </a>
+            </div>
+            {/* Columna Derecha */}
+            <div className="md:w-1/3 w-full flex items-end justify-end relative h-2/3">
+              <img 
+                src="https://eaeapp.com/imagenes-ia/benedetti/mariano-ortopedia.png" 
+                alt="Lic. Mariano Benedetti" 
+                className="w-full h-auto object-contain"
+              />
+            </div>
           </div>
         </div>
       </section>
 
       {/* Contact CTA */}
       <section className="max-w-7xl mx-auto px-4 py-24" id="contacto">
-        <div className="bg-gray-100 rounded-3xl p-12 md:p-20 flex flex-col md:flex-row items-center justify-between gap-12">
+        <div className="bg-gradient-to-tr from-gray-50 to-blue-50 rounded-3xl p-12 md:p-20 flex flex-col md:flex-row items-center justify-between gap-12">
           <div className="max-w-xl">
             <h2 className="text-4xl font-bold text-[#1A3A5A] mb-6">¿Necesitás algo puntual?</h2>
             <p className="text-lg text-gray-600 mb-8">
