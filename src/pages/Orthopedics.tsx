@@ -1,9 +1,15 @@
 import React from 'react';
-import { ShoppingCart, Accessibility, Activity, MessageSquare, Facebook, Instagram, Star, ShoppingBag, Shield, Dumbbell } from 'lucide-react';
+import { ShoppingCart, Accessibility, Activity, MessageSquare, Facebook, Instagram, Star, ShoppingBag, Shield, Dumbbell, CheckCircle2 } from 'lucide-react';
 import { motion } from 'motion/react';
 import { CATALOG_CATEGORIES } from '../constants';
+import { useSettings } from '../hooks/useSettings';
 
 export default function Orthopedics() {
+  const { settings } = useSettings();
+  const cleanNumber = settings.phoneWhatsapp.replace(/\D/g, '');
+  const baseMessage = encodeURIComponent("¡Hola! Necesito consultar sobre Turnos y Servicios.");
+  const getProductMessage = (title: string) => encodeURIComponent(`¡Hola! Me gustaría consultar por el producto "${title}".`);
+  const whatsappUrl = `https://wa.me/54${cleanNumber}`;
   return (
     <div className="bg-white">
       {/* Hero Section */}
@@ -31,7 +37,7 @@ export default function Orthopedics() {
               <p className="text-lg text-gray-600">
                 Incorporamos un área de ortopedia y rehabilitación. Productos seleccionados por profesionales, para venta y alquiler. Consultanos y te orientamos sin compromiso.
               </p>
-              <a href="#catalogo" className="inline-block bg-[#0088CC] text-white px-8 py-4 rounded-xl font-bold hover:bg-[#006699] transition-all shadow-lg hover:shadow-blue-500/30">
+              <a href={`${whatsappUrl}?text=${baseMessage}`} className="inline-block bg-[#0088CC] text-white px-8 py-4 rounded-xl font-bold hover:bg-[#006699] transition-all shadow-lg hover:shadow-blue-500/30">
                 Reserva tu consulta
               </a>
               
@@ -97,26 +103,41 @@ export default function Orthopedics() {
           <div className="flex justify-center mb-16">
             <img src="https://eaeapp.com/imagenes-ia/benedetti/top-catalogo-2.jpg" alt="Catálogo" className="max-w-full h-auto rounded-3xl" />
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="space-y-8">
             {CATALOG_CATEGORIES.map((cat, i) => (
               <motion.div 
                 key={i} 
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: i * 0.1 }}
-                className="bg-gradient-to-br from-gray-50 to-blue-50 p-8 rounded-3xl border border-blue-100 shadow-sm transition-shadow flex flex-col"
+                transition={{ duration: 0.5 }}
+                className="bg-[#1A3A5A] text-white rounded-3xl overflow-hidden flex flex-col md:flex-row w-full md:w-4/5 mx-auto border border-white/20"
               >
-                <div className="flex flex-col flex-grow">
-                  <h3 className="text-2xl font-bold text-[#1A3A5A] mb-4">{cat.title}</h3>
-                  <p className="text-gray-600 mb-6">{cat.description}</p>
-                  <ul className="mb-4">
+                <div className="md:w-1/2 h-64 md:h-auto">
+                  <img src={`https://eaeapp.com/imagenes-ia/benedetti/${
+                    cat.id === 'spine' ? 'columna-y-espalda.jpg' :
+                    cat.id === 'upper-limb' ? 'miembro-superior.jpg' :
+                    cat.id === 'lower-limb' ? 'miembro-inferior.jpg' :
+                    cat.id === 'bandages' ? 'vendajes.jpg' :
+                    cat.id === 'compression' ? 'compresion.jpg' :
+                    cat.id === 'mobility' ? 'movilidad.jpg' :
+                    cat.id === 'rehab' ? 'rehabilitacion.jpg' :
+                    'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&q=80&w=800'
+                  }`} alt={cat.title} className="w-full h-full object-cover" />
+                </div>
+                <div className="md:w-1/2 p-8 md:p-12 flex flex-col justify-center">
+                  <h3 className="text-3xl font-bold mb-4">{cat.title}</h3>
+                  <p className="text-gray-300 mb-6 text-lg">{cat.description}</p>
+                  <ul className="mb-8 space-y-3">
                     {cat.items.map((item, j) => (
-                      <li key={j} className="flex items-center gap-3 text-gray-700 text-sm py-3 border-b border-gray-200 last:border-0">
-                        <span className="w-1.5 h-1.5 bg-[#0088CC] rounded-full flex-shrink-0"></span> {item}
+                      <li key={j} className="flex items-center gap-3 text-sm text-gray-200">
+                        <CheckCircle2 size={18} className="text-[#0088CC] flex-shrink-0" /> {item}
                       </li>
                     ))}
                   </ul>
+                  <a href={`${whatsappUrl}?text=${getProductMessage(cat.title)}`} className="inline-block bg-white text-[#1A3A5A] px-8 py-3 rounded-full font-bold hover:bg-gray-100 transition-colors w-fit">
+                    Consultar producto
+                  </a>
                 </div>
               </motion.div>
             ))}
@@ -127,7 +148,7 @@ export default function Orthopedics() {
       {/* Nuevo CTA Section */}
       <section className="py-0 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-gray-50 rounded-3xl p-8 md:p-12 shadow-sm border border-gray-100 flex flex-col md:flex-row items-center gap-12">
+          <div className="bg-gray-50 rounded-3xl px-8 md:px-12 py-0 shadow-sm border border-gray-100 flex flex-col md:flex-row items-center gap-12">
             {/* Columna Izquierda */}
             <div className="flex-1 space-y-6">
               <h2 className="text-3xl md:text-4xl font-bold text-[#1A3A5A] tracking-tight">
@@ -137,7 +158,7 @@ export default function Orthopedics() {
                 Consultanos, te ayudamos a elegir.
               </p>
               <a 
-                href="https://wa.me/54911XXXXXXXX" 
+                href={`${whatsappUrl}?text=${baseMessage}`} 
                 className="inline-flex items-center gap-3 bg-[#25D366] text-white px-8 py-4 rounded-full font-bold hover:bg-[#128C7E] transition-all text-lg shadow-lg hover:shadow-green-500/20"
               >
                 <MessageSquare className="w-6 h-6" />
@@ -164,7 +185,7 @@ export default function Orthopedics() {
             <p className="text-lg text-gray-600 mb-8">
               Nuestro equipo está listo para asesorarte. Consultanos por WhatsApp.
             </p>
-            <a href="https://wa.me/yournumber" className="inline-flex items-center gap-2 bg-green-600 text-white px-8 py-4 rounded-lg font-bold hover:bg-green-700 transition-colors">
+            <a href={`${whatsappUrl}?text=${baseMessage}`} className="inline-flex items-center gap-2 bg-green-600 text-white px-8 py-4 rounded-lg font-bold hover:bg-green-700 transition-colors">
               <MessageSquare className="w-5 h-5" /> WhatsApp
             </a>
           </div>
