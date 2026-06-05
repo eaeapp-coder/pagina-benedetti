@@ -54,7 +54,7 @@ export default function Orthopedics() {
       </section>
 
       {/* Services */}
-      <section className="py-24 bg-white mt-10 md:mt-24" id="servicios">
+      <section className="py-24 bg-white mt-10 md:mt-0" id="servicios">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-[#1A3A5A] mb-4">Servicios Especializados</h2>
