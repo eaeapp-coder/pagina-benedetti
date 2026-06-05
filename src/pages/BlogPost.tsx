@@ -37,7 +37,14 @@ export default function BlogPost() {
         "url": "https://eaeapp.com/imagenes-ia/benedetti/logo-benedetti.png"
       }
     },
+    "author": {
+      "@type": "Person",
+      "name": "Lic. Mariano Benedetti",
+      "jobTitle": "Director de Consultorios Benedetti - Kinesiólogo Especialista en Quiropraxia",
+      "url": "https://consultoriosbenedetti.com.ar/profesionales/1"
+    },
     "datePublished": post.date,
+    "dateModified": post.date,
     "description": post.excerpt
   };
 
@@ -77,9 +84,16 @@ export default function BlogPost() {
               </h1>
               
               <div className="flex flex-wrap items-center gap-6 pt-4 border-t border-gray-100">
-                <div className="flex items-center text-sm text-gray-400">
-                  <Calendar className="w-4 h-4 mr-2" />
-                  {post.date}
+                <div className="flex items-center text-sm text-gray-500">
+                  <Calendar className="w-4 h-4 mr-2 text-[#0088CC]" />
+                  Publicado el: <span className="font-medium ml-1">{post.date}</span>
+                </div>
+                <div className="flex items-center text-sm text-gray-500">
+                  <User className="w-4 h-4 mr-2 text-[#0088CC]" />
+                  Revisado y avalado por: <Link to="/profesionales/1" className="font-semibold text-[#1A3A5A] hover:text-[#0088CC] underline ml-1">Lic. Mariano Benedetti (M.N. 10.452)</Link>
+                </div>
+                <div className="flex items-center text-xs bg-green-50 text-green-700 px-3 py-1 rounded-full font-medium sm:ml-auto">
+                  ✓ Revisión Clínica Médica
                 </div>
               </div>
             </motion.div>

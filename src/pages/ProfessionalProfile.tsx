@@ -93,6 +93,15 @@ export default function ProfessionalProfile() {
                 <p className="text-[#0088CC] font-semibold mb-6">{doctor.specialties.join(', ')}</p>
 
                 <div className="space-y-4 text-left border-t border-gray-100 pt-6">
+                  {doctor.registration && (
+                    <div className="flex items-start space-x-3">
+                      <div className="text-gray-400 shrink-0 select-none text-[10px] leading-none font-bold border border-gray-300 rounded p-1 mt-0.5">M.P.</div>
+                      <div>
+                        <p className="text-xs text-gray-400 uppercase font-bold tracking-wider">Registro Nacional / Provincial</p>
+                        <p className="text-sm text-gray-600">{doctor.registration}</p>
+                      </div>
+                    </div>
+                  )}
                   {doctor.availability && (
                     <div className="flex items-start space-x-3">
                       <Clock className="w-5 h-5 text-gray-400 shrink-0" />

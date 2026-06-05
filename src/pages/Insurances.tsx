@@ -49,7 +49,10 @@ export default function Insurances() {
             >
               <ShieldCheck className="w-8 h-8 text-[#0088CC]" />
             </motion.div>
-            <h1 className="text-4xl md:text-5xl font-bold text-[#1A3A5A] mb-4">Obras Sociales y Prepagas</h1>
+            <h1 className="text-4xl md:text-5xl font-bold mb-4">
+              <span className="text-[#0088CC]">Obras Sociales</span>{' '}
+              <span className="text-[#1A3A5A]">y Prepagas</span>
+            </h1>
             <p className="text-gray-500 text-lg max-w-2xl mx-auto">
               Trabajamos con una amplia red de coberturas médicas exclusivamente para la especialidad de <span className="text-[#0088CC] font-semibold">Kinesiología</span>.
             </p>
