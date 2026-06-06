@@ -79,7 +79,7 @@ export default function BlogPost() {
               <span className="px-4 py-1.5 bg-blue-50 text-[#0088CC] text-sm font-bold rounded-full inline-block">
                 {post.category}
               </span>
-              <h1 className="text-4xl md:text-6xl font-bold text-[#1A3A5A] leading-tight tracking-tight">
+              <h1 className="text-[48px] font-bold text-[#1A3A5A] leading-tight tracking-tight">
                 {post.title}
               </h1>
               
@@ -129,6 +129,9 @@ export default function BlogPost() {
 
             {/* Article Body */}
             <div className="lg:col-span-11">
+              <p className="text-xl font-bold text-gray-800 mb-8">
+                {post.excerpt}
+              </p>
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}

@@ -21,7 +21,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="text-4xl md:text-6xl font-bold text-[#1A3A5A] leading-tight md:leading-[1.1] mb-6"
+            className="text-[48px] font-bold text-[#1A3A5A] leading-tight md:leading-[1.1] mb-6"
           >
             Más de <span className="text-[#0088CC]">10 años</span> acompañando<br />
             tu recuperación
