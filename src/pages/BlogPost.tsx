@@ -134,13 +134,8 @@ export default function BlogPost() {
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.2 }}
                 className="prose prose-lg prose-blue max-w-none text-gray-600 leading-relaxed"
-              >
-                {post.content.split('\n\n').map((paragraph, i) => (
-                  <p key={i} className="mb-6">
-                    {paragraph.trim()}
-                  </p>
-                ))}
-              </motion.div>
+                dangerouslySetInnerHTML={{ __html: post.content }}
+              />
 
               {/* Footer CTA */}
               <div className="mt-16 p-10 rounded-[3rem] bg-[#1A3A5A] text-white relative overflow-hidden">

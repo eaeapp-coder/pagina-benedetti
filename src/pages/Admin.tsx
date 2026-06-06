@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import ReactQuill from 'react-quill';
 import { auth, db } from '../firebase';
 import { signInWithEmailAndPassword, signOut, onAuthStateChanged, User } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
@@ -1074,7 +1075,26 @@ export default function Admin() {
                       </div>
                       <div className="md:col-span-2">
                         <label className="block text-sm font-medium text-gray-700 mb-1">Contenido</label>
-                        <textarea required value={blogContent} onChange={e => setBlogContent(e.target.value)} rows={10} className="w-full px-4 py-2 rounded-xl border border-gray-200 outline-none focus:ring-2 focus:ring-blue-500 resize-y font-mono text-sm" placeholder="Usa Enter para separar párrafos." />
+                        <ReactQuill 
+                          theme="snow"
+                          value={blogContent}
+                          onChange={setBlogContent}
+                          modules={{
+                            toolbar: [
+                              [{ 'header': [1, 2, false] }],
+                              ['bold', 'italic', 'underline'],
+                              [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                              ['link']
+                            ],
+                          }}
+                          formats={[
+                            'header',
+                            'bold', 'italic', 'underline',
+                            'list', 'bullet',
+                            'link'
+                          ]}
+                          className="h-64 mb-12"
+                        />
                       </div>
                     </div>
                     <div className="flex justify-end space-x-3 pt-4">
