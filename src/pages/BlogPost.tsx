@@ -141,9 +141,9 @@ export default function BlogPost() {
               <div className="mt-16 p-10 rounded-[3rem] bg-[#1A3A5A] text-white relative overflow-hidden">
                 <div className="absolute top-0 right-0 w-64 h-64 bg-[#0088CC] rounded-full blur-3xl opacity-20 -mr-32 -mt-32"></div>
                 <div className="relative z-10">
-                  <h3 className="text-2xl font-bold mb-4">¿Te interesó este artículo?</h3>
+                  <h3 className="text-2xl font-bold mb-4">{post.footerTitle || '¿Te interesó este artículo?'}</h3>
                   <p className="text-blue-100 mb-8 max-w-xl">
-                    Si tienes dudas sobre este tema o necesitas una consulta personalizada, nuestro equipo está listo para ayudarte.
+                    {post.footerText || 'Si tienes dudas sobre este tema o necesitas una consulta personalizada, nuestro equipo está listo para ayudarte.'}
                   </p>
                   <Link 
                     to="/contacto" 

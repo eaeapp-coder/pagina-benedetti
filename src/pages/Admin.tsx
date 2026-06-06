@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import ReactQuill from 'react-quill';
+import Editor, { Toolbar, BtnBold, BtnItalic, BtnUnderline, BtnBulletList } from 'react-simple-wysiwyg';
 import { auth, db } from '../firebase';
 import { signInWithEmailAndPassword, signOut, onAuthStateChanged, User } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
@@ -57,6 +57,8 @@ export default function Admin() {
   const [blogDate, setBlogDate] = useState(new Date().toISOString().split('T')[0]);
   const [blogCategory, setBlogCategory] = useState('');
   const [blogImage, setBlogImage] = useState('');
+  const [blogFooterTitle, setBlogFooterTitle] = useState('');
+  const [blogFooterText, setBlogFooterText] = useState('');
 
   // Professional form state
   const [editingProfessional, setEditingProfessional] = useState<Doctor | null>(null);
@@ -280,7 +282,9 @@ export default function Admin() {
       content: blogContent,
       date: blogDate,
       category: blogCategory,
-      image: blogImage
+      image: blogImage,
+      footerTitle: blogFooterTitle,
+      footerText: blogFooterText
     };
 
     try {
@@ -306,6 +310,8 @@ export default function Admin() {
     setBlogDate(new Date().toISOString().split('T')[0]);
     setBlogCategory('');
     setBlogImage('');
+    setBlogFooterTitle('');
+    setBlogFooterText('');
     setShowBlogForm(false);
   };
 
@@ -317,6 +323,8 @@ export default function Admin() {
     setBlogDate(post.date);
     setBlogCategory(post.category);
     setBlogImage(post.image);
+    setBlogFooterTitle(post.footerTitle || '');
+    setBlogFooterText(post.footerText || '');
     setShowBlogForm(true);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -1074,27 +1082,26 @@ export default function Admin() {
                         <textarea required value={blogExcerpt} onChange={e => setBlogExcerpt(e.target.value)} rows={2} className="w-full px-4 py-2 rounded-xl border border-gray-200 outline-none focus:ring-2 focus:ring-blue-500 resize-none" />
                       </div>
                       <div className="md:col-span-2">
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Título del Footer</label>
+                        <input type="text" value={blogFooterTitle} onChange={e => setBlogFooterTitle(e.target.value)} className="w-full px-4 py-2 rounded-xl border border-gray-200 outline-none focus:ring-2 focus:ring-blue-500" />
+                      </div>
+                      <div className="md:col-span-2">
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Contenido del Footer</label>
+                        <textarea value={blogFooterText} onChange={e => setBlogFooterText(e.target.value)} rows={3} className="w-full px-4 py-2 rounded-xl border border-gray-200 outline-none focus:ring-2 focus:ring-blue-500 resize-y" />
+                      </div>
+                      <div className="md:col-span-2">
                         <label className="block text-sm font-medium text-gray-700 mb-1">Contenido</label>
-                        <ReactQuill 
-                          theme="snow"
+                        <Editor 
                           value={blogContent}
-                          onChange={setBlogContent}
-                          modules={{
-                            toolbar: [
-                              [{ 'header': [1, 2, false] }],
-                              ['bold', 'italic', 'underline'],
-                              [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-                              ['link']
-                            ],
-                          }}
-                          formats={[
-                            'header',
-                            'bold', 'italic', 'underline',
-                            'list', 'bullet',
-                            'link'
-                          ]}
-                          className="h-64 mb-12"
-                        />
+                          onChange={e => setBlogContent(e.target.value)}
+                        >
+                          <Toolbar>
+                            <BtnBold />
+                            <BtnItalic />
+                            <BtnUnderline />
+                            <BtnBulletList />
+                          </Toolbar>
+                        </Editor>
                       </div>
                     </div>
                     <div className="flex justify-end space-x-3 pt-4">

@@ -264,6 +264,8 @@ export interface BlogPost {
   date: string;
   category: string;
   image: string;
+  footerTitle?: string;
+  footerText?: string;
 }
 
 export const BLOG_POSTS: BlogPost[] = [
