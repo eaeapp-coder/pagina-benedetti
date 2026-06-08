@@ -8,14 +8,15 @@ import { useReviews, Review } from '../hooks/useReviews';
 import { useProfessionals } from '../hooks/useProfessionals';
 import { useInsurances } from '../hooks/useInsurances';
 import { useBlog } from '../hooks/useBlog';
-import { SPECIALTIES, Doctor, InsuranceProvider, INSURANCE_PROVIDERS, BlogPost } from '../constants';
+import { useCatalog, CatalogCategory } from '../hooks/useCatalog';
+import { SPECIALTIES, Doctor, InsuranceProvider, INSURANCE_PROVIDERS, BlogPost, CATALOG_CATEGORIES } from '../constants';
 import { 
   Lock, Save, LogOut, Settings as SettingsIcon, Loader2, MessageSquare, 
   Star as StarIcon, Plus, Eye, EyeOff, Users, Shield, Trash2, Edit2, X,
-  FileText
+  FileText, ShoppingBag
 } from 'lucide-react';
 
-type AdminTab = 'general' | 'professionals' | 'reviews' | 'insurances' | 'blog';
+type AdminTab = 'general' | 'professionals' | 'reviews' | 'insurances' | 'blog' | 'catalog';
 
 export default function Admin() {
   const [user, setUser] = useState<User | null>(null);
@@ -35,6 +36,7 @@ export default function Admin() {
   const { professionals, addProfessional, updateProfessional, deleteProfessional } = useProfessionals();
   const { insurances, addInsurance, updateInsurance, deleteInsurance } = useInsurances();
   const { posts, addPost, updatePost, deletePost } = useBlog();
+  const { categories: catalogCategories, saveCatalogCategory, deleteCatalogCategory } = useCatalog();
   
   const [isImporting, setIsImporting] = useState(false);
   const [formData, setFormData] = useState<AppSettings | null>(null);
@@ -42,6 +44,15 @@ export default function Admin() {
   const [showInsForm, setShowInsForm] = useState(false);
   const [showReviewForm, setShowReviewForm] = useState(false);
   const [showBlogForm, setShowBlogForm] = useState(false);
+  const [showCatalogForm, setShowCatalogForm] = useState(false);
+
+  // Catalog category form state
+  const [editingCategory, setEditingCategory] = useState<CatalogCategory | null>(null);
+  const [catId, setCatId] = useState('');
+  const [catTitle, setCatTitle] = useState('');
+  const [catDescription, setCatDescription] = useState('');
+  const [catImage, setCatImage] = useState('');
+  const [catItemsText, setCatItemsText] = useState('');
   
   // Review form state
   const [editingReview, setEditingReview] = useState<Review | null>(null);
@@ -80,12 +91,49 @@ export default function Admin() {
   const [insLogo, setInsLogo] = useState('');
   const [insSpecialties, setInsSpecialties] = useState<string[]>([]);
   const [insIsNew, setInsIsNew] = useState(false);
+  const [isFirestoreBlocked, setIsFirestoreBlocked] = useState(false);
+
+  useEffect(() => {
+    const checkFirestoreReachability = async () => {
+      try {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 2000);
+        await fetch('https://firestore.googleapis.com', { 
+          method: 'HEAD', 
+          mode: 'no-cors',
+          signal: controller.signal
+        });
+        clearTimeout(timeoutId);
+      } catch (e) {
+        console.warn('Firestore connectivity check failed (likely blocked by adblock or firewall):', e);
+        setIsFirestoreBlocked(true);
+      }
+    };
+    checkFirestoreReachability();
+  }, []);
 
   useEffect(() => {
     setIsMounted(true);
-    const unsubscribe = onAuthStateChanged(auth, (u) => {
+    const unsubscribe = onAuthStateChanged(auth, async (u) => {
       setUser(u);
       setIsAuthLoading(false);
+      
+      if (u && u.email) {
+        const emailLower = u.email.toLowerCase();
+        if (emailLower === "cbenedetti@benedetti.com" || emailLower === "naturalsoft@gmail.com") {
+          try {
+            const userDocRef = doc(db, 'users', u.uid);
+            await setDoc(userDocRef, {
+              uid: u.uid,
+              email: u.email,
+              role: 'admin'
+            }, { merge: true });
+            console.log('Perfil de administrador verificado en Firestore para', u.email);
+          } catch (err) {
+            console.warn('Error al auto-verificar el documento de usuario en Firestore:', err);
+          }
+        }
+      }
     });
     return () => unsubscribe();
   }, []);
@@ -329,6 +377,60 @@ export default function Admin() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const resetCatalogForm = () => {
+    setEditingCategory(null);
+    setCatId('');
+    setCatTitle('');
+    setCatDescription('');
+    setCatImage('');
+    setCatItemsText('');
+    setShowCatalogForm(false);
+  };
+
+  const startEditCatalog = (cat: CatalogCategory) => {
+    setEditingCategory(cat);
+    setCatId(cat.id);
+    setCatTitle(cat.title);
+    setCatDescription(cat.description);
+    setCatImage(cat.image || '');
+    setCatItemsText(cat.items ? cat.items.join('\n') : '');
+    setShowCatalogForm(true);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleCatalogSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!catId || !catTitle || !catDescription) {
+      alert('Por favor completa los campos requeridos.');
+      return;
+    }
+
+    // Process items line by line
+    const items = catItemsText
+      .split('\n')
+      .map(item => item.trim())
+      .filter(item => item !== '');
+
+    const normalizedId = catId.trim().toLowerCase().replace(/[^a-z0-9-_]/g, '-').replace(/-+/g, '-');
+
+    const data: CatalogCategory = {
+      id: normalizedId,
+      title: catTitle.trim(),
+      description: catDescription.trim(),
+      image: catImage.trim(),
+      items: items
+    };
+
+    try {
+      await saveCatalogCategory(data);
+      alert(editingCategory ? 'Categoría de catálogo actualizada.' : 'Categoría de catálogo agregada.');
+      resetCatalogForm();
+    } catch (err) {
+      console.error(err);
+      alert('Error al guardar la categoría del catálogo: ' + (err instanceof Error ? err.message : String(err)));
+    }
+  };
+
   const handleBulkImportInsurances = async () => {
     if (!confirm('¿Deseas cargar la lista predefinida de obras sociales? Esto agregará las que no existan.')) return;
     setIsImporting(true);
@@ -343,7 +445,23 @@ export default function Admin() {
       alert(`Se agregaron ${toAdd.length} obras sociales nuevas.`);
     } catch (err) {
       console.error(err);
-      alert('Error al importar obras sociales.');
+      alert('Error al importar obras sociales: ' + (err instanceof Error ? err.message : String(err)));
+    } finally {
+      setIsImporting(false);
+    }
+  };
+
+  const handleBulkImportCatalog = async () => {
+    if (!confirm('¿Deseas cargar el catálogo de productos predefinido? Esto cargará todas las categorías y artículos iniciales en la base de datos Firestore.')) return;
+    setIsImporting(true);
+    try {
+      for (const cat of CATALOG_CATEGORIES) {
+        await saveCatalogCategory(cat as CatalogCategory);
+      }
+      alert('Se cargaron correctamente las categorías y listas de productos predefinidos desde el sistema.');
+    } catch (err) {
+      console.error(err);
+      alert('Error al importar el catálogo predefinido: ' + (err instanceof Error ? err.message : String(err)));
     } finally {
       setIsImporting(false);
     }
@@ -453,6 +571,7 @@ export default function Admin() {
           <NavItem id="reviews" label="Reviews" icon={MessageSquare} />
           <NavItem id="insurances" label="Obras Sociales" icon={Shield} />
           <NavItem id="blog" label="Blog" icon={FileText} />
+          <NavItem id="catalog" label="Catálogo" icon={ShoppingBag} />
         </div>
         <div className="absolute bottom-8 w-full px-6">
           <button 
@@ -469,6 +588,23 @@ export default function Admin() {
       <main className="flex-1 md:ml-64 pt-32 pb-20 px-4 md:px-8">
         <div className="max-w-4xl mx-auto">
           
+          {isFirestoreBlocked && (
+            <div className="bg-red-50 border border-red-200 text-red-700 p-6 rounded-3xl mb-8 flex flex-col md:flex-row gap-4 items-start shadow-sm">
+              <div className="bg-red-100 p-2 rounded-2xl shrink-0 text-red-600">
+                <Shield size={24} />
+              </div>
+              <div>
+                <h4 className="font-bold text-lg mb-1 text-red-800">Conexión a Firestore bloqueada</h4>
+                <p className="text-sm leading-relaxed text-red-700">
+                  Hemos detectado que tu navegador o red está bloqueando las conexiones directas con la base de datos de Google Firebase (esto es comúnmente causado por extensiones bloqueadoras de publicidad o privacidad como <strong>uBlock Origin, AdBlock, Ghostery o Brave Shield</strong>). 
+                </p>
+                <p className="text-sm leading-relaxed text-red-700 mt-2">
+                  Por favor, <strong>desactiva el bloqueador de publicidad</strong> en la pestaña superior derecha de tu navegador o añade este dominio de AI Studio a la lista de permitidos. Si no lo haces, cualquier acción de alta, baja, modificación o "Cargar Lista" se quedará pausada indefinidamente en la memoria del navegador y no impactará en el servidor.
+                </p>
+              </div>
+            </div>
+          )}
+
           {/* Mobile Nav Header */}
           <div className="md:hidden flex overflow-x-auto bg-white rounded-xl shadow-sm mb-8 p-2 space-x-2">
             <button onClick={() => setActiveTab('general')} className={`px-4 py-2 rounded-lg text-sm whitespace-nowrap ${activeTab === 'general' ? 'bg-blue-50 text-[#0088CC] font-bold' : 'text-gray-500'}`}>General</button>
@@ -476,6 +612,7 @@ export default function Admin() {
             <button onClick={() => setActiveTab('reviews')} className={`px-4 py-2 rounded-lg text-sm whitespace-nowrap ${activeTab === 'reviews' ? 'bg-blue-50 text-[#0088CC] font-bold' : 'text-gray-500'}`}>Reviews</button>
             <button onClick={() => setActiveTab('insurances')} className={`px-4 py-2 rounded-lg text-sm whitespace-nowrap ${activeTab === 'insurances' ? 'bg-blue-50 text-[#0088CC] font-bold' : 'text-gray-500'}`}>Obras Sociales</button>
             <button onClick={() => setActiveTab('blog')} className={`px-4 py-2 rounded-lg text-sm whitespace-nowrap ${activeTab === 'blog' ? 'bg-blue-50 text-[#0088CC] font-bold' : 'text-gray-500'}`}>Blog</button>
+            <button onClick={() => setActiveTab('catalog')} className={`px-4 py-2 rounded-lg text-sm whitespace-nowrap ${activeTab === 'catalog' ? 'bg-blue-50 text-[#0088CC] font-bold' : 'text-gray-500'}`}>Catálogo</button>
           </div>
 
           {/* Section: General Settings */}
@@ -810,7 +947,17 @@ export default function Admin() {
                     </div>
                     <div className="flex items-center space-x-2">
                       <button onClick={() => startEditProf(prof)} className="p-2 text-gray-400 hover:text-blue-500 transition-colors"><Edit2 size={18} /></button>
-                      <button onClick={() => { if(confirm('¿Borrar profesional?')) deleteProfessional(prof.id) }} className="p-2 text-gray-400 hover:text-red-500 transition-colors"><Trash2 size={18} /></button>
+                      <button onClick={async () => {
+                        if (confirm('¿Borrar profesional?')) {
+                          try {
+                            await deleteProfessional(prof.id);
+                            alert('Profesional eliminado.');
+                          } catch (err) {
+                            console.error(err);
+                            alert('Error al borrar profesional: ' + (err instanceof Error ? err.message : String(err)));
+                          }
+                        }
+                      }} className="p-2 text-gray-400 hover:text-red-500 transition-colors"><Trash2 size={18} /></button>
                     </div>
                   </div>
                 ))}
@@ -896,7 +1043,17 @@ export default function Admin() {
                           <button onClick={() => startEditReview(review)} className="p-2 text-gray-400 hover:text-[#0088CC] transition-colors">
                             <Edit2 className="w-4 h-4" />
                           </button>
-                          <button onClick={() => { if(confirm('¿Borrar reseña?')) deleteReview(review.id) }} className="p-2 text-gray-400 hover:text-red-500 transition-colors">
+                          <button onClick={async () => {
+                            if (confirm('¿Borrar reseña?')) {
+                              try {
+                                await deleteReview(review.id);
+                                alert('Reseña eliminada.');
+                              } catch (err) {
+                                console.error(err);
+                                alert('Error al borrar reseña: ' + (err instanceof Error ? err.message : String(err)));
+                              }
+                            }
+                          }} className="p-2 text-gray-400 hover:text-red-500 transition-colors">
                             <Trash2 className="w-4 h-4" />
                           </button>
                         </div>
@@ -1002,25 +1159,55 @@ export default function Admin() {
               )}
 
               {/* List */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {insurances.map(ins => (
-                  <div key={ins.id} className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex items-center justify-between">
-                    <div className="flex items-center space-x-4">
-                      <div className="w-12 h-12 bg-gray-50 rounded-lg flex items-center justify-center p-2">
-                        <img src={ins.logo} alt={ins.name} className="max-w-full max-h-full object-contain" referrerPolicy="no-referrer" />
-                      </div>
-                      <div>
-                        <h3 className="font-bold text-[#1A3A5A]">{ins.name}</h3>
-                        <p className="text-xs text-gray-400">{ins.specialties.length} especialidades</p>
-                      </div>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <button onClick={() => startEditIns(ins)} className="p-2 text-gray-400 hover:text-blue-500 transition-colors"><Edit2 size={18} /></button>
-                      <button onClick={() => { if(confirm('¿Borrar obra social?')) deleteInsurance(ins.id) }} className="p-2 text-gray-400 hover:text-red-500 transition-colors"><Trash2 size={18} /></button>
-                    </div>
+              {insurances.length === 0 ? (
+                <div className="bg-white p-12 rounded-[2rem] shadow-sm border border-gray-100 text-center">
+                  <div className="w-16 h-16 bg-blue-50 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                    <Shield className="text-[#0088CC] w-8 h-8" />
                   </div>
-                ))}
-              </div>
+                  <h3 className="text-lg font-bold text-[#1A3A5A] mb-1">No hay obras sociales en la base de datos</h3>
+                  <p className="text-gray-500 text-sm max-w-md mx-auto mb-6">
+                    La colección de obras sociales en tu base de datos de Firestore está vacía. Puedes cargar la lista predefinida con un solo clic.
+                  </p>
+                  <button
+                    onClick={handleBulkImportInsurances}
+                    disabled={isImporting}
+                    className="bg-[#0088CC] text-white px-6 py-2.5 rounded-xl font-bold hover:bg-[#0077B3] transition-all inline-flex items-center space-x-2 disabled:opacity-50"
+                  >
+                    {isImporting ? <Loader2 className="animate-spin w-4 h-4" /> : <Plus className="w-4 h-4" />}
+                    <span>Cargar Lista Predeterminada</span>
+                  </button>
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {insurances.map(ins => (
+                    <div key={ins.id} className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex items-center justify-between">
+                      <div className="flex items-center space-x-4">
+                        <div className="w-12 h-12 bg-gray-50 rounded-lg flex items-center justify-center p-2">
+                          <img src={ins.logo} alt={ins.name} className="max-w-full max-h-full object-contain" referrerPolicy="no-referrer" />
+                        </div>
+                        <div>
+                          <h3 className="font-bold text-[#1A3A5A]">{ins.name}</h3>
+                          <p className="text-xs text-gray-400">{ins.specialties.length} especialidades</p>
+                        </div>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <button onClick={() => startEditIns(ins)} className="p-2 text-gray-400 hover:text-blue-500 transition-colors"><Edit2 size={18} /></button>
+                        <button onClick={async () => {
+                          if (confirm('¿Borrar obra social?')) {
+                            try {
+                              await deleteInsurance(ins.id);
+                              alert('Obra social eliminada con éxito.');
+                            } catch (err) {
+                              console.error(err);
+                              alert('Error al eliminar obra social: ' + (err instanceof Error ? err.message : String(err)));
+                            }
+                          }
+                        }} className="p-2 text-gray-400 hover:text-red-500 transition-colors"><Trash2 size={18} /></button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           )}
 
@@ -1131,8 +1318,185 @@ export default function Admin() {
                       </div>
                     </div>
                     <div className="flex items-center space-x-2">
-                      <button onClick={() => startEditBlog(post)} className="p-2 text-gray-400 hover:text-blue-500 transition-colors"><Edit2 size={18} /></button>
-                      <button onClick={() => { if(confirm('¿Borrar artículo?')) deletePost(post.id) }} className="p-2 text-gray-400 hover:text-red-500 transition-colors"><Trash2 size={18} /></button>
+                       <button onClick={() => startEditBlog(post)} className="p-2 text-gray-400 hover:text-blue-500 transition-colors"><Edit2 size={18} /></button>
+                       <button onClick={async () => {
+                         if (confirm('¿Borrar artículo?')) {
+                           try {
+                             await deletePost(post.id);
+                             alert('Artículo eliminado.');
+                           } catch (err) {
+                             console.error(err);
+                             alert('Error al borrar artículo: ' + (err instanceof Error ? err.message : String(err)));
+                           }
+                         }
+                       }} className="p-2 text-gray-400 hover:text-red-500 transition-colors"><Trash2 size={18} /></button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Section: Catalog */}
+          {activeTab === 'catalog' && (
+            <div className="space-y-8">
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+                <div>
+                  <h1 className="text-3xl font-bold text-[#1A3A5A]">Catálogo</h1>
+                  <p className="text-gray-500">Administra las categorías de productos y sus listas de artículos</p>
+                </div>
+                {!showCatalogForm && (
+                  <div className="flex flex-wrap gap-3">
+                    <button 
+                      onClick={handleBulkImportCatalog}
+                      disabled={isImporting}
+                      className="bg-emerald-50 text-emerald-700 border border-emerald-200 hover:bg-emerald-100 disabled:opacity-50 px-5 py-2 rounded-xl font-bold transition-all flex items-center space-x-2"
+                    >
+                      <ShoppingBag className="w-4 h-4 text-emerald-600" />
+                      <span>{isImporting ? 'Cargando...' : 'Cargar Catálogo Inicial'}</span>
+                    </button>
+                    <button 
+                      onClick={() => {
+                        resetCatalogForm();
+                        setShowCatalogForm(true);
+                      }}
+                      className="bg-[#0088CC] text-white px-5 py-2 rounded-xl font-bold hover:bg-[#0077B3] transition-all flex items-center space-x-2"
+                    >
+                      <Plus className="w-4 h-4" />
+                      <span>Nueva Categoría</span>
+                    </button>
+                  </div>
+                )}
+              </div>
+
+              {showCatalogForm && (
+                <div className="bg-white rounded-[2rem] shadow-sm border border-gray-100 p-8">
+                  <h2 className="text-xl font-bold text-[#1A3A5A] mb-6 flex items-center">
+                    {editingCategory ? <Edit2 className="mr-2 text-[#0088CC]" /> : <Plus className="mr-2 text-[#0088CC]" />}
+                    {editingCategory ? 'Editar Categoría de Catálogo' : 'Nueva Categoría de Catálogo'}
+                  </h2>
+                  <form onSubmit={handleCatalogSubmit} className="space-y-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Identificador / ID único de URL</label>
+                        <input 
+                          type="text" 
+                          required 
+                          disabled={!!editingCategory} 
+                          value={catId} 
+                          onChange={e => setCatId(e.target.value)} 
+                          placeholder="ej. columna-y-espalda o spine" 
+                          className="w-full px-4 py-2 rounded-xl border border-gray-200 outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100" 
+                        />
+                        <p className="text-xs text-gray-400 mt-1">Se usará para la ruta interna. Ej: spine, movilidad, vendajes.</p>
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Título de la Categoría</label>
+                        <input 
+                          type="text" 
+                          required 
+                          value={catTitle} 
+                          onChange={e => setCatTitle(e.target.value)} 
+                          placeholder="ej. Columna y espalda" 
+                          className="w-full px-4 py-2 rounded-xl border border-gray-200 outline-none focus:ring-2 focus:ring-blue-500" 
+                        />
+                      </div>
+                      <div className="md:col-span-2">
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Descripción de la Categoría</label>
+                        <textarea 
+                          required 
+                          value={catDescription} 
+                          onChange={e => setCatDescription(e.target.value)} 
+                          placeholder="Descripción breve que describe qué tipo de productos se incluyen aquí" 
+                          rows={2} 
+                          className="w-full px-4 py-2 rounded-xl border border-gray-200 outline-none focus:ring-2 focus:ring-blue-500 resize-none" 
+                        />
+                      </div>
+                      <div className="md:col-span-2">
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Clave de Imagen o URL Completa</label>
+                        <input 
+                          type="text" 
+                          required 
+                          value={catImage} 
+                          onChange={e => setCatImage(e.target.value)} 
+                          placeholder="ej. columna-y-espalda.jpg o https://..." 
+                          className="w-full px-4 py-2 rounded-xl border border-gray-200 outline-none focus:ring-2 focus:ring-blue-500" 
+                        />
+                        <p className="text-xs text-gray-400 mt-1">
+                          Nombres predefinidos disponibles: <b>spine</b> (Columna), <b>upper-limb</b> (M. superior), <b>lower-limb</b> (M. inferior), <b>bandages</b> (Vendajes), <b>compression</b> (Compresión), <b>mobility</b> (Movilidad), <b>rehab</b> (Rehabilitación). O puedes pegar cualquier URL de imagen completa.
+                        </p>
+                      </div>
+                      <div className="md:col-span-2">
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Listado de Productos (Un producto por renglón/línea)</label>
+                        <textarea 
+                          required 
+                          value={catItemsText} 
+                          onChange={e => setCatItemsText(e.target.value)} 
+                          placeholder="Collar cervical de espuma 7 cm (T1 / T2 / T3)&#123;&#10;&#125;Codera larga sin velcro&#123;&#10;&#125;Tobillera de neoprene T1" 
+                          rows={6} 
+                          className="w-full px-4 py-2 rounded-xl border border-gray-200 outline-none focus:ring-2 focus:ring-blue-500 font-mono text-sm resize-y" 
+                        />
+                        <p className="text-xs text-gray-400 mt-1">Presiona "Enter" después de cada producto para listarlos de manera individual.</p>
+                      </div>
+                    </div>
+                    <div className="flex justify-end space-x-3 pt-4">
+                      <button type="button" onClick={resetCatalogForm} className="px-6 py-2 rounded-xl border border-gray-200 text-gray-500 hover:bg-gray-50 font-bold">
+                        Cancelar
+                      </button>
+                      <button type="submit" className="bg-[#0088CC] text-white px-8 py-2 rounded-xl font-bold hover:bg-[#0077B3] transition-all">
+                        {editingCategory ? 'Actualizar' : 'Guardar'}
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              )}
+
+              <div className="grid grid-cols-1 gap-4">
+                {catalogCategories.map(cat => (
+                  <div key={cat.id} className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex items-center justify-between">
+                    <div className="flex items-center space-x-4">
+                      <div className="w-16 h-16 rounded-xl bg-gray-100 flex-shrink-0 overflow-hidden flex items-center justify-center">
+                        <img 
+                          src={
+                            cat.image && (cat.image.startsWith('http://') || cat.image.startsWith('https://'))
+                              ? cat.image
+                              : `https://eaeapp.com/imagenes-ia/benedetti/${
+                                  cat.image === 'spine_back_support' || cat.id === 'spine' ? 'columna-y-espalda.jpg' :
+                                  cat.image === 'upper_limb_support' || cat.id === 'upper-limb' ? 'miembro-superior.jpg' :
+                                  cat.image === 'lower_limb_support' || cat.id === 'lower-limb' ? 'miembro-inferior.jpg' :
+                                  cat.image === 'bandages_therapy' || cat.id === 'bandages' ? 'vendajes.jpg' :
+                                  cat.image === 'compression_stockings' || cat.id === 'compression' ? 'compresion.jpg' :
+                                  cat.image === 'mobility_aids' || cat.id === 'mobility' ? 'movilidad.jpg' :
+                                  cat.image === 'rehab_training' || cat.id === 'rehab' ? 'rehabilitacion.jpg' :
+                                  cat.image || 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&q=80&w=800'
+                                }`
+                          } 
+                          alt={cat.title} 
+                          className="w-full h-full object-cover" 
+                          referrerPolicy="no-referrer" 
+                        />
+                      </div>
+                      <div>
+                        <h3 className="font-bold text-[#1A3A5A]">{cat.title}</h3>
+                        <p className="text-xs text-gray-500 line-clamp-1 max-w-md">{cat.description}</p>
+                        <span className="inline-block mt-1 px-2 py-0.5 bg-blue-50 text-[#0088CC] text-[10px] font-bold rounded-full">
+                          {cat.items ? cat.items.length : 0} productos
+                        </span>
+                      </div>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <button onClick={() => startEditCatalog(cat)} className="p-2 text-gray-400 hover:text-blue-500 transition-colors" title="Editar"><Edit2 size={18} /></button>
+                      <button onClick={async () => {
+                        if (confirm('¿Seguro deseas eliminar esta categoría del catálogo?')) {
+                          try {
+                            await deleteCatalogCategory(cat.id);
+                            alert('Categoría del catálogo eliminada.');
+                          } catch (err) {
+                            console.error(err);
+                            alert('Error al borrar categoría del catálogo: ' + (err instanceof Error ? err.message : String(err)));
+                          }
+                        }
+                      }} className="p-2 text-gray-400 hover:text-red-500 transition-colors" title="Eliminar"><Trash2 size={18} /></button>
                     </div>
                   </div>
                 ))}

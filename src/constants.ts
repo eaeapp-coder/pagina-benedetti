@@ -251,7 +251,7 @@ export const CATALOG_CATEGORIES = [
     id: 'rehab',
     title: 'Rehabilitación y entrenamiento',
     description: 'Bandas elásticas, pelotas medicinales, foam roller, accesorios de mano y elementos de confort postural.',
-    items: ['Mini band baja / media / alta', 'Banda larga baja / media / alta', 'Pelota medicinal', 'Pelota chica de propiocepción', 'Foam roller', 'Pelota miofascial', 'Pelota de mano', 'Masilla terapéutica', 'Hand grip', 'Almohadón lumbar', 'Almohadón de asiento', 'Almohada cervical', 'Mancuernas 1 kg', 'Mancuernas 2 kg', 'Tobillera con peso'],
+    items: ['Mini band baja / media / alta', 'Banda larga baja / media / alta', 'Pelota medicinal', 'Pelota chica de propiocepción', 'Foam roller', 'Pelota miofascial', 'Pelota de mano', 'Masilla terapéutica', 'Hand grip', 'Almohadón lumbar', 'Almohadón de asiento', 'Almohadona cervical', 'Mancuernas 1 kg', 'Mancuernas 2 kg', 'Tobillera con peso'],
     image: 'rehab_training'
   }
 ];

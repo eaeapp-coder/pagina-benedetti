@@ -39,22 +39,35 @@ export default function About() {
       <main className="min-h-screen bg-[#F8FAFC] pt-32 pb-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Hero Section */}
-          <div className="text-center mb-20">
-            <motion.h1 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="text-4xl md:text-6xl font-bold text-[#1A3A5A] mb-6 tracking-tight"
-            >
-              Sobre <span className="text-[#0088CC]">Nosotros</span>
-            </motion.h1>
-            <motion.p 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 }}
-              className="text-gray-500 text-lg max-w-3xl mx-auto leading-relaxed"
-            >
-              {loading ? "..." : settings.aboutHero}
-            </motion.p>
+          <div className="flex flex-col md:flex-row items-center justify-between gap-12 mb-20">
+            <div className="text-left max-w-3xl">
+              <motion.h1 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="text-4xl md:text-6xl font-bold text-[#1A3A5A] mb-6 tracking-tight"
+              >
+                Sobre <span className="text-[#0088CC]">Nosotros</span>
+              </motion.h1>
+              <motion.p 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1 }}
+                className="text-gray-500 text-lg leading-relaxed"
+              >
+                {loading ? "..." : settings.aboutHero}
+              </motion.p>
+            </div>
+            <div className="shrink-0">
+              <motion.img
+                initial={{ opacity: 0, scale: 0.8, rotate: -5 }}
+                animate={{ opacity: 1, scale: 1, rotate: 0 }}
+                transition={{ duration: 0.6 }}
+                src="https://eaeapp.com/imagenes-ia/benedetti/10.png"
+                alt="10 Años Aniversario Consultorios Benedetti"
+                className="h-36 md:h-[184px] w-auto object-contain"
+                referrerPolicy="no-referrer"
+              />
+            </div>
           </div>
 
           {/* History Section */}

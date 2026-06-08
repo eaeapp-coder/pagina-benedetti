@@ -2,13 +2,14 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { ShoppingCart, Accessibility, Activity, MessageSquare, Facebook, Instagram, Star, ShoppingBag, Shield, Dumbbell, CheckCircle2 } from 'lucide-react';
 import { motion } from 'motion/react';
-import { CATALOG_CATEGORIES } from '../constants';
 import { useSettings } from '../hooks/useSettings';
+import { useCatalog } from '../hooks/useCatalog';
 import SEO from '../components/SEO';
 import StructuredData from '../components/StructuredData';
 
 export default function Orthopedics() {
   const { settings } = useSettings();
+  const { categories, loading: loadingCatalog } = useCatalog();
   const cleanNumber = settings.phoneWhatsapp.replace(/\D/g, '');
   const baseMessage = encodeURIComponent("¡Hola! Necesito consultar sobre Turnos y Servicios.");
   const getProductMessage = () => encodeURIComponent("¡Hola! Me gustaría consultar por un producto.");
@@ -125,7 +126,7 @@ export default function Orthopedics() {
           <div className="grid md:grid-cols-3 gap-8">
             {[
               { icon: ShoppingBag, title: 'Venta y Alquiler Ortopédico', desc: 'Amplio catálogo de muletas, bastones, sillas de ruedas, andadores y más equipamiento.' },
-              { icon: Shield, title: 'Elementos de Neoprene Médico', desc: 'Rodilleras, tobilleras, muñequeras, coderas y fajas con compresión premium.' },
+              { icon: Shield, title: 'Elementos de Neoprene', desc: 'Rodilleras, tobilleras, muñequeras, coderas y fajas con compresión premium.' },
               { icon: Dumbbell, title: 'Rehabilitación Kinésica en Casa', desc: 'Bandas elásticas, pelotas medicinales, foam roller y accesorios recomendados.' },
             ].map((s, i) => (
               <motion.div 
@@ -178,32 +179,36 @@ export default function Orthopedics() {
             />
           </div>
           <div className="space-y-8">
-            {CATALOG_CATEGORIES.map((cat, i) => (
+            {categories.map((cat, i) => (
               <motion.div 
-                key={i} 
+                key={cat.id || i} 
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5 }}
                 className="bg-white text-[#1A3A5A] rounded-3xl overflow-hidden flex flex-col md:flex-row w-full md:w-4/5 mx-auto border border-[#DBE6F2]"
               >
-                <div className="md:w-1/2 h-64 md:h-auto">
-                  <img src={`https://eaeapp.com/imagenes-ia/benedetti/${
-                    cat.id === 'spine' ? 'columna-y-espalda.jpg' :
-                    cat.id === 'upper-limb' ? 'miembro-superior.jpg' :
-                    cat.id === 'lower-limb' ? 'miembro-inferior.jpg' :
-                    cat.id === 'bandages' ? 'vendajes.jpg' :
-                    cat.id === 'compression' ? 'compresion.jpg' :
-                    cat.id === 'mobility' ? 'movilidad.jpg' :
-                    cat.id === 'rehab' ? 'rehabilitacion.jpg' :
-                    'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&q=80&w=800'
-                  }`} alt={`Productos de ortopedia para ${cat.title} - Ortopedia Benedetti`} className="w-full h-full object-cover" />
+                <div className="md:w-1/3 h-64 md:h-auto">
+                  <img src={
+                    cat.image && (cat.image.startsWith('http://') || cat.image.startsWith('https://'))
+                      ? cat.image
+                      : `https://eaeapp.com/imagenes-ia/benedetti/${
+                          cat.image === 'spine_back_support' || cat.id === 'spine' ? 'columna-y-espalda.jpg' :
+                          cat.image === 'upper_limb_support' || cat.id === 'upper-limb' ? 'miembro-superior.jpg' :
+                          cat.image === 'lower_limb_support' || cat.id === 'lower-limb' ? 'miembro-inferior.jpg' :
+                          cat.image === 'bandages_therapy' || cat.id === 'bandages' ? 'vendajes.jpg' :
+                          cat.image === 'compression_stockings' || cat.id === 'compression' ? 'compresion.jpg' :
+                          cat.image === 'mobility_aids' || cat.id === 'mobility' ? 'movilidad.jpg' :
+                          cat.image === 'rehab_training' || cat.id === 'rehab' ? 'rehabilitacion.jpg' :
+                          cat.image || 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&q=80&w=800'
+                        }`
+                  } alt={`Productos de ortopedia para ${cat.title} - Ortopedia Benedetti`} className="w-full h-full object-cover" />
                 </div>
-                <div className="md:w-1/2 p-8 md:p-12 flex flex-col justify-center bg-[#DBE6F2]">
+                <div className="md:w-2/3 p-8 md:p-12 flex flex-col justify-center bg-[#DBE6F2]">
                   <h3 className="text-3xl font-bold mb-4">{cat.title}</h3>
                   <p className="text-gray-700 mb-6 text-lg">{cat.description}</p>
-                  <ul className="mb-8 space-y-3">
-                    {cat.items.map((item, j) => (
+                  <ul className="mb-8 grid md:grid-cols-2 gap-x-6 gap-y-3">
+                    {cat.items && cat.items.map((item, j) => (
                       <li key={j} className="flex items-center gap-3 text-sm text-gray-700">
                         <CheckCircle2 size={18} className="text-[#0088CC] flex-shrink-0" /> {item}
                       </li>

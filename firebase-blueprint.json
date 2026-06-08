@@ -90,6 +90,20 @@
         "image": { "type": "string" }
       },
       "required": ["title", "excerpt", "content", "date", "category", "image"]
+    },
+    "CatalogCategory": {
+      "title": "CatalogCategory",
+      "description": "Product category in the catalog",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "items": { "type": "array", "items": { "type": "string" } },
+        "image": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "title", "description", "items", "image"]
     }
   },
   "firestore": {
@@ -116,6 +130,10 @@
     "/blog/{postId}": {
       "schema": "BlogPost",
       "description": "Blog article documents"
+    },
+    "/catalog/{categoryId}": {
+      "schema": "CatalogCategory",
+      "description": "Catalog category document with list of products"
     }
   }
 }

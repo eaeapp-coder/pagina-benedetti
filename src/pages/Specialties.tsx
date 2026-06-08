@@ -30,12 +30,20 @@ export default function Specialties() {
           <div className="text-center mb-16">
             <h1 className="text-4xl md:text-5xl font-bold text-[#1A3A5A] mb-4">Nuestras Especialidades</h1>
             <p className="text-gray-500 text-lg max-w-2xl mx-auto">
-              Contamos con un equipo multidisciplinario de profesionales altamente capacitados para brindarte la mejor atención médica.
+              Contamos con un equipo multidisciplinario de profesionales altamente capacitados.
             </p>
           </div>
 
           <div className="space-y-8">
-            {SPECIALTIES.map((spec, index) => {
+            {[...SPECIALTIES].sort((a, b) => {
+              const docsInA = professionals.filter(d => d.specialties.includes(a.name));
+              const docsInB = professionals.filter(d => d.specialties.includes(b.name));
+              const hasProfsA = docsInA.length > 0;
+              const hasProfsB = docsInB.length > 0;
+              if (hasProfsA && !hasProfsB) return -1;
+              if (!hasProfsA && hasProfsB) return 1;
+              return 0;
+            }).map((spec, index) => {
               const docsInSpec = professionals.filter(d => d.specialties.includes(spec.name));
               const hasProfessionals = docsInSpec.length > 0;
               
