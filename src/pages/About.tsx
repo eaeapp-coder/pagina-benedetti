@@ -200,6 +200,37 @@ export default function About() {
             </div>
           </div>
 
+          {/* Fichas de Profesionales */}
+          <div className="mb-32">
+            <div className="text-center mb-16">
+              <h2 className="text-3xl font-bold text-[#1A3A5A] mb-4">Nuestro Equipo Profesional</h2>
+              <p className="text-gray-500">Conoce a quienes cuidan tu salud</p>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+              {[
+                { name: 'Lic. Mariano Benedetti', role: 'Director Médico', link: '/profesionales/1', img: 'https://eaeapp.com/imagenes-ia/benedetti/lic_mariano_benedetti.jpg' },
+                { name: 'Lic. Esteban Benedetti', role: 'Co-director', link: '/profesionales/2', img: 'https://eaeapp.com/imagenes-ia/benedetti/lic_esteban_benedetti.jpg' }
+              ].map((pro, index) => (
+                <motion.a
+                  key={index}
+                  href={pro.link}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1 }}
+                  className="bg-white p-8 rounded-[2.5rem] shadow-sm border border-gray-100 flex items-center gap-6 hover:shadow-lg transition-shadow"
+                >
+                  <img src={pro.img} alt={pro.name} className="w-24 h-24 rounded-full object-cover" referrerPolicy="no-referrer" />
+                  <div>
+                    <h4 className="font-bold text-[#1A3A5A] text-xl mb-1">{pro.name}</h4>
+                    <p className="text-[#0088CC] font-medium">{pro.role}</p>
+                    <span className="text-sm text-gray-500 mt-2 block underline">Ver perfil</span>
+                  </div>
+                </motion.a>
+              ))}
+            </div>
+          </div>
+
           {/* Call to Action */}
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
