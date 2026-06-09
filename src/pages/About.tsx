@@ -4,9 +4,16 @@ import PageTransition from '../components/PageTransition';
 import { Heart, Target, Eye, Users, Award, Loader2 } from 'lucide-react';
 import SEO from '../components/SEO';
 import { useSettings } from '../hooks/useSettings';
+import { Link } from 'react-router-dom';
+import { useProfessionals } from '../hooks/useProfessionals';
 
 export default function About() {
   const { settings, loading } = useSettings();
+  const { professionals } = useProfessionals();
+
+  const mDoc = professionals.find(p => p.name.toLowerCase().includes("mariano")) || { id: '1' };
+  const eDoc = professionals.find(p => p.name.toLowerCase().includes("esteban")) || { id: '2' };
+
   const values = [
     {
       icon: Heart,
@@ -208,25 +215,29 @@ export default function About() {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
               {[
-                { name: 'Lic. Mariano Benedetti', role: 'Director Médico', link: '/profesionales/1', img: 'https://eaeapp.com/imagenes-ia/benedetti/lic_mariano_benedetti.jpg' },
-                { name: 'Lic. Esteban Benedetti', role: 'Co-director', link: '/profesionales/2', img: 'https://eaeapp.com/imagenes-ia/benedetti/lic_esteban_benedetti.jpg' }
+                { name: 'Lic. Mariano Benedetti', role: 'Director Médico', link: `/profesionales/${mDoc.id}`, img: 'https://eaeapp.com/imagenes-ia/benedetti/lic_mariano_benedetti.jpg' },
+                { name: 'Lic. Esteban Benedetti', role: 'Co-director', link: `/profesionales/${eDoc.id}`, img: 'https://eaeapp.com/imagenes-ia/benedetti/lic_esteban_benedetti.jpg' }
               ].map((pro, index) => (
-                <motion.a
+                <Link
                   key={index}
-                  href={pro.link}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1 }}
-                  className="bg-white p-8 rounded-[2.5rem] shadow-sm border border-gray-100 flex items-center gap-6 hover:shadow-lg transition-shadow"
+                  to={pro.link}
+                  className="block"
                 >
-                  <img src={pro.img} alt={pro.name} className="w-24 h-24 rounded-full object-cover" referrerPolicy="no-referrer" />
-                  <div>
-                    <h4 className="font-bold text-[#1A3A5A] text-xl mb-1">{pro.name}</h4>
-                    <p className="text-[#0088CC] font-medium">{pro.role}</p>
-                    <span className="text-sm text-gray-500 mt-2 block underline">Ver perfil</span>
-                  </div>
-                </motion.a>
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.1 }}
+                    className="bg-white p-8 rounded-[2.5rem] shadow-sm border border-gray-100 flex items-center gap-6 hover:shadow-lg transition-shadow h-full"
+                  >
+                    <img src={pro.img} alt={pro.name} className="w-24 h-24 rounded-full object-cover" referrerPolicy="no-referrer" />
+                    <div>
+                      <h4 className="font-bold text-[#1A3A5A] text-xl mb-1">{pro.name}</h4>
+                      <p className="text-[#0088CC] font-medium">{pro.role}</p>
+                      <span className="text-sm text-gray-500 mt-2 block underline">Ver perfil</span>
+                    </div>
+                  </motion.div>
+                </Link>
               ))}
             </div>
           </div>
