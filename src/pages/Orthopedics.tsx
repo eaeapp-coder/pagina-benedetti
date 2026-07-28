@@ -20,7 +20,7 @@ export default function Orthopedics() {
     "@type": "MedicalBusiness",
     "name": "Ortopedia Benedetti",
     "alternateName": "Área de Ortopedia y Rehabilitación - Consultorios Benedetti",
-    "image": "https://eaeapp.com/imagenes-ia/benedetti/fondo-hero-ortopedia.jpg",
+    "image": "https://eaeapp.com/imagenes-ia/benedetti/fondo-hero-ortopedia-3.png",
     "telephone": settings.phoneLine || "+54 11 1122-3344",
     "address": {
       "@type": "PostalAddress",
@@ -78,7 +78,7 @@ export default function Orthopedics() {
         {/* Background Image */}
         <div 
           className="absolute inset-0 bg-cover bg-[bottom_right]" 
-          style={{ backgroundImage: 'url("https://eaeapp.com/imagenes-ia/benedetti/fondo-hero-ortopedia.jpg")' }}
+          style={{ backgroundImage: 'url("https://eaeapp.com/imagenes-ia/benedetti/fondo-hero-ortopedia-3.png")' }}
           role="img"
           aria-label="Artículos de ortopedia y equipamiento de rehabilitación"
         >
@@ -97,7 +97,7 @@ export default function Orthopedics() {
               </div>
 
               <h1 className="mt-4 text-[33px] font-bold text-[#1A3A5A] leading-[40px]">
-                <span className="text-[#0088CC]">Ortopedia Benedetti</span>
+                <span className="text-[#0088CC]">Consultorios Benedetti</span>
                 <br />
                 Todo para tu recuperación, en un solo lugar.
               </h1>

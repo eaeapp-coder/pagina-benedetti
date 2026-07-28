@@ -186,7 +186,7 @@ export const DOCTORS: Doctor[] = [
     specialties: ['Kinesiología'],
     image: 'https://eaeapp.com/imagenes-ia/benedetti/lic_mariano_benedetti.jpg',
     bio: 'Director de Consultorios Benedetti. Especialista en Quiropraxia y Kinesiología con amplia trayectoria en el tratamiento de la columna vertebral.',
-    education: ['Lic. en Kinesiología y Fisiatría - UBA', 'Especialista en Quiropraxia y Osteopatía', 'Acreditación Internacional en Kinesiología Deportiva'],
+    education: ['Lic. en Kinesiología y Fisiatría - UBA', 'Especialista en Quiropraxia y Osteopatía', 'Acreditación Internacional en Kinesiología Deportiva', 'Técnico Ortopedista'],
     languages: ['Español', 'Inglés'],
     availability: 'Mar. a Jue. 11:00 a 20:00 | Lun. Mie. y Vie. 08:00 a 18:00',
     registration: 'Matrícula Nacional (M.N.) 10.452 | Matrícula Provincial (M.P.) 5.120'
