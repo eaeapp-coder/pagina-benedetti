@@ -13,7 +13,7 @@ import { SPECIALTIES, Doctor, InsuranceProvider, INSURANCE_PROVIDERS, BlogPost, 
 import { 
   Lock, Save, LogOut, Settings as SettingsIcon, Loader2, MessageSquare, 
   Star as StarIcon, Plus, Eye, EyeOff, Users, Shield, Trash2, Edit2, X,
-  FileText, ShoppingBag
+  FileText, ShoppingBag, GripVertical, ChevronUp, ChevronDown
 } from 'lucide-react';
 
 type AdminTab = 'general' | 'professionals' | 'reviews' | 'insurances' | 'blog' | 'catalog';
@@ -34,7 +34,7 @@ export default function Admin() {
   const { settings, loading: settingsLoading } = useSettings();
   const { reviews, addReview, updateReview, deleteReview } = useReviews();
   const { professionals, addProfessional, updateProfessional, deleteProfessional } = useProfessionals();
-  const { insurances, addInsurance, updateInsurance, deleteInsurance } = useInsurances();
+  const { insurances, addInsurance, updateInsurance, updateInsurancesOrder, deleteInsurance } = useInsurances();
   const { posts, addPost, updatePost, deletePost } = useBlog();
   const { categories: catalogCategories, saveCatalogCategory, deleteCatalogCategory } = useCatalog();
   
@@ -320,6 +320,66 @@ export default function Admin() {
     setInsIsNew(ins.isNew || false);
     setShowInsForm(true);
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const [draggedInsIndex, setDraggedInsIndex] = useState<number | null>(null);
+
+  const handleInsDragStart = (e: React.DragEvent, index: number) => {
+    setDraggedInsIndex(index);
+    e.dataTransfer.effectAllowed = 'move';
+  };
+
+  const handleInsDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.dataTransfer.dropEffect = 'move';
+  };
+
+  const handleInsDrop = async (e: React.DragEvent, targetIndex: number) => {
+    e.preventDefault();
+    if (draggedInsIndex === null || draggedInsIndex === targetIndex) return;
+
+    const newInsurances = [...insurances];
+    const [movedItem] = newInsurances.splice(draggedInsIndex, 1);
+    newInsurances.splice(targetIndex, 0, movedItem);
+
+    setDraggedInsIndex(null);
+
+    try {
+      await updateInsurancesOrder(newInsurances);
+    } catch (err) {
+      console.error(err);
+      alert('Error al actualizar el orden.');
+    }
+  };
+
+  const handleInsMoveUp = async (index: number) => {
+    if (index === 0) return;
+    const newInsurances = [...insurances];
+    const temp = newInsurances[index];
+    newInsurances[index] = newInsurances[index - 1];
+    newInsurances[index - 1] = temp;
+
+    try {
+      await updateInsurancesOrder(newInsurances);
+    } catch (err) {
+      console.error(err);
+      alert('Error al mover.');
+    }
+  };
+
+  const handleInsMoveDown = async (index: number) => {
+    if (index === insurances.length - 1) return;
+    const newInsurances = [...insurances];
+    const temp = newInsurances[index];
+    newInsurances[index] = newInsurances[index + 1];
+    newInsurances[index + 1] = temp;
+
+    try {
+      await updateInsurancesOrder(newInsurances);
+    } catch (err) {
+      console.error(err);
+      alert('Error al mover.');
+    }
   };
 
   const handleBlogSubmit = async (e: React.FormEvent) => {
@@ -1178,34 +1238,77 @@ export default function Admin() {
                   </button>
                 </div>
               ) : (
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {insurances.map(ins => (
-                    <div key={ins.id} className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex items-center justify-between">
-                      <div className="flex items-center space-x-4">
-                        <div className="w-12 h-12 bg-gray-50 rounded-lg flex items-center justify-center p-2">
-                          <img src={ins.logo} alt={ins.name} className="max-w-full max-h-full object-contain" referrerPolicy="no-referrer" />
+                <div className="space-y-3">
+                  <p className="text-xs text-gray-400 italic mb-2">
+                    💡 Puedes arrastrar y soltar las obras sociales (Drag & Drop) o usar las flechas para ordenar su aparición en la página de Obras Sociales del sitio.
+                  </p>
+                  <div className="grid grid-cols-1 gap-3">
+                    {insurances.map((ins, index) => (
+                      <div 
+                        key={ins.id} 
+                        draggable
+                        onDragStart={(e) => handleInsDragStart(e, index)}
+                        onDragOver={handleInsDragOver}
+                        onDrop={(e) => handleInsDrop(e, index)}
+                        className={`bg-white p-4 rounded-2xl shadow-sm border transition-all flex items-center justify-between cursor-grab active:cursor-grabbing ${
+                          draggedInsIndex === index ? 'opacity-40 border-dashed border-[#0088CC]' : 'border-gray-100 hover:border-blue-200'
+                        }`}
+                      >
+                        <div className="flex items-center space-x-3">
+                          <div className="text-gray-300 hover:text-gray-600 cursor-grab">
+                            <GripVertical size={20} />
+                          </div>
+                          <div className="w-12 h-12 bg-gray-50 rounded-lg flex items-center justify-center p-2 flex-shrink-0">
+                            <img src={ins.logo} alt={ins.name} className="max-w-full max-h-full object-contain" referrerPolicy="no-referrer" />
+                          </div>
+                          <div>
+                            <div className="flex items-center space-x-2">
+                              <span className="text-xs font-bold text-gray-400">#{index + 1}</span>
+                              <h3 className="font-bold text-[#1A3A5A]">{ins.name}</h3>
+                              {ins.isNew && (
+                                <span className="px-2 py-0.5 bg-red-100 text-red-600 text-[10px] font-bold rounded-full">NUEVA</span>
+                              )}
+                            </div>
+                            <p className="text-xs text-gray-400">{ins.specialties.length} especialidades</p>
+                          </div>
                         </div>
-                        <div>
-                          <h3 className="font-bold text-[#1A3A5A]">{ins.name}</h3>
-                          <p className="text-xs text-gray-400">{ins.specialties.length} especialidades</p>
-                        </div>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <button onClick={() => startEditIns(ins)} className="p-2 text-gray-400 hover:text-blue-500 transition-colors"><Edit2 size={18} /></button>
-                        <button onClick={async () => {
-                          if (confirm('¿Borrar obra social?')) {
-                            try {
-                              await deleteInsurance(ins.id);
-                              alert('Obra social eliminada con éxito.');
-                            } catch (err) {
-                              console.error(err);
-                              alert('Error al eliminar obra social: ' + (err instanceof Error ? err.message : String(err)));
+                        <div className="flex items-center space-x-1">
+                          <div className="flex flex-col space-y-0.5 mr-2">
+                            <button 
+                              type="button"
+                              onClick={() => handleInsMoveUp(index)} 
+                              disabled={index === 0}
+                              className="p-1 text-gray-400 hover:text-blue-600 disabled:opacity-30 transition-colors"
+                              title="Mover arriba"
+                            >
+                              <ChevronUp size={16} />
+                            </button>
+                            <button 
+                              type="button"
+                              onClick={() => handleInsMoveDown(index)} 
+                              disabled={index === insurances.length - 1}
+                              className="p-1 text-gray-400 hover:text-blue-600 disabled:opacity-30 transition-colors"
+                              title="Mover abajo"
+                            >
+                              <ChevronDown size={16} />
+                            </button>
+                          </div>
+                          <button onClick={() => startEditIns(ins)} className="p-2 text-gray-400 hover:text-blue-500 transition-colors" title="Editar"><Edit2 size={18} /></button>
+                          <button onClick={async () => {
+                            if (confirm('¿Borrar obra social?')) {
+                              try {
+                                await deleteInsurance(ins.id);
+                                alert('Obra social eliminada con éxito.');
+                              } catch (err) {
+                                console.error(err);
+                                alert('Error al eliminar obra social: ' + (err instanceof Error ? err.message : String(err)));
+                              }
                             }
-                          }
-                        }} className="p-2 text-gray-400 hover:text-red-500 transition-colors"><Trash2 size={18} /></button>
+                          }} className="p-2 text-gray-400 hover:text-red-500 transition-colors" title="Eliminar"><Trash2 size={18} /></button>
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
               )}
             </div>

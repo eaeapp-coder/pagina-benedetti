@@ -61,6 +61,12 @@ export function useInsurances() {
           id: doc.id,
           ...doc.data()
         })) as InsuranceProvider[];
+        docs.sort((a, b) => {
+          const orderA = a.order ?? 9999;
+          const orderB = b.order ?? 9999;
+          if (orderA !== orderB) return orderA - orderB;
+          return a.name.localeCompare(b.name);
+        });
         setInsurances(docs);
       setLoading(false);
     });
@@ -72,6 +78,7 @@ export function useInsurances() {
     try {
       await addDoc(collection(db, 'insurances'), {
         ...insurance,
+        order: insurances.length,
         createdAt: serverTimestamp()
       });
     } catch (error) {
@@ -91,6 +98,18 @@ export function useInsurances() {
     }
   };
 
+  const updateInsurancesOrder = async (reorderedItems: InsuranceProvider[]) => {
+    try {
+      const promises = reorderedItems.map((item, index) => {
+        const docRef = doc(db, 'insurances', item.id);
+        return setDoc(docRef, { order: index, updatedAt: serverTimestamp() }, { merge: true });
+      });
+      await Promise.all(promises);
+    } catch (error) {
+      handleFirestoreError(error, OperationType.UPDATE, 'insurances');
+    }
+  };
+
   const deleteInsurance = async (id: string) => {
     try {
       await deleteDoc(doc(db, 'insurances', id));
@@ -100,5 +119,5 @@ export function useInsurances() {
     }
   };
 
-  return { insurances, loading, addInsurance, updateInsurance, deleteInsurance };
+  return { insurances, loading, addInsurance, updateInsurance, updateInsurancesOrder, deleteInsurance };
 }
