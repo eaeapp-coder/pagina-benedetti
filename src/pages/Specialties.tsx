@@ -35,15 +35,7 @@ export default function Specialties() {
           </div>
 
           <div className="space-y-8">
-            {[...SPECIALTIES].sort((a, b) => {
-              const docsInA = professionals.filter(d => d.specialties.includes(a.name));
-              const docsInB = professionals.filter(d => d.specialties.includes(b.name));
-              const hasProfsA = docsInA.length > 0;
-              const hasProfsB = docsInB.length > 0;
-              if (hasProfsA && !hasProfsB) return -1;
-              if (!hasProfsA && hasProfsB) return 1;
-              return 0;
-            }).map((spec, index) => {
+            {SPECIALTIES.map((spec, index) => {
               const docsInSpec = professionals.filter(d => d.specialties.includes(spec.name));
               const hasProfessionals = docsInSpec.length > 0;
               

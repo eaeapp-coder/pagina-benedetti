@@ -48,21 +48,21 @@ export interface Specialty {
 
 export const SPECIALTIES: Specialty[] = [
   { 
-    id: 'kinesiology', 
-    name: 'Kinesiología', 
-    icon: Activity, 
-    description: 'Rehabilitación profesional para que tu cuerpo vuelva a funcionar al máximo. Tratamos lesiones traumatológicas, deportivas y posquirúrgicas con un enfoque personalizado y basado en evidencia.',
-    fullDescription: 'La kinesiología es una disciplina de la salud que se enfoca en el estudio del movimiento humano y su aplicación para la rehabilitación, prevención y mejora del rendimiento físico. En nuestro consultorio, utilizamos técnicas manuales, ejercicios terapéuticos y agentes físicos para tratar diversas patologías musculoesqueléticas, neurológicas y respiratorias. Nuestro objetivo es restaurar la función motora, aliviar el dolor y mejorar la calidad de vida de nuestros pacientes a través de un enfoque personalizado y basado en la evidencia científica.',
+    id: 'traumatology', 
+    name: 'Ortopedia', 
+    icon: Bone, 
+    description: 'El tratamiento no termina en el consultorio. Contamos con todo lo que necesitás para acompañar tu recuperación: elementos, ayudas técnicas y productos ortopédicos de calidad, disponibles para la venta y el alquiler.',
+    fullDescription: 'La ortopedia y traumatología es la rama de la medicina que se ocupa del estudio y tratamiento de las afecciones del sistema locomotor. Esto incluye huesos, articulaciones, ligamentos, tendones y músculos. En nuestro centro, brindamos atención especializada para fracturas, esguinces, lesiones deportivas, enfermedades degenerativas como la artrosis y deformidades congénitas o adquiridas. Contamos con profesionales expertos que utilizan las últimas tecnologías y técnicas quirúrgicas y no quirúrgicas para asegurar una recuperación óptima y el retorno a las actividades diarias.',
     benefits: [
-      'Rehabilitación post-quirúrgica y post-traumática',
-      'Tratamiento de dolores crónicos y agudos',
-      'Mejora de la movilidad y flexibilidad',
-      'Prevención de lesiones deportivas y laborales',
-      'Corrección postural y ergonomía'
+      'Diagnóstico preciso de lesiones óseas y articulares',
+      'Tratamientos mínimamente invasivos',
+      'Manejo especializado de fracturas y luxaciones',
+      'Atención integral de patologías de columna y miembros',
+      'Seguimiento personalizado en la recuperación'
     ],
     images: [
-      'https://eaeapp.com/imagenes-ia/benedetti/pexels-kinesiologia.jpg',
-      'https://eaeapp.com/imagenes-ia/benedetti/kinesiologia-1.webp'
+      'https://eaeapp.com/imagenes-ia/benedetti/ortopedia-especiaidad.webp',
+      'https://images.pexels.com/photos/6129045/pexels-photo-6129045.jpeg'
     ]
   },
   { 
@@ -102,21 +102,21 @@ export const SPECIALTIES: Specialty[] = [
     ]
   },
   { 
-    id: 'traumatology', 
-    name: 'Ortopedia', 
-    icon: Bone, 
-    description: 'El tratamiento no termina en el consultorio. Contamos con todo lo que necesitás para acompañar tu recuperación: elementos, ayudas técnicas y productos ortopédicos de calidad, disponibles para la venta y el alquiler.',
-    fullDescription: 'La ortopedia y traumatología es la rama de la medicina que se ocupa del estudio y tratamiento de las afecciones del sistema locomotor. Esto incluye huesos, articulaciones, ligamentos, tendones y músculos. En nuestro centro, brindamos atención especializada para fracturas, esguinces, lesiones deportivas, enfermedades degenerativas como la artrosis y deformidades congénitas o adquiridas. Contamos con profesionales expertos que utilizan las últimas tecnologías y técnicas quirúrgicas y no quirúrgicas para asegurar una recuperación óptima y el retorno a las actividades diarias.',
+    id: 'kinesiology', 
+    name: 'Kinesiología', 
+    icon: Activity, 
+    description: 'Rehabilitación profesional para que tu cuerpo vuelva a funcionar al máximo. Tratamos lesiones traumatológicas, deportivas y posquirúrgicas con un enfoque personalizado y basado en evidencia.',
+    fullDescription: 'La kinesiología es una disciplina de la salud que se enfoca en el estudio del movimiento humano y su aplicación para la rehabilitación, prevención y mejora del rendimiento físico. En nuestro consultorio, utilizamos técnicas manuales, ejercicios terapéuticos y agentes físicos para tratar diversas patologías musculoesqueléticas, neurológicas y respiratorias. Nuestro objetivo es restaurar la función motora, aliviar el dolor y mejorar la calidad de vida de nuestros pacientes a través de un enfoque personalizado y basado en la evidencia científica.',
     benefits: [
-      'Diagnóstico preciso de lesiones óseas y articulares',
-      'Tratamientos mínimamente invasivos',
-      'Manejo especializado de fracturas y luxaciones',
-      'Atención integral de patologías de columna y miembros',
-      'Seguimiento personalizado en la recuperación'
+      'Rehabilitación post-quirúrgica y post-traumática',
+      'Tratamiento de dolores crónicos y agudos',
+      'Mejora de la movilidad y flexibilidad',
+      'Prevención de lesiones deportivas y laborales',
+      'Corrección postural y ergonomía'
     ],
     images: [
-      'https://eaeapp.com/imagenes-ia/benedetti/ortopedia.jpg',
-      'https://images.pexels.com/photos/6129045/pexels-photo-6129045.jpeg'
+      'https://eaeapp.com/imagenes-ia/benedetti/pexels-kinesiologia.jpg',
+      'https://eaeapp.com/imagenes-ia/benedetti/kinesiologia-1.webp'
     ]
   }
 ];

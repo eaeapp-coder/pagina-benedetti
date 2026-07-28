@@ -69,7 +69,7 @@ export default function NewServiceHighlight() {
                 >
                   <div className="w-72 h-72 md:w-[378px] md:h-[378px] bg-white rounded-[2rem] shadow-xl overflow-hidden transform -rotate-6">
                     <img 
-                      src="https://eaeapp.com/imagenes-ia/benedetti/ortopedia.jpg" 
+                      src="https://eaeapp.com/imagenes-ia/benedetti/ortopedia-especiaidad.webp" 
                       alt="Ortopedia" 
                       className="w-full h-full object-cover -scale-x-100"
                       referrerPolicy="no-referrer"
@@ -83,7 +83,7 @@ export default function NewServiceHighlight() {
                     className="absolute -top-2 -right-2 md:-top-6 md:-right-6 bg-white p-3 md:p-4 rounded-2xl shadow-lg border border-blue-50"
                   >
                     <div className="text-[#0088CC] font-bold text-base md:text-lg">Excelencia</div>
-                    <div className="text-gray-400 text-[10px] md:text-xs">Médica</div>
+                    <div className="text-gray-400 text-[10px] md:text-xs">en profesionales</div>
                   </motion.div>
 
                   <motion.div 
