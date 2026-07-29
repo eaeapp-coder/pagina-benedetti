@@ -14,10 +14,14 @@ export function useBlog() {
     
     const unsubscribe = onSnapshot(q, (snapshot) => {
       if (!snapshot.empty) {
-        const fetchedPosts = snapshot.docs.map(doc => ({
-          ...doc.data(),
-          id: doc.id
-        })) as BlogPost[];
+        const fetchedPosts = snapshot.docs.map(doc => {
+          const data = doc.data() as any;
+          const slug = slugify(data.title || doc.id);
+          return {
+            ...data,
+            id: slug
+          };
+        }) as BlogPost[];
         setPosts(fetchedPosts);
       } else {
         setPosts(BLOG_POSTS);
