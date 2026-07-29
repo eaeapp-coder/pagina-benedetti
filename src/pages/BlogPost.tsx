@@ -79,7 +79,7 @@ export default function BlogPost() {
               <span className="px-4 py-1.5 bg-blue-50 text-[#0088CC] text-sm font-bold rounded-full inline-block">
                 {post.category}
               </span>
-              <h1 className="text-[48px] font-bold text-[#1A3A5A] leading-tight tracking-tight">
+              <h1 className="text-[30px] sm:text-[48px] font-bold text-[#1A3A5A] leading-tight tracking-tight">
                 {post.title}
               </h1>
               
@@ -92,9 +92,7 @@ export default function BlogPost() {
                   <User className="w-4 h-4 mr-2 text-[#0088CC]" />
                   Revisado y avalado por: <Link to="/profesionales/1" className="font-semibold text-[#1A3A5A] hover:text-[#0088CC] underline ml-1">Lic. Mariano Benedetti (M.N. 10.452)</Link>
                 </div>
-                <div className="flex items-center text-xs bg-green-50 text-green-700 px-3 py-1 rounded-full font-medium sm:ml-auto">
-                  ✓ Revisión Clínica Médica
-                </div>
+
               </div>
             </motion.div>
           </header>
