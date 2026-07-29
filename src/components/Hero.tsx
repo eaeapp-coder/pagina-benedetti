@@ -7,7 +7,7 @@ export default function Hero() {
       {/* Background Image with Overlay */}
       <div className="absolute inset-0 z-0">
         <img 
-          src="https://eaeapp.com/imagenes-ia/benedetti/portada-web.jpg" 
+          src="https://eaeapp.com/imagenes-ia/benedetti/portada-web-2.jpg" 
           alt="Medical Center"
           className="w-full h-full object-cover object-left"
           referrerPolicy="no-referrer"
