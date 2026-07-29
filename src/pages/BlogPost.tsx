@@ -3,7 +3,7 @@ import { useParams, Link, Navigate } from 'react-router-dom';
 import { useBlog } from '../hooks/useBlog';
 import { motion } from 'motion/react';
 import PageTransition from '../components/PageTransition';
-import { Calendar, User, ArrowLeft, Share2, MessageSquare, Loader2 } from 'lucide-react';
+import { Calendar, User, ArrowLeft, Share2, Loader2 } from 'lucide-react';
 import SEO from '../components/SEO';
 import StructuredData from '../components/StructuredData';
 
@@ -118,11 +118,24 @@ export default function BlogPost() {
             {/* Sidebar - Share/Actions */}
             <div className="lg:col-span-1 hidden lg:block">
               <div className="sticky top-40 space-y-6">
-                <button className="w-12 h-12 rounded-2xl bg-white border border-gray-100 flex items-center justify-center text-gray-400 hover:text-[#0088CC] hover:border-[#0088CC] transition-all shadow-sm">
+                <button 
+                  onClick={() => {
+                    const url = window.location.href;
+                    if (navigator.share) {
+                      navigator.share({
+                        title: post.title,
+                        text: post.excerpt,
+                        url: url,
+                      }).catch(() => {});
+                    } else {
+                      navigator.clipboard.writeText(url);
+                      alert('¡Enlace copiado al portapapeles!');
+                    }
+                  }}
+                  title="Compartir artículo"
+                  className="w-12 h-12 rounded-2xl bg-white border border-gray-100 flex items-center justify-center text-gray-400 hover:text-[#0088CC] hover:border-[#0088CC] transition-all shadow-sm cursor-pointer"
+                >
                   <Share2 className="w-5 h-5" />
-                </button>
-                <button className="w-12 h-12 rounded-2xl bg-white border border-gray-100 flex items-center justify-center text-gray-400 hover:text-[#0088CC] hover:border-[#0088CC] transition-all shadow-sm">
-                  <MessageSquare className="w-5 h-5" />
                 </button>
               </div>
             </div>

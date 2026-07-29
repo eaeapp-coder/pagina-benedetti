@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
-import { collection, query, orderBy, onSnapshot, addDoc, deleteDoc, doc, updateDoc } from 'firebase/firestore';
+import { collection, query, orderBy, onSnapshot, setDoc, deleteDoc, doc, updateDoc } from 'firebase/firestore';
 import { db } from '../firebase';
 import { handleFirestoreError, OperationType } from '../lib/firestore-utils';
-import { BlogPost, BLOG_POSTS } from '../constants';
+import { BlogPost, BLOG_POSTS, slugify } from '../constants';
 
 export function useBlog() {
   const [posts, setPosts] = useState<BlogPost[]>([]);
@@ -34,8 +34,10 @@ export function useBlog() {
   const addPost = async (newPost: Omit<BlogPost, 'id'>) => {
     const path = 'blog';
     try {
-      await addDoc(collection(db, 'blog'), {
-        ...newPost
+      const slug = slugify(newPost.title);
+      await setDoc(doc(db, 'blog', slug), {
+        ...newPost,
+        id: slug
       });
     } catch (error) {
       handleFirestoreError(error, OperationType.WRITE, path);

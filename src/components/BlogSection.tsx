@@ -1,39 +1,21 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { Calendar, ChevronRight, User } from 'lucide-react';
+import { Calendar, ChevronRight, User, Loader2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
-
-const BLOG_POSTS = [
-  {
-    id: 1,
-    title: "Beneficios de la Quiropraxia en la vida diaria",
-    excerpt: "Descubre cómo los ajustes vertebrales pueden mejorar tu postura y reducir el estrés cotidiano.",
-    date: "20 Mar, 2026",
-    author: "Dr. Roberto Gómez",
-    image: "https://lh3.googleusercontent.com/d/1LOXqn-eOuM5tTno7lRElV6_aA3UZprLa",
-    category: "Quiropraxia"
-  },
-  {
-    id: 2,
-    title: "Análisis de la pisada: ¿Por qué es importante?",
-    excerpt: "La forma en que caminamos influye en todo nuestro cuerpo. Aprende a prevenir lesiones desde la base.",
-    date: "15 Mar, 2026",
-    author: "Lic. Carlos Rodríguez",
-    image: "https://lh3.googleusercontent.com/d/1LOXqn-eOuM5tTno7lRElV6_aA3UZprLa",
-    category: "Kinesiología"
-  },
-  {
-    id: 3,
-    title: "Prevención de lesiones en deportistas",
-    excerpt: "Consejos fundamentales de traumatología para mantenerte activo y evitar interrupciones en tu entrenamiento.",
-    date: "10 Mar, 2026",
-    author: "Dra. Ana Martínez",
-    image: "https://lh3.googleusercontent.com/d/1LOXqn-eOuM5tTno7lRElV6_aA3UZprLa",
-    category: "Ortopedia"
-  }
-];
+import { useBlog } from '../hooks/useBlog';
 
 export default function BlogSection() {
+  const { posts, loading } = useBlog();
+  const displayPosts = posts.slice(0, 3);
+
+  if (loading) {
+    return (
+      <section className="py-24 bg-white flex justify-center items-center">
+        <Loader2 className="animate-spin text-[#0088CC] w-8 h-8" />
+      </section>
+    );
+  }
+
   return (
     <section className="py-24 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -56,16 +38,16 @@ export default function BlogSection() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {BLOG_POSTS.map((post, index) => (
+          {displayPosts.map((post, index) => (
             <motion.article
               key={post.id}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="group cursor-pointer"
+              className="group cursor-pointer bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 flex flex-col"
             >
-              <div className="relative h-64 mb-6 rounded-2xl overflow-hidden shadow-lg">
+              <Link to={`/blog/${post.id}`} className="block relative h-64 overflow-hidden">
                 <img 
                   src={post.image} 
                   alt={post.title}
@@ -75,33 +57,33 @@ export default function BlogSection() {
                 <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold text-[#0088CC]">
                   {post.category}
                 </div>
-              </div>
-
-              <div className="flex items-center space-x-4 text-xs text-gray-400 mb-3">
-                <div className="flex items-center">
-                  <Calendar className="w-4 h-4 mr-1" />
-                  {post.date}
-                </div>
-                <div className="flex items-center">
-                  <User className="w-4 h-4 mr-1" />
-                  {post.author}
-                </div>
-              </div>
-
-              <h3 className="text-xl font-bold text-[#1A3A5A] mb-3 group-hover:text-[#0088CC] transition-colors">
-                {post.title}
-              </h3>
-              <p className="text-gray-500 text-sm leading-relaxed mb-6">
-                {post.excerpt}
-              </p>
-              
-              <Link 
-                to={`/blog/${post.id}`}
-                className="inline-flex items-center text-sm font-bold text-[#1A3A5A] hover:text-[#0088CC] transition-colors"
-              >
-                Leer más
-                <ChevronRight className="w-4 h-4 ml-1" />
               </Link>
+
+              <div className="p-6 flex-1 flex flex-col justify-between">
+                <div>
+                  <div className="flex items-center space-x-4 text-xs text-gray-400 mb-3">
+                    <div className="flex items-center">
+                      <Calendar className="w-4 h-4 mr-1" />
+                      {post.date}
+                    </div>
+                  </div>
+
+                  <h3 className="text-xl font-bold text-[#1A3A5A] mb-3 group-hover:text-[#0088CC] transition-colors">
+                    <Link to={`/blog/${post.id}`}>{post.title}</Link>
+                  </h3>
+                  <p className="text-gray-500 text-sm leading-relaxed mb-6 line-clamp-3">
+                    {post.excerpt}
+                  </p>
+                </div>
+                
+                <Link 
+                  to={`/blog/${post.id}`}
+                  className="inline-flex items-center text-sm font-bold text-[#1A3A5A] hover:text-[#0088CC] transition-colors"
+                >
+                  Leer más
+                  <ChevronRight className="w-4 h-4 ml-1" />
+                </Link>
+              </div>
             </motion.article>
           ))}
         </div>

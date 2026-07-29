@@ -257,6 +257,18 @@ export const CATALOG_CATEGORIES = [
   }
 ];
 
+export function slugify(text: string): string {
+  return text
+    .toString()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .trim()
+    .replace(/\s+/g, '-')
+    .replace(/[^\w-]+/g, '')
+    .replace(/--+/g, '-');
+}
+
 export interface BlogPost {
   id: string;
   title: string;
@@ -271,7 +283,7 @@ export interface BlogPost {
 
 export const BLOG_POSTS: BlogPost[] = [
   {
-    id: '1',
+    id: 'beneficios-de-la-quiropraxia-en-el-deporte',
     title: 'Beneficios de la Quiropraxia en el Deporte',
     excerpt: 'Descubre cómo los ajustes quiroprácticos pueden mejorar el rendimiento deportivo y prevenir lesiones.',
     content: `
@@ -286,7 +298,7 @@ export const BLOG_POSTS: BlogPost[] = [
     image: 'https://images.unsplash.com/photo-1537368910025-700350fe46c7?auto=format&fit=crop&q=80&w=800'
   },
   {
-    id: '2',
+    id: 'la-importancia-de-una-buena-pisada',
     title: 'La importancia de una buena pisada',
     excerpt: '¿Sabías que muchos dolores de espalda comienzan en los pies? El análisis de la pisada es la clave.',
     content: `
@@ -301,7 +313,7 @@ export const BLOG_POSTS: BlogPost[] = [
     image: 'https://images.unsplash.com/photo-1562157873-818bc0726f68?auto=format&fit=crop&q=80&w=800'
   },
   {
-    id: '3',
+    id: 'kinesiologia-mas-que-masajes',
     title: 'Kinesiología: Más que masajes',
     excerpt: 'Entiende el rol del kinesiólogo en la rehabilitación moderna y cómo ayuda a recuperar la movilidad.',
     content: `
