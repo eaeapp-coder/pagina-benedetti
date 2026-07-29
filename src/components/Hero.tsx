@@ -9,7 +9,7 @@ export default function Hero() {
         <img 
           src="https://eaeapp.com/imagenes-ia/benedetti/portada-web-2.jpg" 
           alt="Medical Center"
-          className="w-full h-full object-cover object-left"
+          className="w-full h-full object-cover object-center md:object-[left_top]"
           referrerPolicy="no-referrer"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-white/90 via-white/70 to-transparent"></div>
@@ -21,7 +21,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="text-[48px] font-bold text-[#1A3A5A] leading-tight md:leading-[1.1] mb-6"
+            className="text-[32px] sm:text-[48px] font-bold text-[#1A3A5A] leading-tight md:leading-[1.1] mb-6"
           >
             Más de <span className="text-[#0088CC]">10 años</span> acompañando<br />
             tu recuperación
