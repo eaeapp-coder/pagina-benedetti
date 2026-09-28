@@ -114,7 +114,25 @@ export default function Admin() {
 
   useEffect(() => {
     setIsMounted(true);
+    
+    // Check if there is an active admin login session in this browser tab
+    const hasAdminSession = sessionStorage.getItem('admin_authenticated') === 'true';
+
     const unsubscribe = onAuthStateChanged(auth, async (u) => {
+      // If no explicit admin login session exists in this browser session, enforce login prompt
+      if (!sessionStorage.getItem('admin_authenticated')) {
+        if (u) {
+          try {
+            await signOut(auth);
+          } catch (e) {
+            console.error(e);
+          }
+        }
+        setUser(null);
+        setIsAuthLoading(false);
+        return;
+      }
+
       setUser(u);
       setIsAuthLoading(false);
       
@@ -149,15 +167,29 @@ export default function Admin() {
     setIsLoggingIn(true);
     setLoginError('');
     
-    const loginEmail = username.includes('@') ? username : `${username.toLowerCase()}@benedetti.com`;
+    const cleanUser = username.trim().toLowerCase();
+    const loginEmail = cleanUser.includes('@') ? cleanUser : `${cleanUser}@benedetti.com`;
     
     try {
-      await signInWithEmailAndPassword(auth, loginEmail, password);
+      sessionStorage.setItem('admin_authenticated', 'true');
+      const cred = await signInWithEmailAndPassword(auth, loginEmail, password);
+      setUser(cred.user);
     } catch (err) {
+      sessionStorage.removeItem('admin_authenticated');
       setLoginError('Credenciales inválidas. Por favor intente de nuevo.');
     } finally {
       setIsLoggingIn(false);
     }
+  };
+
+  const handleLogout = async () => {
+    sessionStorage.removeItem('admin_authenticated');
+    try {
+      await signOut(auth);
+    } catch (err) {
+      console.error(err);
+    }
+    setUser(null);
   };
 
   const handleSaveSettings = async (e: React.FormEvent) => {
@@ -635,7 +667,7 @@ export default function Admin() {
         </div>
         <div className="absolute bottom-8 w-full px-6">
           <button 
-            onClick={() => signOut(auth)}
+            onClick={handleLogout}
             className="flex items-center text-gray-400 hover:text-red-500 transition-colors font-medium w-full"
           >
             <LogOut className="mr-2 w-5 h-5" />
@@ -666,13 +698,23 @@ export default function Admin() {
           )}
 
           {/* Mobile Nav Header */}
-          <div className="md:hidden flex overflow-x-auto bg-white rounded-xl shadow-sm mb-8 p-2 space-x-2">
-            <button onClick={() => setActiveTab('general')} className={`px-4 py-2 rounded-lg text-sm whitespace-nowrap ${activeTab === 'general' ? 'bg-blue-50 text-[#0088CC] font-bold' : 'text-gray-500'}`}>General</button>
-            <button onClick={() => setActiveTab('professionals')} className={`px-4 py-2 rounded-lg text-sm whitespace-nowrap ${activeTab === 'professionals' ? 'bg-blue-50 text-[#0088CC] font-bold' : 'text-gray-500'}`}>Profesionales</button>
-            <button onClick={() => setActiveTab('reviews')} className={`px-4 py-2 rounded-lg text-sm whitespace-nowrap ${activeTab === 'reviews' ? 'bg-blue-50 text-[#0088CC] font-bold' : 'text-gray-500'}`}>Reviews</button>
-            <button onClick={() => setActiveTab('insurances')} className={`px-4 py-2 rounded-lg text-sm whitespace-nowrap ${activeTab === 'insurances' ? 'bg-blue-50 text-[#0088CC] font-bold' : 'text-gray-500'}`}>Obras Sociales</button>
-            <button onClick={() => setActiveTab('blog')} className={`px-4 py-2 rounded-lg text-sm whitespace-nowrap ${activeTab === 'blog' ? 'bg-blue-50 text-[#0088CC] font-bold' : 'text-gray-500'}`}>Blog</button>
-            <button onClick={() => setActiveTab('catalog')} className={`px-4 py-2 rounded-lg text-sm whitespace-nowrap ${activeTab === 'catalog' ? 'bg-blue-50 text-[#0088CC] font-bold' : 'text-gray-500'}`}>Catálogo</button>
+          <div className="md:hidden flex items-center justify-between bg-white rounded-xl shadow-sm mb-8 p-2">
+            <div className="flex overflow-x-auto space-x-2">
+              <button onClick={() => setActiveTab('general')} className={`px-4 py-2 rounded-lg text-sm whitespace-nowrap ${activeTab === 'general' ? 'bg-blue-50 text-[#0088CC] font-bold' : 'text-gray-500'}`}>General</button>
+              <button onClick={() => setActiveTab('professionals')} className={`px-4 py-2 rounded-lg text-sm whitespace-nowrap ${activeTab === 'professionals' ? 'bg-blue-50 text-[#0088CC] font-bold' : 'text-gray-500'}`}>Profesionales</button>
+              <button onClick={() => setActiveTab('reviews')} className={`px-4 py-2 rounded-lg text-sm whitespace-nowrap ${activeTab === 'reviews' ? 'bg-blue-50 text-[#0088CC] font-bold' : 'text-gray-500'}`}>Reviews</button>
+              <button onClick={() => setActiveTab('insurances')} className={`px-4 py-2 rounded-lg text-sm whitespace-nowrap ${activeTab === 'insurances' ? 'bg-blue-50 text-[#0088CC] font-bold' : 'text-gray-500'}`}>Obras Sociales</button>
+              <button onClick={() => setActiveTab('blog')} className={`px-4 py-2 rounded-lg text-sm whitespace-nowrap ${activeTab === 'blog' ? 'bg-blue-50 text-[#0088CC] font-bold' : 'text-gray-500'}`}>Blog</button>
+              <button onClick={() => setActiveTab('catalog')} className={`px-4 py-2 rounded-lg text-sm whitespace-nowrap ${activeTab === 'catalog' ? 'bg-blue-50 text-[#0088CC] font-bold' : 'text-gray-500'}`}>Catálogo</button>
+            </div>
+            <button 
+              onClick={handleLogout}
+              className="text-red-500 hover:text-red-700 px-3 py-2 flex items-center text-sm font-semibold shrink-0 border-l border-gray-100 ml-2"
+              title="Cerrar Sesión"
+            >
+              <LogOut size={16} className="mr-1" />
+              Salir
+            </button>
           </div>
 
           {/* Section: General Settings */}
